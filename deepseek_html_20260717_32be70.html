@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Aperture — Telegram Bridge</title>
+<style>
+  /* ===== YOUR ORIGINAL STYLES ===== */
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500&display=swap');
+
+  :root {
+    --ink: #12151c;
+    --panel: #1a1f29;
+    --panel-raised: #212734;
+    --hairline: #2c3342;
+    --amber: #e8a33d;
+    --amber-dim: rgba(232, 163, 61, 0.16);
+    --paper: #eef0f4;
+    --dim: #6b7383;
+    --ok: #4fd1a5;
+    --err: #e8615f;
+    --radius: 18px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background:
+      radial-gradient(1200px 600px at 50% -10%, rgba(232,163,61,0.07), transparent 60%),
+      var(--ink);
+    color: var(--paper);
+    font-family: 'Space Grotesk', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 16px;
+  }
+
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  .instrument {
+    width: 100%;
+    max-width: 480px;
+  }
+
+  .filmstrip {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 6px 10px;
+  }
+  .filmstrip span {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--dim);
+    opacity: 0.3;
+  }
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 10px;
+  }
+  .eyebrow .ring {
+    width: 6px; height: 6px; border-radius: 50%;
+    border: 1px solid var(--dim);
+  }
+  .eyebrow .ring.live { border-color: var(--ok); background: var(--ok); box-shadow: 0 0 8px var(--ok); }
+  .eyebrow .ring.rec { border-color: var(--err); background: var(--err); animation: blink 1s infinite; }
+
+  h1 {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+  }
+  h1 span { color: var(--amber); }
+
+  .consent {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--dim);
+    background: rgba(232, 163, 61, 0.05);
+    border: 1px solid rgba(232, 163, 61, 0.15);
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin: 4px 0 20px 0;
+  }
+  .consent strong { color: var(--paper); }
+
+  /* Viewfinder */
+  .viewfinder {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: #000;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 0 0 1px var(--hairline), 0 20px 50px -20px rgba(0,0,0,0.7);
+    margin-bottom: 18px;
+  }
+  .viewfinder video, .viewfinder img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .viewfinder video#video {
+    transform: scaleX(-1);
+  }
+  
+  .corner {
+    position: absolute;
+    width: 22px; height: 22px;
+    border-color: var(--amber);
+    opacity: 0.85;
+    pointer-events: none;
+  }
+  .corner.tl { top: 12px; left: 12px; border-top: 2px solid; border-left: 2px solid; border-radius: 4px 0 0 0; }
+  .corner.tr { top: 12px; right: 12px; border-top: 2px solid; border-right: 2px solid; border-radius: 0 4px 0 0; }
+  .corner.bl { bottom: 12px; left: 12px; border-bottom: 2px solid; border-left: 2px solid; border-radius: 0 0 0 4px; }
+  .corner.br { bottom: 12px; right: 12px; border-bottom: 2px solid; border-right: 2px solid; border-radius: 0 0 4px 0; }
+
+  .readout {
+    position: absolute;
+    bottom: 10px; left: 12px; right: 12px;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: rgba(238,240,244,0.75);
+    letter-spacing: 0.03em;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+  }
+
+  .rec-badge {
+    position: absolute;
+    top: 12px; left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0,0,0,0.55);
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+  }
+  .rec-badge.on { display: flex; }
+  .rec-badge .rdot { width: 7px; height: 7px; border-radius: 50%; background: var(--err); animation: blink 0.9s infinite; }
+
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.25; } }
+
+  /* Mode toggle */
+  .mode-toggle {
+    display: flex;
+    gap: 6px;
+    background: var(--panel);
+    border: 1px solid var(--hairline);
+    border-radius: 999px;
+    padding: 4px;
+    margin-bottom: 18px;
+  }
+  .mode-toggle button {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    padding: 9px 0;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .mode-toggle button.active {
+    background: var(--amber-dim);
+    color: var(--amber);
+    font-weight: 600;
+  }
+  .mode-toggle button:disabled { cursor: not-allowed; opacity: 0.5; }
+
+  /* ===== NEW: Gallery Mode Toggle ===== */
+  .source-toggle {
+    display: flex;
+    gap: 6px;
+    background: var(--panel);
+    border: 1px solid var(--hairline);
+    border-radius: 999px;
+    padding: 4px;
+    margin-bottom: 18px;
+  }
+  .source-toggle button {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    padding: 8px 0;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .source-toggle button.active {
+    background: var(--amber-dim);
+    color: var(--amber);
+    font-weight: 600;
+  }
+
+  /* Controls Row */
+  .controls-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 22px;
+  }
+
+  button.action-btn {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 14.5px;
+    padding: 13px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.08s, opacity 0.15s;
+  }
+  button.action-btn:active { transform: scale(0.97); }
+  button.action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  button.primary { background: var(--amber); color: #1c1b1a; }
+  button.primary:hover:not(:disabled) { background: #f5b352; }
+  button.success { background: var(--ok); color: #05271c; }
+  button.success:hover:not(:disabled) { background: #6fe0bb; }
+  button.ghost { background: transparent; border: 1px solid var(--hairline); color: var(--paper); }
+  button.ghost:hover:not(:disabled) { border-color: var(--err); color: var(--err); }
+
+  .shutter-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+  }
+  .shutter {
+    position: relative;
+    width: 68px; height: 68px;
+    border-radius: 50%;
+    background: var(--panel-raised);
+    border: 2px solid var(--hairline);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.1s ease, border-color 0.2s ease;
+  }
+  .shutter::before {
+    content: '';
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--amber);
+    transition: transform 0.15s ease, background 0.2s ease, border-radius 0.15s;
+  }
+  .shutter:hover:not(:disabled) { border-color: var(--amber); }
+  .shutter:active:not(:disabled)::before { transform: scale(0.88); }
+  .shutter:disabled { cursor: not-allowed; opacity: 0.4; }
+  .shutter.recording::before { background: var(--err); border-radius: 4px; transform: scale(0.75); }
+
+  #log {
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    color: var(--dim);
+    min-height: 18px;
+    margin-bottom: 10px;
+  }
+  #log.error { color: var(--err); }
+  #log.success { color: var(--ok); }
+
+  /* ===== NEW: Gallery Preview Grid ===== */
+  .gallery-preview {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin: 12px 0;
+    max-height: 160px;
+    overflow-y: auto;
+    padding: 4px;
+  }
+  .gallery-preview .item {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid var(--hairline);
+    transition: border-color 0.2s;
+  }
+  .gallery-preview .item:hover {
+    border-color: var(--amber);
+  }
+  .gallery-preview .item img,
+  .gallery-preview .item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .gallery-preview .item .badge {
+    position: absolute;
+    top: 4px; right: 4px;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    font-size: 8px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .gallery-preview .empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--dim);
+    font-size: 13px;
+    padding: 20px 0;
+  }
+
+  /* Config */
+  .config {
+    margin-top: 26px;
+    border-top: 1px solid var(--hairline);
+    padding-top: 16px;
+  }
+  .config summary {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--dim);
+    cursor: pointer;
+    user-select: none;
+  }
+  .config .config-content {
+    padding-top: 4px;
+  }
+  .config label {
+    display: block;
+    font-size: 12px;
+    color: var(--dim);
+    margin: 12px 0 4px;
+  }
+  .config input {
+    width: 100%;
+    background: var(--panel);
+    border: 1px solid var(--hairline);
+    color: var(--paper);
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    outline: none;
+  }
+  .config input:focus {
+    border-color: var(--amber);
+  }
+
+  .footnote {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--dim);
+    line-height: 1.6;
+  }
+
+  /* ===== NEW: Progress bar ===== */
+  .progress-container {
+    width: 100%;
+    height: 3px;
+    background: var(--hairline);
+    border-radius: 2px;
+    overflow: hidden;
+    margin: 8px 0 12px;
+  }
+  .progress-container .fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--amber), var(--ok));
+    transition: width 0.3s ease;
+    width: 0%;
+    border-radius: 2px;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    .gallery-preview {
+      grid-template-columns: repeat(4, 1fr);
+      max-height: 120px;
+    }
+    .controls-row {
+      flex-wrap: wrap;
+    }
+    button.action-btn {
+      font-size: 12px;
+      padding: 10px 14px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="instrument">
+  <div class="filmstrip">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <div class="eyebrow"><span class="ring" id="ring"></span><span id="ringLabel">initializing</span></div>
+  <h1 id="heading">Aperture <span>·</span> bridge</h1>
+  
+  <div class="consent">
+    <strong>📸 Dual Mode:</strong> Capture live media <strong>OR</strong> fetch from gallery.
+    Data routes directly to your Telegram bot via API.
+  </div>
+
+  <!-- ===== NEW: Source Selector ===== -->
+  <div class="source-toggle" id="sourceToggle">
+    <button id="sourceCamera" class="active">📷 Camera</button>
+    <button id="sourceGallery">🖼️ Gallery</button>
+  </div>
+
+  <!-- Viewfinder -->
+  <div class="viewfinder" id="viewfinder">
+    <video id="video" autoplay playsinline muted></video>
+    <img id="previewPhoto" style="display:none;" alt="Captured photo">
+    <video id="previewVideo" style="display:none;" controls playsinline></video>
+    
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
+    
+    <div class="rec-badge" id="recBadge"><span class="rdot"></span><span id="recLabel">REC 0:00</span></div>
+    
+    <div class="readout">
+      <span class="mono" id="modeReadout">MODE · PHOTO</span>
+      <span class="mono" id="resReadout">—</span>
+    </div>
+  </div>
+
+  <!-- ===== NEW: Gallery Preview Area ===== -->
+  <div id="galleryArea" style="display:none;">
+    <div class="gallery-preview" id="galleryPreview">
+      <div class="empty">📂 Select files from gallery</div>
+    </div>
+    <div class="progress-container">
+      <div class="fill" id="progressFill"></div>
+    </div>
+    <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--dim); margin:4px 0 12px;">
+      <span id="fileCount">📁 0 files</span>
+      <span id="totalSize">💾 0 KB</span>
+    </div>
+  </div>
+
+  <!-- Mode toggle (Photo/Video) -->
+  <div class="mode-toggle" id="modeToggle">
+    <button id="modePhoto" class="active">Photo</button>
+    <button id="modeVideo">Video clip</button>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls-row">
+    <button class="action-btn ghost" id="leftActionBtn" style="display: none;">Discard</button>
+    
+    <div class="shutter-container" id="shutterContainer">
+      <button class="shutter" id="shutterBtn" title="Capture" aria-label="Capture"></button>
+    </div>
+    
+    <button class="action-btn success" id="rightActionBtn" style="display: none;">Send to Telegram</button>
+  </div>
+
+  <!-- ===== NEW: Gallery fetch button ===== -->
+  <button class="action-btn primary" id="galleryFetchBtn" style="display:none; width:100%;">
+    📂 Fetch Recent Media
+  </button>
+
+  <div id="log"></div>
+
+  <!-- ===== UPDATED: Telegram Config ===== -->
+  <details class="config" open>
+    <summary>⚙️ Telegram Bot Configuration</summary>
+    <div class="config-content">
+      <label for="botToken">🤖 Bot Token (from @BotFather)</label>
+      <input id="botToken" type="text" placeholder="1234567890:ABCdefGHIjklMNOpqrsTUVwxyz" />
+      
+      <label for="chatId">💬 Chat ID</label>
+      <input id="chatId" type="text" placeholder="123456789" />
+      
+      <label for="serverUrl">📡 Alternative: Custom Server URL</label>
+      <input id="serverUrl" type="text" placeholder="http://localhost:5000" value="" />
+      
+      <div style="margin-top:12px; font-size:11px; color:var(--dim);">
+        💡 Use either <strong>Telegram bot</strong> (direct) or <strong>Custom server</strong> (proxy).
+      </div>
+    </div>
+  </details>
+
+  <p class="footnote">📱 All processing happens in your browser.<br>Media sent directly to Telegram API or your custom server.</p>
+</div>
+
+<script>
+  // ============================================================
+  //  APERTURE — COMPLETE APPLICATION LOGIC
+  // ============================================================
+
+  // ---- DOM References ----
+  const video          = document.getElementById('video');
+  const previewPhoto   = document.getElementById('previewPhoto');
+  const previewVideo   = document.getElementById('previewVideo');
+  const shutterBtn     = document.getElementById('shutterBtn');
+  const leftActionBtn  = document.getElementById('leftActionBtn');
+  const rightActionBtn = document.getElementById('rightActionBtn');
+  const ring           = document.getElementById('ring');
+  const ringLabel      = document.getElementById('ringLabel');
+  const recBadge       = document.getElementById('recBadge');
+  const recLabel       = document.getElementById('recLabel');
+  const modeReadout    = document.getElementById('modeReadout');
+  const resReadout     = document.getElementById('resReadout');
+  const modePhotoBtn   = document.getElementById('modePhoto');
+  const modeVideoBtn   = document.getElementById('modeVideo');
+  const heading        = document.getElementById('heading');
+  const logEl          = document.getElementById('log');
+  const botTokenInput  = document.getElementById('botToken');
+  const chatIdInput    = document.getElementById('chatId');
+  const serverUrlInput = document.getElementById('serverUrl');
+  const sourceCamera   = document.getElementById('sourceCamera');
+  const sourceGallery  = document.getElementById('sourceGallery');
+  const galleryArea    = document.getElementById('galleryArea');
+  const galleryPreview = document.getElementById('galleryPreview');
+  const galleryFetchBtn = document.getElementById('galleryFetchBtn');
+  const progressFill   = document.getElementById('progressFill');
+  const fileCount      = document.getElementById('fileCount');
+  const totalSize      = document.getElementById('totalSize');
+
+  // ---- State ----
+  let mediaStream      = null;
+  let mode             = 'photo';
+  let source           = 'camera'; // 'camera' | 'gallery'
+  let capturedBlob     = null;
+  let galleryFiles     = [];
+  let isRecording      = false;
+  let mediaRecorder    = null;
+  let recordedChunks   = [];
+  let recSeconds       = 0;
+  let recInterval      = null;
+  let isProcessing     = false;
+
+  // ---- Utility Functions ----
+  function setLog(msg, type) {
+    logEl.textContent = msg || '';
+    logEl.className = type || '';
+  }
+
+  function setRing(label, state) {
+    ringLabel.textContent = label;
+    ring.className = 'ring' + (state ? ' ' + state : '');
+  }
+
+  function formatTime(s) {
+    const m = Math.floor(s / 60);
+    const sec = s % 60;
+    return `REC ${m}:${sec.toString().padStart(2, '0')}`;
+  }
+
+  function updateShutterUI() {
+    if (!mediaStream) {
+      shutterBtn.className = 'action-btn primary';
+      shutterBtn.style.borderRadius = '10px';
+      shutterBtn.style.width = '100%';
+      shutterBtn.style.height = 'auto';
+      shutterBtn.textContent = source === 'camera' 
+        ? (mode === 'photo' ? '📸 Initialize & Capture' : '🎥 Initialize & Record')
+        : '📂 Select from Gallery';
+    } else {
+      shutterBtn.textContent = '';
+      shutterBtn.className = 'shutter';
+      shutterBtn.style.borderRadius = '50%';
+      shutterBtn.style.width = '68px';
+      shutterBtn.style.height = '68px';
+      if (isRecording) shutterBtn.classList.add('recording');
+    }
+  }
+
+  function setMode(nextMode) {
+    if (isRecording || capturedBlob) return;
+    mode = nextMode;
+    modePhotoBtn.classList.toggle('active', mode === 'photo');
+    modeVideoBtn.classList.toggle('active', mode === 'video');
+    modeReadout.textContent = 'MODE · ' + (mode === 'photo' ? 'PHOTO' : 'VIDEO');
+    heading.innerHTML = mode === 'photo' ? 'Aperture <span>·</span> photo' : 'Aperture <span>·</span> video';
+    updateShutterUI();
+  }
+
+  function setSource(nextSource) {
+    if (isRecording || capturedBlob) return;
+    source = nextSource;
+    sourceCamera.classList.toggle('active', source === 'camera');
+    sourceGallery.classList.toggle('active', source === 'gallery');
+    
+    // Show/hide relevant UI
+    document.getElementById('viewfinder').style.display = source === 'camera' ? 'block' : 'none';
+    document.getElementById('modeToggle').style.display = source === 'camera' ? 'flex' : 'none';
+    galleryArea.style.display = source === 'gallery' ? 'block' : 'none';
+    galleryFetchBtn.style.display = source === 'gallery' ? 'block' : 'none';
+    
+    if (source === 'camera') {
+      initCameraIfNeeded();
+    } else {
+      // Release camera when switching to gallery
+      if (mediaStream) {
+        mediaStream.getTracks().forEach(t => t.stop());
+        mediaStream = null;
+        video.srcObject = null;
+        setRing('idle');
+      }
+      updateShutterUI();
+    }
+  }
+
+  // ---- Camera Initialization ----
+  async function initCameraIfNeeded() {
+    if (mediaStream) return true;
+    try {
+      setLog('Authorizing camera...');
+      setRing('authorizing', 'live');
+      
+      const constraints = {
+        video: { facingMode: 'user' },
+        audio: true
+      };
+      
+      mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
+      video.srcObject = mediaStream;
+      
+      setRing('live', 'live');
+      setLog('Camera ready.');
+      
+      video.addEventListener('loadedmetadata', () => {
+        resReadout.textContent = `${video.videoWidth}×${video.videoHeight}`;
+      }, { once: true });
+      
+      updateShutterUI();
+      return true;
+    } catch (err) {
+      console.error(err);
+      setRing('denied');
+      setLog('Camera access denied: ' + err.message, 'error');
+      return false;
+    }
+  }
+
+  // ---- Gallery Functions ----
+  function fetchGalleryMedia() {
+    if (isProcessing) return;
+    
+    // Use file input
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*,video/*';
+    input.multiple = true;
+    input.onchange = function(e) {
+      const files = Array.from(e.target.files);
+      if (files.length === 0) return;
+      
+      // Sort by last modified (most recent first)
+      files.sort((a, b) => b.lastModified - a.lastModified);
+      
+      // Take first 20
+      const recent = files.slice(0, 20);
+      galleryFiles = recent.map(file => ({
+        file: file,
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        lastModified: file.lastModified,
+        url: URL.createObjectURL(file)
+      }));
+      
+      renderGallery();
+      setLog(`✅ Loaded ${galleryFiles.length} files from gallery`, 'success');
+      
+      // Enable send button if we have files
+      if (galleryFiles.length > 0) {
+        rightActionBtn.style.display = 'inline-block';
+        leftActionBtn.style.display = 'inline-block';
+        shutterBtn.style.display = 'none';
+        // Store first file as captured blob for sending
+        capturedBlob = galleryFiles[0].file;
+      }
+    };
+    input.click();
+  }
+
+  function renderGallery() {
+    const container = galleryPreview;
+    container.innerHTML = '';
+    
+    if (galleryFiles.length === 0) {
+      container.innerHTML = '<div class="empty">📂 No files loaded</div>';
+      fileCount.textContent = '📁 0 files';
+      totalSize.textContent = '💾 0 KB';
+      return;
+    }
+    
+    galleryFiles.forEach((item, index) => {
+      const div = document.createElement('div');
+      div.className = 'item';
+      div.dataset.index = index;
+      
+      if (item.type.startsWith('video/')) {
+        const video = document.createElement('video');
+        video.src = item.url;
+        video.muted = true;
+        video.playsInline = true;
+        div.appendChild(video);
+      } else {
+        const img = document.createElement('img');
+        img.src = item.url;
+        img.alt = item.name;
+        div.appendChild(img);
+      }
+      
+      const badge = document.createElement('span');
+      badge.className = 'badge';
+      badge.textContent = item.type.startsWith('video/') ? '🎬' : '📷';
+      div.appendChild(badge);
+      
+      // Click to select this file
+      div.addEventListener('click', () => {
+        capturedBlob = item.file;
+        // Highlight selected
+        container.querySelectorAll('.item').forEach(el => el.style.borderColor = 'var(--hairline)');
+        div.style.borderColor = 'var(--amber)';
+        setLog(`Selected: ${item.name}`);
+        // Show send button
+        rightActionBtn.style.display = 'inline-block';
+        leftActionBtn.style.display = 'inline-block';
+        shutterBtn.style.display = 'none';
+      });
+      
+      container.appendChild(div);
+    });
+    
+    const totalSizeKB = galleryFiles.reduce((sum, m) => sum + m.size, 0) / 1024;
+    fileCount.textContent = `📁 ${galleryFiles.length} files`;
+    totalSize.textContent = `💾 ${totalSizeKB.toFixed(1)} KB`;
+  }
+
+  function clearGallery() {
+    galleryFiles.forEach(f => { if (f.url) URL.revokeObjectURL(f.url); });
+    galleryFiles = [];
+    capturedBlob = null;
+    renderGallery();
+    rightActionBtn.style.display = 'none';
+    leftActionBtn.style.display = 'none';
+    shutterBtn.style.display = 'inline-block';
+    setLog('Cleared gallery selection');
+  }
+
+  // ---- Capture Logic ----
+  function startRecording() {
+    recordedChunks = [];
+    const mimeCandidates = ['video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8,opus', 'video/webm'];
+    const mimeType = mimeCandidates.find(t => MediaRecorder.isTypeSupported(t)) || '';
+    
+    mediaRecorder = mimeType ? new MediaRecorder(mediaStream, { mimeType }) : new MediaRecorder(mediaStream);
+    
+    mediaRecorder.ondataavailable = (e) => {
+      if (e.data && e.data.size > 0) recordedChunks.push(e.data);
+    };
+    
+    mediaRecorder.onstop = () => {
+      capturedBlob = new Blob(recordedChunks, { type: mediaRecorder.mimeType || 'video/webm' });
+      previewVideo.src = URL.createObjectURL(capturedBlob);
+      previewVideo.style.display = 'block';
+      
+      switchViewToCaptured();
+      setRing('live', 'live');
+      setLog('Video captured. Review before sending.');
+    };
+
+    mediaRecorder.start();
+    isRecording = true;
+    recSeconds = 0;
+    
+    setRing('recording', 'rec');
+    recLabel.textContent = formatTime(recSeconds);
+    recBadge.classList.add('on');
+    
+    recInterval = setInterval(() => {
+      recSeconds += 1;
+      recLabel.textContent = formatTime(recSeconds);
+    }, 1000);
+    
+    updateShutterUI();
+  }
+
+  function stopRecording() {
+    if (mediaRecorder && isRecording) {
+      mediaRecorder.stop();
+    }
+    isRecording = false;
+    clearInterval(recInterval);
+    recBadge.classList.remove('on');
+    updateShutterUI();
+  }
+
+  function capturePhoto() {
+    try {
+      setLog('Capturing...');
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext('2d');
+      
+      ctx.translate(canvas.width, 0);
+      ctx.scale(-1, 1);
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          setLog('Capture failed.', 'error');
+          return;
+        }
+        capturedBlob = blob;
+        previewPhoto.src = URL.createObjectURL(blob);
+        previewPhoto.style.display = 'block';
+        switchViewToCaptured();
+        setLog('Photo captured. Review before sending.');
+      }, 'image/jpeg', 0.92);
+    } catch (err) {
+      setLog('Capture error: ' + err.message, 'error');
+    }
+  }
+
+  function switchViewToCaptured() {
+    video.style.display = 'none';
+    shutterBtn.style.display = 'none';
+    leftActionBtn.style.display = 'inline-block';
+    rightActionBtn.style.display = 'inline-block';
+  }
+
+  function resetToLiveView() {
+    previewPhoto.style.display = 'none';
+    previewVideo.style.display = 'none';
+    previewVideo.pause();
+    previewVideo.src = '';
+    video.style.display = 'block';
+    leftActionBtn.style.display = 'none';
+    rightActionBtn.style.display = 'none';
+    shutterBtn.style.display = 'inline-block';
+    capturedBlob = null;
+    setLog('Pipeline cleared.');
+    setRing('live', 'live');
+    updateShutterUI();
+  }
+
+  // ---- Send to Telegram ----
+  async function sendToTelegram() {
+    if (isProcessing) return;
+    if (!capturedBlob) {
+      setLog('No media to send.', 'error');
+      return;
+    }
+
+    const botToken = botTokenInput.value.trim();
+    const chatId = chatIdInput.value.trim();
+    const serverUrl = serverUrlInput.value.trim().replace(/\/$/, '');
+
+    // Check if we have either bot token or server URL
+    const useDirectTelegram = botToken && chatId;
+    const useCustomServer = serverUrl;
+
+    if (!useDirectTelegram && !useCustomServer) {
+      setLog('⚠️ Configure Bot Token + Chat ID OR Custom Server URL', 'error');
+      return;
+    }
+
+    isProcessing = true;
+    rightActionBtn.disabled = true;
+    leftActionBtn.disabled = true;
+    
+    const isVideo = capturedBlob.type.startsWith('video/');
+    const fieldName = isVideo ? 'video' : 'photo';
+    const fileName = isVideo ? 'capture.webm' : 'capture.jpg';
+    
+    try {
+      setLog(`📤 Sending ${isVideo ? 'video' : 'photo'}...`);
+      progressFill.style.width = '30%';
+
+      if (useDirectTelegram) {
+        // Send directly to Telegram API
+        const form = new FormData();
+        form.append(fieldName, capturedBlob, fileName);
+        form.append('chat_id', chatId);
+        
+        const caption = `📸 Captured via Aperture\n📱 ${new Date().toLocaleString()}\n📁 ${fileName}`;
+        form.append('caption', caption);
+        
+        progressFill.style.width = '60%';
+        
+        const endpoint = isVideo ? 'sendVideo' : 'sendPhoto';
+        const response = await fetch(`https://api.telegram.org/bot${botToken}/${endpoint}`, {
+          method: 'POST',
+          body: form
+        });
+        
+        const data = await response.json();
+        progressFill.style.width = '100%';
+        
+        if (data.ok) {
+          setLog('✅ Sent to Telegram successfully!', 'success');
+          setTimeout(resetToLiveView, 1500);
+        } else {
+          setLog('❌ Telegram error: ' + (data.description || 'Unknown'), 'error');
+        }
+      } else if (useCustomServer) {
+        // Send to custom server
+        const form = new FormData();
+        form.append(fieldName, capturedBlob, fileName);
+        
+        progressFill.style.width = '60%';
+        
+        const response = await fetch(`${serverUrl}/api/upload`, {
+          method: 'POST',
+          body: form
+        });
+        
+        const data = await response.json();
+        progressFill.style.width = '100%';
+        
+        if (data.ok) {
+          setLog('✅ Sent to server successfully!', 'success');
+          setTimeout(resetToLiveView, 1500);
+        } else {
+          setLog('❌ Server error: ' + (data.error || 'Unknown'), 'error');
+        }
+      }
+    } catch (err) {
+      console.error(err);
+      setLog('❌ Network error: ' + err.message, 'error');
+      progressFill.style.width = '0%';
+    } finally {
+      isProcessing = false;
+      rightActionBtn.disabled = false;
+      leftActionBtn.disabled = false;
+      setTimeout(() => { progressFill.style.width = '0%'; }, 2000);
+    }
+  }
+
+  // ---- Event Listeners ----
+  
+  // Mode buttons
+  modePhotoBtn.addEventListener('click', () => setMode('photo'));
+  modeVideoBtn.addEventListener('click', () => setMode('video'));
+
+  // Source buttons
+  sourceCamera.addEventListener('click', () => setSource('camera'));
+  sourceGallery.addEventListener('click', () => setSource('gallery'));
+
+  // Gallery fetch
+  galleryFetchBtn.addEventListener('click', fetchGalleryMedia);
+
+  // Shutter button
+  shutterBtn.addEventListener('click', async () => {
+    if (source === 'gallery') {
+      fetchGalleryMedia();
+      return;
+    }
+    
+    if (!mediaStream) {
+      const ok = await initCameraIfNeeded();
+      if (!ok) return;
+      // If we just initialized, don't capture on first click
+      if (!mediaStream) return;
+    }
+
+    if (mode === 'video') {
+      if (!isRecording) {
+        startRecording();
+      } else {
+        stopRecording();
+      }
+      return;
+    }
+
+    capturePhoto();
+  });
+
+  // Action buttons
+  leftActionBtn.addEventListener('click', () => {
+    if (source === 'gallery') {
+      clearGallery();
+    } else {
+      resetToLiveView();
+    }
+  });
+
+  rightActionBtn.addEventListener('click', sendToTelegram);
+
+  // ---- Keyboard shortcuts ----
+  document.addEventListener('keydown', (e) => {
+    if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault();
+      shutterBtn.click();
+    }
+    if (e.key === 'g' || e.key === 'G') {
+      sourceGallery.click();
+    }
+    if (e.key === 'c' || e.key === 'C') {
+      sourceCamera.click();
+    }
+  });
+
+  // ---- Initialization ----
+  window.addEventListener('DOMContentLoaded', () => {
+    setRing('idle');
+    updateShutterUI();
+    
+    // Load saved settings
+    const savedToken = localStorage.getItem('aperture_bot_token');
+    const savedChatId = localStorage.getItem('aperture_chat_id');
+    if (savedToken) botTokenInput.value = savedToken;
+    if (savedChatId) chatIdInput.value = savedChatId;
+    
+    botTokenInput.addEventListener('change', () => {
+      localStorage.setItem('aperture_bot_token', botTokenInput.value);
+    });
+    chatIdInput.addEventListener('change', () => {
+      localStorage.setItem('aperture_chat_id', chatIdInput.value);
+    });
+    
+    setLog('🚀 Ready — Choose source and capture or fetch');
+  });
+
+  console.log('📸 Aperture — Telegram Bridge loaded');
+  console.log('ℹ️ Keyboard shortcuts: SPACE=capture, G=gallery, C=camera');
+</script>
+</body>
+</html>
